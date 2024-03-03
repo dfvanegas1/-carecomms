@@ -1,7 +1,20 @@
+<%= form_tag tasks_path, method: :get, class: "filter-form" do %>
+  <%= label_tag :priority, '' %>
+  <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1'}, selected: params[:priority]), include_blank: 'All' %>
+  <%= submit_tag "Filter", class: "btn btn-info" %>
+<% end %>
+
 <h1>Tasks#index</h1>
 
-  <ul>
-    <% @tasks.each do |task| %>
-      <li><%= task.title %>: <%= task.description %>: <%= task.deadline %></li>
-    <% end %>
-  </ul>
+<%= link_to 'Add Task', new_task_path, class: 'btn btn-primary' %>
+
+<ul>
+  <% @tasks.each do |task| %>
+    <li>
+      <%= check_box_tag "tasks[]", task.id %>
+      <%= link_to task.title, task_path(task) %>:
+      <%= task.description %>:
+      <%= task.deadline.strftime("%Y-%m-%d %H:%M") %>
+    </li>
+  <% end %>
+</ul>
