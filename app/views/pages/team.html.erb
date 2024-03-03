@@ -3,7 +3,7 @@
 <% @users_on_shift.each do |user|%>
   <% if user.avatar.attached? %>
     <%= link_to cl_image_tag(user.avatar.key, class: "avatar"), profile_path(id: user.id) %>
-    <% else %>
+  <% else %>
     <%= link_to image_tag("avatar_placeholder.jpg", class: "avatar"), profile_path(id: user.id) %>
   <% end %>
   <%= link_to user.first_name, profile_path(id: user.id), class: "user-name" %>
