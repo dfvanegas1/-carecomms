@@ -1,2 +1,35 @@
 <h1>Tasks#show</h1>
 <p>Find me in app/views/tasks/show.html.erb</p>
+<h2>Title: <%= @task.name %></h2>
+<p>Description: <%= @task.description %></p>
+<p> Deadline: <%= @task.deadline %></p>
+
+<h3>Assigned Users:</h3>
+<ul>
+  <% @task.user_tasks.each do |user_task| %>
+    <li><%= user_task.user.first_name %> <%= user_task.user.last_name %></li>
+  <% end %>
+</ul>
+
+
+<!-- Display all comments related to this task -->
+<h3>Comments:</h3>
+<% @task.task_comments.each do |comment| %>
+  <p><%= comment.content %></p>
+<% end %>
+
+<h3>Add a Comment:</h3>
+<%= form_with(url: task_comments_path(@task), local: true) do |form| %>
+  <div>
+    <%= form.label :content, 'Your Comment:' %>
+    <%= form.text_area :content %>
+  </div>
+  <div>
+    <%= form.hidden_field :task_id, value: @task.id %>
+    <%= form.submit 'Submit Comment' %>
+  </div>
+<% end %>
+
+<!-- Add links for user actions -->
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back to Tasks', tasks_path %>
