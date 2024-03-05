@@ -1,21 +1,27 @@
 <h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
-<h2>Title: <%= @task.name %></h2>
+<h2>Title: <%= @task.title %></h2>
 <p>Description: <%= @task.description %></p>
-<p> Deadline: <%= @task.deadline %></p>
 
 <h3>Assigned Users:</h3>
 <ul>
-  <% @task.user_tasks.each do |user_task| %>
-    <li><%= user_task.user.first_name %> <%= user_task.user.last_name %></li>
+  <% @task.user_tasks.includes(:user).each do |user_task| %>
+    <li>
+      <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "avatar-bordered") if user_task.user.avatar.attached? %>
+      <%= user_task.user.first_name %> <%= user_task.user.last_name %>
+    </li>
   <% end %>
 </ul>
 
+<p> Deadline: <%= @task.deadline %></p>
 
 <!-- Display all comments related to this task -->
 <h3>Comments:</h3>
-<% @task.task_comments.each do |comment| %>
-  <p><%= comment.content %></p>
+<% if @task.task_comments.any? %>
+  <% @task.task_comments.each do |comment| %>
+    <p><%= comment.content %></p>
+  <% end %>
+<% else %>
+  <p>No comments yet.</p>
 <% end %>
 
 <h3>Add a Comment:</h3>
@@ -31,5 +37,4 @@
 <% end %>
 
 <!-- Add links for user actions -->
-<%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back to Tasks', tasks_path %>
