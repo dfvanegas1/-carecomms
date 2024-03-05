@@ -11,6 +11,8 @@ class PagesController < ApplicationController
 
   def team
     @users = User.all
+    @users_on_shift = Shift.current_shift_users
+    @users_out_today = Shift.out_today_users
   end
 
   def profile
