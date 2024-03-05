@@ -18,8 +18,8 @@ Chatroom.delete_all
 Shift.delete_all
 
 users = User.create!([
-  { email: 'dfvangeas@test.com', password: '123456', password_confirmation: '123456', first_name: 'Daniel', last_name: 'Vanegas' },
-  { email: 'frnpcc@test.com', password: '123456', password_confirmation: '123456', first_name: 'Franchesca', last_name: 'Correa' },
+  { email: 'dfvanegas@test.com', password: '123456', password_confirmation: '123456', first_name: 'Daniel', last_name: 'Vanegas' },
+  { email: 'frnpcc@test.com', password: '123456', password_confirmation: '123456', first_name: 'Francesca', last_name: 'Correa' },
   { email: 'fmarchal03@test.com', password: '123456', password_confirmation: '123456', first_name: 'Frederic', last_name: 'Marchal' }
 ])
 
@@ -28,10 +28,6 @@ tasks = Task.create!([
   { title: 'Call XY', description: 'Important call to Mr. XY', deadline: 2.days.from_now },
   { title: 'Renew Subscription', description: 'Renew the annual subscription for the service.', deadline: 30.days.from_now }
 ])
-
-users.each do |user|
-  user.tasks << tasks.sample(2)
-end
 
 chatrooms = Chatroom.create!([
   { name: 'General' },
@@ -46,6 +42,10 @@ shifts = Shift.create!([
   { start_date: 4.days.from_now.beginning_of_day, end_date: 4.days.from_now.end_of_day }
 ])
 
+users.each do |user|
+  user.tasks << tasks.sample(2)
+  user.shifts << shifts.sample(2)
+end
 
 tasks.each_with_index do |task, index|
   TaskComment.create!(task: task, user: users[index % users.size], content: "Comment #{index} for task.")
