@@ -1,11 +1,13 @@
 class ShiftsController < ApplicationController
-  before_action :set_user, only: [:update]
+  before_action :authenticate_user!
   before_action :set_shift, only: [:update]
+  before_action :set_user_from_profile, only: [:update]
+  before_action :authorize_shift_update, only: [:update]
 
   def update
     if @shift.update(shift_params)
       respond_to do |format|
-        format.html { redirect_to profile_path(@user), notice: 'Shift was successfully updated.' }
+        format.html { redirect_to profile_path(id: @user.id), notice: 'Shift was successfully updated.' }
         format.json { render json: { message: 'Shift updated successfully', shift: @shift }, status: :ok }
       end
     else
@@ -18,16 +20,28 @@ class ShiftsController < ApplicationController
 
   private
 
-  def set_user
-    @user = User.find(params[:user_id])
-  end
-
   def set_shift
-    # Ensures that you are finding the shift within the scope of the user
-    @shift = @user.shifts.find(params[:id])
+    @shift = Shift.find(params[:id])
   end
 
   def shift_params
     params.require(:shift).permit(:start_date, :end_date)
+  end
+
+  def set_user_from_profile
+    # This sets @user based on the profile being visited
+    @user = User.find(params[:user_id])
+  end
+
+  def authorize_shift_update
+    unless can_edit_shifts_for?(@user) || current_user.admin?
+      redirect_to root_path, alert: "You're not authorized to edit this shift."
+    end
+  end
+
+  def can_edit_shifts_for?(user)
+    # Your custom logic here. This example assumes you might check if the current_user is an admin,
+    # or if the current_user is part of the same team or has specific permissions to edit shifts for the visited user.
+    current_user.admin? || current_user == user || current_user.has_permission?(:edit_shifts, for: user)
   end
 end
