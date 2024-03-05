@@ -1,13 +1,3 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
 TaskComment.delete_all
 UserShift.delete_all
 Message.delete_all
@@ -32,7 +22,7 @@ users = User.create!([
 
   if File.exist?(avatar_path)
     user.avatar.attach(io: File.open(avatar_path), filename: avatar_filename, content_type: 'image/jpg')
-    puts "Attached avatar for #{user.first_name}"
+    puts "Attached avatar for #{user.first_name} 🦧"
   else
     puts "No avatar image found for #{user.first_name}."
   end
@@ -40,38 +30,40 @@ end
 
 
 tasks = Task.create!([
-  { title: 'Administer Medications', description: 'Administer scheduled medications to assigned patients.', deadline: 1.day.from_now, priority: 1 },
-  { title: 'Update Patient Records', description: 'Update the medical records of all assigned patients with the latest vitals and medication information.', deadline: 1.day.from_now, priority: 2 },
-  { title: 'Attend Team Meeting', description: 'Participate in the daily healthcare team meeting to discuss patient care plans.', deadline: 1.day.from_now, priority: 3 },
-  { title: 'Check Emergency Equipment', description: 'Ensure all emergency equipment, such as defibrillators and oxygen tanks, are in working order.', deadline: 2.days.from_now, priority: 1 },
-  { title: 'Complete Incident Reports', description: 'Complete any outstanding incident reports related to patient care or safety issues.', deadline: 3.days.from_now, priority: 2 },
-  { title: 'Conduct Patient Rounds', description: 'Conduct rounds to monitor patient conditions and provide necessary care.', deadline: 1.day.from_now, priority: 3 },
-  { title: 'Prepare Surgical Instruments', description: 'Sterilize and prepare surgical instruments for upcoming procedures.', deadline: 4.days.from_now, priority: 1 },
-  { title: 'Assist with Patient Admissions', description: 'Assist with the admission of new patients to the unit.', deadline: 2.days.from_now, priority: 2 },
-  { title: 'Coordinate Patient Transfers', description: 'Coordinate the transfer of patients to other units or facilities as needed.', deadline: 5.days.from_now, priority: 3 },
-  { title: 'Restock Supplies', description: 'Check and restock nursing stations with necessary supplies.', deadline: 5.days.from_now, priority: 1 },
-  { title: 'Review New Protocols', description: 'Review any new healthcare protocols or procedure updates.', deadline: 7.days.from_now, priority: 2 },
-  { title: 'Schedule Patient Appointments', description: 'Schedule follow-up appointments for patients being discharged.', deadline: 2.days.from_now, priority: 3 },
-  { title: 'Assist with Patient Hygiene', description: 'Assist patients with bathing, oral care, and other hygiene needs.', deadline: 1.day.from_now, priority: 1 },
-  { title: 'Participate in Quality Improvement', description: 'Participate in quality improvement initiatives and projects.', deadline: 10.days.from_now, priority: 2 },
-  { title: 'Attend Training Session', description: 'Attend a mandatory training session on new electronic health record software.', deadline: 14.days.from_now, priority: 3 },
-  { title: 'Perform ECGs', description: 'Perform ECGs on patients with cardiac complaints as ordered by the physician.', deadline: 3.days.from_now, priority: 1 },
-  { title: 'Administer Vaccinations', description: 'Administer flu vaccinations to patients as part of the seasonal flu prevention program.', deadline: 10.days.from_now, priority: 2 },
-  { title: 'Assist with Patient Mobility', description: 'Assist patients with mobility issues in getting to and from the bathroom, participating in physical therapy sessions.', deadline: 1.day.from_now, priority: 3 },
-  { title: 'Prepare Patient Discharge', description: 'Prepare discharge paperwork and instructions for patients scheduled to leave.', deadline: 2.days.from_now, priority: 1 },
-  { title: 'Assist with Patient Nutrition', description: 'Assist patients with meal selection and feeding as needed.', deadline: 1.day.from_now, priority: 2 },
-  { title: 'Perform Respiratory Treatments', description: 'Perform respiratory treatments for patients with chronic lung conditions.', deadline: 3.days.from_now, priority: 3 },
-  { title: 'Assist with Patient Restraints', description: 'Assist with the application of patient restraints as ordered by the physician.', deadline: 1.day.from_now, priority: 1 },
-  { title: 'Provide Emotional Support', description: 'Provide emotional support to patients and their families during difficult times.', deadline: 1.day.from_now, priority: 2 },
-  { title: 'Monitor Vital Signs', description: 'Regularly monitor and record the vital signs of assigned patients.', deadline: 1.day.from_now, priority: 3 },
-  { title: 'Provide Patient Education', description: 'Educate patients and their families about care plans and any necessary post-discharge care.', deadline: 3.days.from_now, priority: 1 },
-  { title: 'Collect Lab Samples', description: 'Collect blood, urine, or other samples from patients as required for lab tests.', deadline: 2.days.from_now, priority: 2 },
-  { title: 'Assist with Patient Dressing Changes', description: 'Assist with the changing of dressings for patients with surgical incisions or wounds.', deadline: 1.day.from_now, priority: 3 },
-  { title: 'Conduct Wound Care', description: 'Provide wound care for patients with surgical incisions or pressure ulcers.', deadline: 1.day.from_now, priority: 1 },
-  { title: 'Assist with Patient Ambulation', description: 'Assist patients with walking and other forms of ambulation as part of their care plan.', deadline: 1.day.from_now, priority: 2 },
-  { title: 'Implement Isolation Protocols', description: 'Implement and maintain isolation protocols for patients with infectious diseases.', deadline: 4.days.from_now, priority: 3 },
-  { title: 'Assist with Patient Comfort Measures', description: 'Assist patients with comfort measures such as repositioning, pain management, and environmental adjustments.', deadline: 1.day.from_now, priority: 1 },
+  { title: 'Administer Medications', description: 'Administer scheduled medications to assigned patients.', deadline: 1.day.from_now, priority: 1, completed: false },
+  { title: 'Update Patient Records', description: 'Update the medical records of all assigned patients with the latest vitals and medication information.', deadline: 1.day.from_now, priority: 2, completed: false },
+  { title: 'Attend Team Meeting', description: 'Participate in the daily healthcare team meeting to discuss patient care plans.', deadline: 1.day.from_now, priority: 3, completed: false },
+  { title: 'Check Emergency Equipment', description: 'Ensure all emergency equipment, such as defibrillators and oxygen tanks, are in working order.', deadline: 2.days.from_now, priority: 1, completed: false },
+  { title: 'Complete Incident Reports', description: 'Complete any outstanding incident reports related to patient care or safety issues.', deadline: 3.days.from_now, priority: 2, completed: false },
+  { title: 'Conduct Patient Rounds', description: 'Conduct rounds to monitor patient conditions and provide necessary care.', deadline: 1.day.from_now, priority: 3, completed: false },
+  { title: 'Prepare Surgical Instruments', description: 'Sterilize and prepare surgical instruments for upcoming procedures.', deadline: 4.days.from_now, priority: 1, completed: false},
+  { title: 'Assist with Patient Admissions', description: 'Assist with the admission of new patients to the unit.', deadline: 2.days.from_now, priority: 2, completed: false },
+  { title: 'Coordinate Patient Transfers', description: 'Coordinate the transfer of patients to other units or facilities as needed.', deadline: 5.days.from_now, priority: 3, completed: false },
+  { title: 'Restock Supplies', description: 'Check and restock nursing stations with necessary supplies.', deadline: 5.days.from_now, priority: 1, completed: false },
+  { title: 'Review New Protocols', description: 'Review any new healthcare protocols or procedure updates.', deadline: 7.days.from_now, priority: 2, completed: false },
+  { title: 'Schedule Patient Appointments', description: 'Schedule follow-up appointments for patients being discharged.', deadline: 2.days.from_now, priority: 3, completed: false },
+  { title: 'Assist with Patient Hygiene', description: 'Assist patients with bathing, oral care, and other hygiene needs.', deadline: 1.day.from_now, priority: 1, completed: false },
+  { title: 'Participate in Quality Improvement', description: 'Participate in quality improvement initiatives and projects.', deadline: 10.days.from_now, priority: 2, completed: false },
+  { title: 'Attend Training Session', description: 'Attend a mandatory training session on new electronic health record software.', deadline: 14.days.from_now, priority: 3, completed: false },
+  { title: 'Perform ECGs', description: 'Perform ECGs on patients with cardiac complaints as ordered by the physician.', deadline: 3.days.from_now, priority: 1, completed: false },
+  { title: 'Administer Vaccinations', description: 'Administer flu vaccinations to patients as part of the seasonal flu prevention program.', deadline: 10.days.from_now, priority: 2, completed: false },
+  { title: 'Assist with Patient Mobility', description: 'Assist patients with mobility issues in getting to and from the bathroom, participating in physical therapy sessions.', deadline: 1.day.from_now, priority: 3, completed: false },
+  { title: 'Prepare Patient Discharge', description: 'Prepare discharge paperwork and instructions for patients scheduled to leave.', deadline: 2.days.from_now, priority: 1, completed: false },
+  { title: 'Assist with Patient Nutrition', description: 'Assist patients with meal selection and feeding as needed.', deadline: 1.day.from_now, priority: 2, completed: false },
+  { title: 'Perform Respiratory Treatments', description: 'Perform respiratory treatments for patients with chronic lung conditions.', deadline: 3.days.from_now, priority: 3, completed: false },
+  { title: 'Assist with Patient Restraints', description: 'Assist with the application of patient restraints as ordered by the physician.', deadline: 1.day.from_now, priority: 1, completed: false },
+  { title: 'Provide Emotional Support', description: 'Provide emotional support to patients and their families during difficult times.', deadline: 1.day.from_now, priority: 2, completed: false },
+  { title: 'Monitor Vital Signs', description: 'Regularly monitor and record the vital signs of assigned patients.', deadline: 1.day.from_now, priority: 3, completed: false },
+  { title: 'Provide Patient Education', description: 'Educate patients and their families about care plans and any necessary post-discharge care.', deadline: 3.days.from_now, priority: 1, completed: false },
+  { title: 'Collect Lab Samples', description: 'Collect blood, urine, or other samples from patients as required for lab tests.', deadline: 2.days.from_now, priority: 2, completed: false },
+  { title: 'Assist with Patient Dressing Changes', description: 'Assist with the changing of dressings for patients with surgical incisions or wounds.', deadline: 1.day.from_now, priority: 3, completed: false },
+  { title: 'Conduct Wound Care', description: 'Provide wound care for patients with surgical incisions or pressure ulcers.', deadline: 1.day.from_now, priority: 1, completed: false },
+  { title: 'Assist with Patient Ambulation', description: 'Assist patients with walking and other forms of ambulation as part of their care plan.', deadline: 1.day.from_now, priority: 2, completed: false },
+  { title: 'Implement Isolation Protocols', description: 'Implement and maintain isolation protocols for patients with infectious diseases.', deadline: 4.days.from_now, priority: 3, completed: false },
+  { title: 'Assist with Patient Comfort Measures', description: 'Assist patients with comfort measures such as repositioning, pain management, and environmental adjustments.', deadline: 1.day.from_now, priority: 1, completed: false },
 ])
+
+puts "#{Task.count} Tasks were created 🥳"
 
 users.each do |user|
   tasks.sample(5).each do |task|
@@ -108,4 +100,4 @@ chatrooms.each_with_index do |chatroom, index|
   Message.create!(chatroom: chatroom, user: users[index % users.size], content: "Message #{index} in chatroom.")
 end
 
-puts 'Database has been seeded.'
+puts 'Database has been seeded 🏎️ 💨  🥳 🍻'

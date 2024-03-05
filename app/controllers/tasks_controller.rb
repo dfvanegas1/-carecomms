@@ -30,10 +30,50 @@ class TasksController < ApplicationController
     end
   end
 
-  def mark_complete
-    Task.where(id: params[:tasks]).update_all(completed: true)
-    redirect_to tasks_path, notice: "Tasks marked as complete."
+  def toggle_completion
+    @task = current_user.tasks.find(params[:id])
+    @task.completed = !@task.completed
+    if @task.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_back(fallback_location: task_path(@task), notice: 'Task status updated.') }
+      end
+    else
+      redirect_back(fallback_location: task_path(@task), alert: 'Unable to update task.')
+    end
   end
+
+  def add_user
+    @task = Task.find(params[:id])
+    @user = User.find(params[:user_id])
+    @task.users << @user unless @task.users.include?(@user)
+    redirect_to task_path(@task), notice: "User added successfully."
+  end
+
+  def remove_user_from_task
+    user_task = UserTask.find_by(task_id: params[:id], user_id: params[:user_id])
+    if user_task&.destroy
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("task_users", partial: "tasks/task_users", locals: { task: user_task.task })
+        end
+        format.html { redirect_to task_path(user_task.task), notice: "User removed from task." }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to task_path(params[:id]), alert: "Failed to remove user from task." }
+        # For turbo_stream, ensure that the Task.find call is safely handled in case the task doesn't exist
+        task = Task.find_by(id: params[:id])
+        if task
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("task_users", partial: "tasks/task_users", locals: { task: task }) }
+        else
+          format.turbo_stream { render turbo_stream: turbo_stream.append("errors", "Task not found.") }
+        end
+      end
+    end
+  end
+
+
 
   private
 
