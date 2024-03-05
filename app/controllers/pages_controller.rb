@@ -7,6 +7,8 @@ class PagesController < ApplicationController
   def dashboard
     @tasks = Task.all
     @users = User.all
+    @users_on_shift = Shift.current_shift_users
+    @tasks_priority = current_user.tasks.order(:deadline).where(priority: '3').count
   end
 
   def team
@@ -16,5 +18,6 @@ class PagesController < ApplicationController
   end
 
   def profile
+    @user = User.find(params[:id])
   end
 end
