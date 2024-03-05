@@ -15,4 +15,7 @@ Rails.application.routes.draw do
 
   root 'pages#home'
   get 'dashboard', to: 'pages#dashboard', as: 'dashboard'
+  get 'team', to: 'pages#team', as: 'team'
+  get 'profile', to: 'pages#profile', as: 'profile'
+
 end
