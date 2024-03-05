@@ -1,0 +1,21 @@
+<h1>Your team</h1>
+<h2>On duty</h2>
+<% @users.each do |user|%>
+  <% if user.avatar.attached? %>
+    <%= cl_image_tag user.avatar.key, class: "avatar" %>
+    <% else %>
+    <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
+  <% end %>
+  <%= user.first_name %>
+  <p>Nurse</p>
+<% end %>
+<h2>Out today</h2>
+<% @users.each do |user|%>
+  <% if user.avatar.attached? %>
+    <%= cl_image_tag user.avatar.key, class: "avatar" %>
+    <% else %>
+    <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
+  <% end %>
+  <%= user.first_name %>
+  <p>Nurse</p>
+<% end %>
