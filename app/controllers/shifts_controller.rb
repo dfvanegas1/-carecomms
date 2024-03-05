@@ -1,14 +1,18 @@
-# app/controllers/shifts_controller.rb
 class ShiftsController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_user, only: [:update]
   before_action :set_shift, only: [:update]
 
   def update
     if @shift.update(shift_params)
-      redirect_to profile_path(id: @user.id), notice: 'Shift was successfully updated.'
+      respond_to do |format|
+        format.html { redirect_to profile_path(@user), notice: 'Shift was successfully updated.' }
+        format.json { render json: { message: 'Shift updated successfully', shift: @shift }, status: :ok }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @shift.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -19,6 +23,7 @@ class ShiftsController < ApplicationController
   end
 
   def set_shift
+    # Ensures that you are finding the shift within the scope of the user
     @shift = @user.shifts.find(params[:id])
   end
 
