@@ -8,36 +8,21 @@
 
 <h1>My Shifts</h1>
 <div id="shifts-list">
-  <% current_user.user_shifts.each do |user_shift| %>
-    <div class="shift" data-shift-id="<%= user_shift.shift.id %>">
-      <p>Shift: <%= user_shift.shift.start_date %> to <%= user_shift.shift.end_date %></p>
-      <button class="edit-shift" data-shift-id="<%= user_shift.shift.id %>">Edit Shift</button>
+<% @shifts.each do |shift| %>
+  <div data-controller="edit-shifts"
+       data-edit-shifts-update-url="<%= shift_path(shift) %>"
+       data-shift-id-value="<%= shift.id %>">
+    <div data-edit-shifts-target="shiftDetails">
+      <p>Shift: <%= shift.start_date %> to <%= shift.end_date %></p>
+      <%= link_to "Edit", "#", data: { action: "edit-shifts#showForm" } %>
     </div>
-  <% end %>
+    <div class="hidden" data-edit-shifts-target="form">
+      <%= form_for(shift, remote: true, data: { action: "ajax:success->edit-shifts#updateSuccess ajax:error->edit-shifts#updateError" }) do |f| %>
+        <%= f.datetime_field :start_date %>
+        <%= f.datetime_field :end_date %>
+        <%= f.submit "Update Shift" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
 </div>
-
-<!-- Add this div where you want the form to be displayed -->
-<div id="edit-shift-form" style="display:none;"></div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  document.querySelectorAll('.edit-shift').forEach(function(button) {
-    button.addEventListener('click', function() {
-      var shiftId = this.dataset.shiftId;
-      var userId = <%= current_user.id %>;
-      var formHtml = `
-        <form action="/users/${userId}/shifts/${shiftId}" method="post" data-remote="true">
-        <input name="_method" type="hidden" value="patch">
-          <label for="shift_start_date">Start Date and Time:</label>
-          <input type="datetime-local" name="shift[start_date]" id="shift_start_date">
-          <label for="shift_end_date">End Date and Time:</label>
-          <input type="datetime-local" name="shift[end_date]" id="shift_end_date">
-          <input type="submit" value="Update Shift">
-        </form>
-      `;
-      document.getElementById('edit-shift-form').innerHTML = formHtml;
-      document.getElementById('edit-shift-form').style.display = 'block';
-    });
-  });
-});
-</script>
