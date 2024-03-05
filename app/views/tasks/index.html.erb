@@ -1,7 +1,6 @@
 <%= form_tag tasks_path, method: :get, class: "filter-form" do %>
   <%= label_tag :priority, '' %>
-  <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1'}, selected: params[:priority]), include_blank: 'All' %>
-  <%= submit_tag "Filter", class: "btn btn-info" %>
+  <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1'}, selected: params[:priority]), include_blank: 'All', onchange: 'this.form.submit()' %>
 <% end %>
 
 <h1>Tasks#index</h1>
@@ -9,12 +8,14 @@
 <%= link_to 'Add Task', new_task_path, class: 'btn btn-primary' %>
 
 <ul>
-  <% @tasks.each do |task| %>
-    <li>
-      <%= check_box_tag "tasks[]", task.id %>
+<% @tasks.each do |task| %>
+  <li>
+    <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, data: { turbo_frame: "task_#{task.id}" } do |form| %>
+      <%= check_box_tag "completed", task.id, task.completed, onchange: "this.form.submit();" %>
       <%= link_to task.title, task_path(task) %>:
       <%= task.description %>:
-      <%= task.deadline.strftime("%Y-%m-%d %H:%M") %>
-    </li>
-  <% end %>
+      <%= task.deadline.strftime("%H:%M %d-%m-%Y") %>
+    <% end %>
+  </li>
+<% end %>
 </ul>

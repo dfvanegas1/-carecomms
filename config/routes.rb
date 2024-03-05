@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
   resources :tasks, only: [:index, :show, :update, :new, :create] do
     resources :comments, only: :create
-    put :mark_complete, on: :collection
+    member do
+      post :add_user
+      delete :remove_user_from_task
+      patch :toggle_completion
+    end
   end
 
   resources :shifts, only: [:edit, :update]
