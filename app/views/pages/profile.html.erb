@@ -1,3 +1,11 @@
+<% if @user.avatar.attached? %>
+    <%= cl_image_tag @user.avatar.key, class: "avatar" %>
+  <% else %>
+    <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
+<% end %>
+<h1><%= @user_first_name %></h1>
+<p>Nurse</p>
+
 <h1>My Shifts</h1>
 <div id="shifts-list">
   <% current_user.user_shifts.each do |user_shift| %>
