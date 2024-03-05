@@ -19,7 +19,7 @@ Shift.delete_all
 
 users = User.create!([
   { email: 'dfvanegas@test.com', password: '123456', password_confirmation: '123456', first_name: 'Daniel', last_name: 'Vanegas' },
-  { email: 'frnpcc@test.com', password: '123456', password_confirmation: '123456', first_name: 'Franchesca', last_name: 'Correa' },
+  { email: 'frnpcc@test.com', password: '123456', password_confirmation: '123456', first_name: 'Francesca', last_name: 'Correa' },
   { email: 'fmarchal03@test.com', password: '123456', password_confirmation: '123456', first_name: 'Frederic', last_name: 'Marchal' },
   { email: '1567ds@test.com', password: '123456', password_confirmation: '123456', first_name: 'Michalis', last_name: 'Ioannides' },
   { email: 'IsabelLopez@test.com', password: '123456', password_confirmation: '123456', first_name: 'Isabel', last_name: 'Lopez' },
@@ -37,6 +37,7 @@ users = User.create!([
     puts "No avatar image found for #{user.first_name}."
   end
 end
+
 
 tasks = Task.create!([
   { title: 'Administer Medications', description: 'Administer scheduled medications to assigned patients.', deadline: 1.day.from_now, priority: 1 },
@@ -91,6 +92,9 @@ shifts = Shift.create!([
   { start_date: 4.days.from_now.beginning_of_day, end_date: 4.days.from_now.end_of_day }
 ])
 
+users.each do |user|
+  user.shifts << shifts.sample(2)
+end
 
 tasks.each_with_index do |task, index|
   TaskComment.create!(task: task, user: users[index % users.size], content: "HEY this is Task: #{index} you are viewing right now!!!")
