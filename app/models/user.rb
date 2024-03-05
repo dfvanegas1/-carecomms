@@ -7,4 +7,5 @@ class User < ApplicationRecord
   has_many :task_comments
   has_many :user_shifts
   has_many :user_tasks
+  has_one_attached :avatar
 end
