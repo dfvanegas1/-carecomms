@@ -1,19 +1,11 @@
 class ShiftsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_shift, only: [:update]
+  before_action :set_shift
+  before_action :set_user_from_profile
 
   def update
-    if @shift.update(shift_params)
-      respond_to do |format|
-        format.html { redirect_to profile_path(id: @user.id), notice: 'Shift was successfully updated.' }
-        format.json { render json: { message: 'Shift updated successfully', shift: @shift }, status: :ok }
-      end
-    else
-      respond_to do |format|
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @shift.errors, status: :unprocessable_entity }
-      end
-    end
+    @shift.update(shift_params)
+    redirect_to profile_path(@user)
   end
 
   private
@@ -24,5 +16,9 @@ class ShiftsController < ApplicationController
 
   def shift_params
     params.require(:shift).permit(:start_date, :end_date)
+  end
+
+  def set_user_from_profile
+    @user = User.find(params[:shift][:user_id].to_i)
   end
 end
