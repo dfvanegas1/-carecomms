@@ -23,25 +23,27 @@
 <p> Deadline: <%= @task.deadline %></p>
 
 <h3>Comments:</h3>
-<% if @task.task_comments.any? %>
+<%= turbo_frame_tag "comments" do %>
   <% @task.task_comments.each do |comment| %>
-    <p><%= comment.content %></p>
+    <%= render "comments/comment", comment: comment %>
   <% end %>
-<% else %>
-  <p>No comments yet.</p>
 <% end %>
 
+
 <h3>Add a Comment:</h3>
-<%= form_with(url: task_comments_path(@task), local: true) do |form| %>
-  <div>
-    <%= form.label :content, 'Your Comment:' %>
-    <%= form.text_area :content %>
-  </div>
-  <div>
-    <%= form.hidden_field :task_id, value: @task.id %>
-    <%= form.submit 'Submit Comment' %>
-  </div>
+<%= turbo_frame_tag "new_comment" do %>
+  <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form" do |form| %>
+    <div>
+      <%= form.label :content, 'Your Comment:' %>
+      <%= form.text_area :content %>
+    </div>
+    <div>
+      <%= form.submit 'Submit Comment' %>
+    </div>
+  <% end %>
 <% end %>
+
+
 
 <%= form_with model: @task, url: toggle_completion_task_path(@task), method: :patch, id: "task_completion_form_#{@task.id}", data: { turbo_frame: "task_#{@task.id}" } do |form| %>
   <div class="form-check form-switch">

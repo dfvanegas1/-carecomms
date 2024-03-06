@@ -6,3 +6,4 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 end
+
