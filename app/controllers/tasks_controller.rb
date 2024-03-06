@@ -23,12 +23,28 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
 
+    if @task.deadline && @task.deadline < Time.current
+      flash.now[:alert] = "Deadline must be in the future."
+      render :new and return
+    end
+
+    user_ids = Array(params[:user_ids]).reject(&:blank?).map(&:to_i).select { |id| id > 0 }
+    if user_ids.empty?
+      flash.now[:alert] = "At least one user must be assigned to the task."
+      render :new and return
+    else
+      @task.users = User.where(id: user_ids)
+    end
+
     if @task.save
-      redirect_to @task, notice: 'Task was successfully created.'
+      redirect_to tasks_path, notice: 'Task was successfully created.'
     else
       render :new
     end
   end
+
+
+
 
   def toggle_completion
     @task = current_user.tasks.find(params[:id])
