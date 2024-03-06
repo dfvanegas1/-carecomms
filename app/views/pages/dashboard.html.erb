@@ -4,7 +4,9 @@
   <% else %>
   <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
 <% end %>
+<%= link_to tasks_path(priority: 3) do %>
 <h3>Priority <i class="fa-solid fa-triangle-exclamation"></i></h3>
+<% end %>
 <p><%= @tasks_priority %> tasks</p>
 <h3> Mentions <i class="fa-solid fa-at"></i></h3>
 <p> 3 mentions </p>
@@ -16,7 +18,9 @@
     </li>
   <% end %>
 </ul>
-<h3> Tasks <i class="fa-solid fa-list-check"></i></h3>
+<%= link_to tasks_path do %>
+<h3>Tasks <i class="fa-solid fa-list-check"></i></h3>
+<% end %>
 <p><%= current_user.tasks.count %> tasks</p>
 <h2>Team on shift</h2>
 <% @users_on_shift.each do |user|%>
