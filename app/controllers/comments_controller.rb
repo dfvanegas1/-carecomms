@@ -1,23 +1,28 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
-  def create
-    @comment = Comment.new(comment_params)
-    @comment.task_id = params[:task_id]
-    @comment.user_id = current_user.id # Assuming you have a current_user method
+  before_action :set_task
 
-    # if @comment.save
-    #   redirect_to task_path(@comment.task_id), notice: 'Comment was successfully added.'
-    # else
-    #   # Handle the case where comment can't be saved
-    #   # This might involve rendering the task's show view again with error messages
-    #   redirect_to task_path(@comment.task_id), alert: 'Error adding comment.'
-    # end
+  def create
+    @comment = @task.task_comments.build(comment_params)
+    @comment.user = current_user
+
+    respond_to do |format|
+      if @comment.save
+        format.turbo_stream
+        format.html { redirect_to @task }
+      else
+        format.html { render 'tasks/show', status: :unprocessable_entity }
+        format.turbo_stream
+      end
+    end
   end
 
   private
 
-  def comment_params
-    params.require(:comment).permit(:content, :task_id)
+  def set_task
+    @task = Task.find(params[:task_id])
   end
 
+  def comment_params
+    params.require(:task_comment).permit(:content)
+  end
 end

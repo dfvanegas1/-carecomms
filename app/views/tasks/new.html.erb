@@ -1,0 +1,32 @@
+<%= form_with(model: @task, local: true) do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+
+  <p>
+    <%= form.label :deadline %><br>
+    <%= form.datetime_select :deadline %>
+  </p>
+
+  <p>
+    <%= form.label :priority %><br>
+    <%= form.select :priority, Task.priorities.map { |key, value| [key.capitalize, key] }, include_blank: true %>
+  </p>
+
+  <p>
+    <%= form.label :user_ids, "Assign Users" %><br>
+    <%= form.collection_select :user_ids, User.all, :id, :full_name, {}, { multiple: true, class: "select-multiple" } %>
+  </p>
+
+  <p>
+    <%= form.submit "Create Task" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back to Tasks', tasks_path %>

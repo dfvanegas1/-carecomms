@@ -26,5 +26,6 @@ class PagesController < ApplicationController
 
   def profile
     @user = User.find(params[:id])
+    @shifts = @user.shifts
   end
 end
