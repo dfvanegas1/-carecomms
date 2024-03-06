@@ -88,9 +88,34 @@ users.each do |user|
   user.shifts << shifts.sample(2)
 end
 
-tasks.each_with_index do |task, index|
-  TaskComment.create!(task: task, user: users[index % users.size], content: "HEY this is Task: #{index} you are viewing right now!!!")
+comment_contents = [
+  "Hurry Up!!!",
+  "Great progress!",
+  "Keep it up!",
+  "Let's meet to discuss.",
+  "Any updates on this?",
+  "Well done on this task.",
+  "This patient is annoying.",
+  "I need help with this task.",
+  "This is priority."
+]
+
+tasks.each do |task|
+  num_comments = rand(1..3)
+
+  num_comments.times do |index|
+    user = users[index % users.size]
+
+    content = comment_contents.sample
+
+    TaskComment.create!(
+      task: task,
+      user: user,
+      content: content
+    )
+  end
 end
+
 
 shifts.each_with_index do |shift, index|
   UserShift.create!(shift: shift, user: users[index % users.size])

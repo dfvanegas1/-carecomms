@@ -21,12 +21,12 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = current_user.tasks.build(task_params)
+    @task = Task.new(task_params)
 
     if @task.save
-      redirect_to tasks_path, notice: 'Task was successfully created.'
+      redirect_to @task, notice: 'Task was successfully created.'
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
@@ -62,7 +62,6 @@ class TasksController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to task_path(params[:id]), alert: "Failed to remove user from task." }
-        # For turbo_stream, ensure that the Task.find call is safely handled in case the task doesn't exist
         task = Task.find_by(id: params[:id])
         if task
           format.turbo_stream { render turbo_stream: turbo_stream.replace("task_users", partial: "tasks/task_users", locals: { task: task }) }
@@ -78,6 +77,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :deadline)
+    params.require(:task).permit(:title, :description, :deadline, :priority, user_ids: [])
   end
 end

@@ -11,4 +11,7 @@ class User < ApplicationRecord
   has_many :tasks, through: :user_tasks
   has_one_attached :avatar
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
