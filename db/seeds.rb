@@ -8,14 +8,14 @@ Chatroom.delete_all
 Shift.delete_all
 
 users = User.create!([
-  { email: 'dfvanegas@test.com', password: '123456', password_confirmation: '123456', first_name: 'Daniel', last_name: 'Vanegas' },
-  { email: 'frnpcc@test.com', password: '123456', password_confirmation: '123456', first_name: 'Francesca', last_name: 'Correa' },
-  { email: 'fmarchal03@test.com', password: '123456', password_confirmation: '123456', first_name: 'Frederic', last_name: 'Marchal' },
-  { email: '1567ds@test.com', password: '123456', password_confirmation: '123456', first_name: 'Michalis', last_name: 'Ioannides' },
-  { email: 'IsabelLopez@test.com', password: '123456', password_confirmation: '123456', first_name: 'Isabel', last_name: 'Lopez' },
-  { email: 'Gonz44@test.com', password: '123456', password_confirmation: '123456', first_name: 'Gonzalo', last_name: 'Guerra' },
-  { email: 'emmvs@test.com', password: '123456', password_confirmation: '123456', first_name: 'Emma', last_name: 'Rünzel' },
-  { email: 'tamaratgz@test.com', password: '123456', password_confirmation: '123456', first_name: 'Tamara', last_name: 'Torrecillas' },
+  { email: 'dfvanegas@test.com', password: '123456', password_confirmation: '123456', first_name: 'Daniel', last_name: 'Vanegas', admin: true },
+  { email: 'frnpcc@test.com', password: '123456', password_confirmation: '123456', first_name: 'Francesca', last_name: 'Correa', admin: true },
+  { email: 'fmarchal03@test.com', password: '123456', password_confirmation: '123456', first_name: 'Frederic', last_name: 'Marchal', admin: true },
+  { email: '1567ds@test.com', password: '123456', password_confirmation: '123456', first_name: 'Michalis', last_name: 'Ioannides', admin: false },
+  { email: 'IsabelLopez@test.com', password: '123456', password_confirmation: '123456', first_name: 'Isabel', last_name: 'Lopez', admin: false },
+  { email: 'Gonz44@test.com', password: '123456', password_confirmation: '123456', first_name: 'Gonzalo', last_name: 'Guerra', admin: false },
+  { email: 'emmvs@test.com', password: '123456', password_confirmation: '123456', first_name: 'Emma', last_name: 'Rünzel', admin: false },
+  { email: 'tamaratgz@test.com', password: '123456', password_confirmation: '123456', first_name: 'Tamara', last_name: 'Torrecillas', admin: false },
 ]).each do |user|
   avatar_filename = "#{user.first_name}.jpg"
   avatar_path = Rails.root.join('app/assets/images', avatar_filename)
