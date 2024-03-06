@@ -4,10 +4,12 @@ class TasksController < ApplicationController
   def index
     @tasks = current_user.tasks.order(:deadline)
     @tasks = @tasks.where(priority: params[:priority]) if params[:priority].present?
+    authorize @tasks
   end
 
   def show
     @task = Task.includes(user_tasks: :user, task_comments: :user).find(params[:id])
+    authorize @task
 
   rescue ActiveRecord::RecordNotFound
     redirect_to tasks_path, alert: 'Task not found.'
@@ -18,10 +20,12 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    authorize @task
   end
 
   def create
     @task = current_user.tasks.build(task_params)
+    authorize @task
 
     if @task.save
       redirect_to tasks_path, notice: 'Task was successfully created.'
@@ -33,6 +37,7 @@ class TasksController < ApplicationController
   def toggle_completion
     @task = current_user.tasks.find(params[:id])
     @task.completed = !@task.completed
+    authorize @task
     if @task.save
       respond_to do |format|
         format.turbo_stream
@@ -45,6 +50,7 @@ class TasksController < ApplicationController
 
   def add_user
     @task = Task.find(params[:id])
+    authorize @task
     @user = User.find(params[:user_id])
     @task.users << @user unless @task.users.include?(@user)
     redirect_to task_path(@task), notice: "User added successfully."
