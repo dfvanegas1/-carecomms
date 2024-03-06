@@ -1,4 +1,12 @@
 <h1>Your team</h1>
+<%= form_with url: team_path, method: :get, class: "d-flex" do %>
+  <%= text_field_tag :query,
+        params[:query],
+        class: "form-control",
+        placeholder: "Type a name"
+    %>
+  <%= submit_tag "Search", name: "", class: "btn btn-primary" %>
+<% end %>
 <h2>On duty</h2>
 <% @users_on_shift.each do |user|%>
   <% if user.avatar.attached? %>
