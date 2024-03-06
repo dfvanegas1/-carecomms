@@ -13,9 +13,12 @@ Rails.application.routes.draw do
 
   resources :shifts, only: [:edit, :update]
 
-  resources :chatrooms, only: :show do
+  resources :chatrooms, only: [] do # Exclude :show from the automatically generated routes
     resources :messages, only: :create
   end
+
+# Custom route for chatroom show action to use name instead of id
+get 'chatrooms/:name', to: 'chatrooms#show', as: 'chatroom_by_name'
 
   root 'pages#home'
   get 'dashboard', to: 'pages#dashboard', as: 'dashboard'
