@@ -6,7 +6,8 @@ class TaskPolicy < ApplicationPolicy
       else
         scope.joins(:user_tasks).where(user_tasks: { user_id: user.id })
       end
-    end  end
+    end
+  end
 
   def index?
     user.present?
