@@ -1,17 +1,12 @@
 class TaskPolicy < ApplicationPolicy
   class Scope < Scope
-    attr_reader :user, :task
-
-    # NOTE: Be explicit about which records you allow access to!
-    def initialize(user, task)
-      @user = user
-      @task = task
-    end
-
     def resolve
-      user.admin? ? scope.all : scope.where(user: user)
-    end
-  end
+      if user.admin?
+        scope.all
+      else
+        scope.joins(:user_tasks).where(user_tasks: { user_id: user.id })
+      end
+    end  end
 
   def index?
     user.present?
