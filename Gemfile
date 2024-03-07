@@ -79,3 +79,5 @@ end
 gem "cloudinary"
 gem "pundit"
 gem 'mentionable'
+gem 'image_processing', '~> 1.2'
+

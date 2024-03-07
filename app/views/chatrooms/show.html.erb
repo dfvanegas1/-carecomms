@@ -29,5 +29,6 @@
     wrapper_html: { class: "flex-grow-1" }
   %>
   <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
+  <%= f.input :file, as: :file, accept: 'application/pdf,image/png,image/jpeg' %>
   <%= f.submit "Send", class: "btn btn-primary mb-3" %>
 <% end %>

@@ -2,6 +2,7 @@ class Message < ApplicationRecord
   belongs_to :user
   belongs_to :chatroom
   has_many :mention_messages, dependent: :destroy
+  has_one_attached :file
   after_save :create_mentions
 
   private

@@ -57,10 +57,11 @@
 
 <h3>Add a Comment:</h3>
 <%= turbo_frame_tag "new_comment" do %>
-  <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form" do |form| %>
+  <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form", local: true do |form| %>
     <div data-controller="mentions" data-action="keyup->mentions#keyup">
       <%= form.label :content, 'Your Comment:' %>
       <%= form.text_area :content, data: { mentions_target: "input" } %>
+      <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg' %>
       <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
     </div>
     <div>
