@@ -1,7 +1,7 @@
 MentionComment.delete_all
 TaskComment.delete_all
 UserShift.delete_all
-MessageComment.delete_all
+MentionMessage.delete_all
 Message.delete_all
 UserTask.delete_all
 Task.delete_all

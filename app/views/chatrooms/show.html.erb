@@ -13,13 +13,23 @@
 </div>
 </div>
 
-<%= simple_form_for [@chatroom, @message],
-  html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex" } do |f|
-%>
+<%= simple_form_for [@chatroom, Message.new], html: {
+  data: {
+    controller: "mentions",
+    action: "keyup->mentions#keyup"
+  },
+  class: "d-flex"
+} do |f| %>
   <%= f.input :content,
     label: false,
-    placeholder: "Message ##{@chatroom.name}",
-    wrapper_html: {class: "flex-grow-1"}
+    input_html: {
+      data: {
+        mentions_target: "input"
+      },
+      placeholder: "Message ##{@chatroom.name}"
+    },
+    wrapper_html: { class: "flex-grow-1" }
   %>
+  <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
   <%= f.submit "Send", class: "btn btn-primary mb-3" %>
 <% end %>
