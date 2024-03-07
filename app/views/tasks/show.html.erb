@@ -1,4 +1,14 @@
-<h1>Tasks#show</h1>
+<%= link_to tasks_path, class: "back-button" do %>
+  <i class="fa fa-arrow-left"></i>
+<% end %>
+
+<% if policy(@task).edit? %>
+  <div class="dropdown">
+    <%= link_to 'Edit', edit_task_path(@task), class: "dropdown-item" %>
+    <%= button_to 'Delete Task', task_path(@task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+  </div>
+<% end %>
+
 <h2>Title: <%= @task.title %></h2>
 <p>Description: <%= @task.description %></p>
 
@@ -9,18 +19,33 @@
       <li id="user_task_<%= user_task.id %>">
         <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "avatar-bordered") if user_task.user.avatar.attached? %>
         <%= user_task.user.first_name %> <%= user_task.user.last_name %>
-        <%= button_to 'Remove', remove_user_from_task_task_path(task_id: @task.id, user_id: user_task.user.id), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <% if policy(@task).edit? %>
+        <%= button_to 'Remove', user_task_path(user_task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        <% end %>
       </li>
     <% end %>
   </ul>
 <% end %>
 
+<% if policy(@task).edit? %>
 <%= form_with url: add_user_task_path(@task), method: :post do |form| %>
   <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :first_name) %>
   <%= form.submit "Add User" %>
 <% end %>
+<% end %>
 
 <p> Deadline: <%= @task.deadline %></p>
+
+<% if policy(@task).edit? %>
+  <%= form_with model: @task, url: task_path(@task), method: :patch, local: true do |form| %>
+    <div class="field">
+      <%= form.label :priority, 'Priority:' %>
+      <%= form.select :priority, Task.priorities.keys.map { |priority| [priority.capitalize, priority] }, {}, { onchange: "this.form.submit();" } %>
+    </div>
+  <% end %>
+<% else %>
+  <p>Priority: <%= @task.priority.capitalize %></p>
+<% end %>
 
 <h3>Comments:</h3>
 <%= turbo_frame_tag "comments" do %>
@@ -53,5 +78,3 @@
     <%= form.label :completed, 'Completed:', class: "form-check-label", for: "completedSwitch#{@task.id}" %>
   </div>
 <% end %>
-
-<%= link_to 'Back to Tasks', tasks_path %>

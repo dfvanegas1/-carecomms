@@ -1,11 +1,13 @@
 <%= form_tag tasks_path, method: :get, class: "filter-form" do %>
   <%= label_tag :priority, '' %>
-  <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1'}, selected: params[:priority]), include_blank: 'All', onchange: 'this.form.submit()' %>
+  <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1', 'Unspecified' => '0'}, selected: params[:priority]), include_blank: 'All', onchange: 'this.form.submit()' %>
 <% end %>
 
-<h1>Tasks#index</h1>
+<h1>Tasks</h1>
 
-<%= link_to 'Add Task', new_task_path, class: 'btn btn-primary' %>
+<% if policy(Task).create? %>
+  <%= link_to 'Add Task', new_task_path, class: 'btn btn-primary' %>
+<% end %>
 
 <ul>
 <% @tasks.each do |task| %>

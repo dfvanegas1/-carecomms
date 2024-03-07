@@ -3,26 +3,37 @@
   <% else %>
     <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
 <% end %>
-<h1><%= @user_first_name %></h1>
+<h1><%= @user.first_name %></h1>
 <p>Nurse</p>
 
-<h1>My Shifts</h1>
-<div id="shifts-list">
+<h2>My Shifts</h2>
 <% @shifts.each do |shift| %>
-  <div data-controller="edit-shifts"
-       data-edit-shifts-update-url="<%= shift_path(shift) %>"
-       data-shift-id-value="<%= shift.id %>">
-    <div data-edit-shifts-target="shiftDetails">
-      <p>Shift: <%= shift.start_date %> to <%= shift.end_date %></p>
-      <%= link_to "Edit", "#", data: { action: "edit-shifts#showForm" } %>
-    </div>
-    <div class="hidden" data-edit-shifts-target="form">
-      <%= form_for(shift, remote: true, data: { action: "ajax:success->edit-shifts#updateSuccess ajax:error->edit-shifts#updateError" }) do |f| %>
-        <%= f.datetime_field :start_date %>
-        <%= f.datetime_field :end_date %>
-        <%= f.submit "Update Shift" %>
+  <div class="shifts-display" data-controller="edit-shifts">
+    <p>Shift: <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %> to <%= shift.end_date.strftime("%d-%m-%Y %H:%M") %></p>
+    <% if policy(Shift).update? %>
+      <button data-action="click->edit-shifts#showForm" class="btn btn-outline-primary">Edit</button>
+    <% end %>
+    <div class="shifts-edit" data-edit-shifts-target="form">
+      <%= simple_form_for(shift) do |f| %>
+        <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'form-control' %>
+        <%= f.hidden_field :user_id, value: @user.id %>
+        <%= f.submit "Assign Shift", class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>
 <% end %>
-</div>
+
+
+<h2>My Tasks</h2>
+<ul>
+  <% @tasks.each do |task| %>
+    <li>
+      <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, data: { turbo_frame: "task_#{task.id}" } do |form| %>
+        <%= check_box_tag "completed", task.id, task.completed, onchange: "this.form.submit();" %>
+        <%= link_to task.title, task_path(task) %>:
+        <%= task.description %>:
+        <%= task.deadline.strftime("%H:%M %d-%m-%Y") %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

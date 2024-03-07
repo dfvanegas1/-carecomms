@@ -15,7 +15,6 @@ class Message < ApplicationRecord
       user = User.where('LOWER(first_name) = ?', name).first
       next unless user
 
-      # Create MentionMessage record
       MentionMessage.create(user: user, message: self)
     end
   end
