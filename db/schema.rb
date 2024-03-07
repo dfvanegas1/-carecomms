@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_05_210209) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_06_154546) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,6 +46,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_210209) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "mention_comments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "task_comment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_comment_id"], name: "index_mention_comments_on_task_comment_id"
+    t.index ["user_id"], name: "index_mention_comments_on_user_id"
+  end
+
+  create_table "mention_messages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "message_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id"], name: "index_mention_messages_on_message_id"
+    t.index ["user_id"], name: "index_mention_messages_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -120,6 +138,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_210209) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "mention_comments", "task_comments"
+  add_foreign_key "mention_comments", "users"
+  add_foreign_key "mention_messages", "messages"
+  add_foreign_key "mention_messages", "users"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"
   add_foreign_key "task_comments", "tasks"
