@@ -3,10 +3,10 @@
   <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1', 'Unspecified' => '0'}, selected: params[:priority]), include_blank: 'All', onchange: 'this.form.submit()' %>
 <% end %>
 
-<h1>Tasks#index</h1>
+<h1>Tasks</h1>
 
 <% if policy(Task).create? %>
-<%= link_to 'Add Task', new_task_path, class: 'btn btn-primary' %>
+  <%= link_to 'Add Task', new_task_path, class: 'btn btn-primary' %>
 <% end %>
 
 <ul>
