@@ -23,5 +23,4 @@ class ShiftsController < ApplicationController
   def set_user_from_profile
     @user = User.find(params[:shift][:user_id])
   end
-
 end

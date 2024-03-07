@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :mention_comments, only: [:create]
   resources :mention_messages, only: [:create]
 
-get 'chatrooms/:name', to: 'chatrooms#show', as: 'chatroom_by_name'
+  get 'chatrooms/:name', to: 'chatrooms#show', as: 'chatroom_by_name'
 
   root 'pages#home'
   get 'dashboard', to: 'pages#dashboard', as: 'dashboard'
