@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :shifts, through: :user_shifts
   has_many :user_tasks
   has_many :tasks, through: :user_tasks
+  has_many :mention_comments
+  has_many :mention_messages
   has_one_attached :avatar
 
   def full_name
