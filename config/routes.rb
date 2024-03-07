@@ -2,15 +2,15 @@ Rails.application.routes.draw do
   devise_for :users
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :tasks, only: [:index, :show, :update, :new, :create] do
+  resources :tasks do
     resources :comments, only: :create
     member do
       post :add_user
-      delete :remove_user_from_task
       patch :toggle_completion
     end
   end
 
+  resources :user_tasks, only: [:destroy]
   resources :shifts, only: [:edit, :update]
 
   resources :chatrooms, only: [] do # Exclude :show from the automatically generated routes

@@ -6,7 +6,8 @@ class TaskPolicy < ApplicationPolicy
       else
         scope.joins(:user_tasks).where(user_tasks: { user_id: user.id })
       end
-    end  end
+    end
+  end
 
   def index?
     user.present?
@@ -33,6 +34,18 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def remove_user_from_task?
+    user.admin?
+  end
+
+  def update?
+    user.admin?
+  end
+
+  def edit?
+    user.admin?
+  end
+
+  def destroy?
     user.admin?
   end
 end

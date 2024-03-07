@@ -66,7 +66,7 @@ tasks = Task.create!([
 puts "#{Task.count} Tasks were created 🥳"
 
 users.each do |user|
-  tasks.sample(5).each do |task|
+  tasks.sample(10).each do |task|
     UserTask.create!(user: user, task: task)
   end
 end
