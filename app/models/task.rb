@@ -5,7 +5,6 @@ class Task < ApplicationRecord
   # validates :priority, inclusion: { in: 0..3 }, allow_nil: true
   enum priority: { high: 3, medium: 2, low: 1, unspecified: 0 }
   validate :deadline_must_be_in_the_future, if: -> { deadline.present? && deadline_changed? }
-
   after_save :parse_mentions
 
   def start_time
