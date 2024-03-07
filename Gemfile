@@ -78,3 +78,4 @@ end
 
 gem "cloudinary"
 gem "pundit"
+gem 'mentionable'

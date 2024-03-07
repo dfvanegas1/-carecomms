@@ -17,6 +17,9 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
 
+  resources :mention_comments, only: [:create]
+  resources :mention_messages, only: [:create]
+
 # Custom route for chatroom show action to use name instead of id
 get 'chatrooms/:name', to: 'chatrooms#show', as: 'chatroom_by_name'
 
