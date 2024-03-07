@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :shifts, only: [:edit, :update]
+  resources :shifts, only: [:update]
 
   resources :chatrooms, only: [] do # Exclude :show from the automatically generated routes
     resources :messages, only: :create
