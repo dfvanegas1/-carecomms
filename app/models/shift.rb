@@ -19,4 +19,12 @@ class Shift < ApplicationRecord
   def shift_info
     "#{start_date.strftime('%d-%m-%Y %H:%M')} to #{end_date.strftime('%d-%m-%Y %H:%M')}"
   end
+
+  def start_time
+    start_date
+  end
+
+  def end_time
+    end_date
+  end
 end

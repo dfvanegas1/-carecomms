@@ -8,6 +8,10 @@ class Task < ApplicationRecord
 
   after_save :parse_mentions
 
+  def start_time
+    deadline
+  end
+
   private
 
   def parse_mentions
@@ -21,8 +25,7 @@ class Task < ApplicationRecord
       puts "Notify #{user.first_name}"
     end
   end
-    
-    
+
   def deadline_must_be_in_the_future
     if deadline < Time.current
       errors.add(:deadline, "must be in the future")
