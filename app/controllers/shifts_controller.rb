@@ -4,7 +4,9 @@ class ShiftsController < ApplicationController
   before_action :set_user_from_profile
 
   def update
-    @shift.update(shift_params)
+    @user_shift = UserShift.find_by(shift_id: @shift.id, user_id: @user.id)
+    authorize @user_shift
+    @user_shift.update(shift_id: params[:shift][:id])
     redirect_to profile_path(@user)
   end
 
@@ -15,10 +17,11 @@ class ShiftsController < ApplicationController
   end
 
   def shift_params
-    params.require(:shift).permit(:start_date, :end_date)
+    params.require(:shift).permit(:id, :user_id)
   end
 
   def set_user_from_profile
-    @user = User.find(params[:shift][:user_id].to_i)
+    @user = User.find(params[:shift][:user_id])
   end
+
 end
