@@ -1,5 +1,5 @@
 class MentionMessagesController < ApplicationController
-  before_action :authenticate_user! # Ensure user is logged in; adjust based on your authentication setup
+  before_action :authenticate_user!
   def create
     @mention_message = MentionMessage.new(mention_message_params)
 
