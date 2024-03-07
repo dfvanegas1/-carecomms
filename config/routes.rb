@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :mention_messages, only: [:create]
 
 get 'chatrooms/:name', to: 'chatrooms#show', as: 'chatroom_by_name'
+  get 'calendar', to: 'pages#calendar', as: 'calendar'
 
   root 'pages#home'
   get 'dashboard', to: 'pages#dashboard', as: 'dashboard'
