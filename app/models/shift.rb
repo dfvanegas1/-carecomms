@@ -15,4 +15,8 @@ class Shift < ApplicationRecord
                    .select(:user_id)
     )
   end
+
+  def shift_info
+    "#{start_date.strftime('%d-%m-%Y %H:%M')} to #{end_date.strftime('%d-%m-%Y %H:%M')}"
+  end
 end
