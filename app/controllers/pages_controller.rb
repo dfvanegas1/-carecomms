@@ -27,5 +27,7 @@ class PagesController < ApplicationController
   def profile
     @user = User.find(params[:id])
     @shifts = @user.shifts
+    @tasks = @user.tasks.order(:deadline)
+    @tasks = @tasks.where(priority: params[:priority]) if params[:priority].present?
   end
 end
