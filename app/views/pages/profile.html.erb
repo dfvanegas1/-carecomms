@@ -9,18 +9,18 @@
 <h2>My Shifts</h2>
 <% @shifts.each do |shift| %>
   <div class="shifts-display" data-controller="edit-shifts">
-      <p>Shift: <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %> to <%= shift.end_date.strftime("%d-%m-%Y %H:%M") %></p>
-      <button data-action="click->edit-shifts#showForm" class="btn btn-outline-primary">Edit</button>
+    <p>Shift: <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %> to <%= shift.end_date.strftime("%d-%m-%Y %H:%M") %></p>
+    <button data-action="click->edit-shifts#showForm" class="btn btn-outline-primary">Edit</button>
     <div class="shifts-edit" data-edit-shifts-target="form">
       <%= simple_form_for(shift) do |f| %>
-        <%= f.datetime_field :start_date %>
-        <%= f.datetime_field :end_date %>
+        <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'form-control' %>
         <%= f.hidden_field :user_id, value: @user.id %>
-        <%= f.submit "Update Shift" %>
+        <%= f.submit "Assign Shift", class: "btn btn-primary" %>
       <% end %>
     </div>
   </div>
 <% end %>
+
 
 <h2>My Tasks</h2>
 <ul>
@@ -35,18 +35,3 @@
     </li>
   <% end %>
 </ul>
-
-<h2>My Shifts</h2>
-<% @shifts.each do |shift| %>
-  <div class="shifts-display" data-controller="edit-shifts">
-    <p>Shift: <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %> to <%= shift.end_date.strftime("%d-%m-%Y %H:%M") %></p>
-    <button data-action="click->edit-shifts#showForm" class="btn btn-outline-primary">Edit</button>
-    <div class="shifts-edit" data-edit-shifts-target="form">
-      <%= simple_form_for(shift) do |f| %>
-        <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'form-control' %>
-        <%= f.hidden_field :user_id, value: @user.id %>
-        <%= f.submit "Assign Shift", class: "btn btn-primary" %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
