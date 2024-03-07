@@ -79,3 +79,4 @@ end
 gem "cloudinary"
 gem "pundit"
 gem 'mentionable'
+gem "simple_calendar"
