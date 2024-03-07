@@ -9,6 +9,7 @@ class PagesController < ApplicationController
     @users = User.all
     @users_on_shift = Shift.current_shift_users
     @tasks_priority = current_user.tasks.order(:deadline).where(priority: '3').count
+    @total_mentions = MentionComment.where(user: current_user).count + MentionMessage.where(user: current_user).count
   end
 
   def team

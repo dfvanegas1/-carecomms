@@ -6,18 +6,7 @@ class Task < ApplicationRecord
   enum priority: { high: 3, medium: 2, low: 1, unspecified: 0 }
   validate :deadline_must_be_in_the_future, if: -> { deadline.present? && deadline_changed? }
 
-  after_save :parse_mentions
-
   private
-
-  def parse_mentions
-    mentioned_names = description.scan(/@(\w+)/).flatten
-    mentioned_users = User.where(first_name: mentioned_names)
-
-    mentioned_users.each do |user|
-      puts "Notify #{user.first_name}"
-    end
-  end
 
   def deadline_must_be_in_the_future
     if deadline < Time.current

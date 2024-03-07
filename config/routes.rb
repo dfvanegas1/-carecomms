@@ -26,4 +26,6 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'pages#dashboard', as: 'dashboard'
   get 'team', to: 'pages#team', as: 'team'
   get 'team/:id', to: 'pages#profile', as: 'profile'
+  get 'mentions', to: 'mentions#index', as: 'mentions'
+  get 'username_suggestions', to: 'username_suggestions#index'
 end

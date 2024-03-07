@@ -1,0 +1,21 @@
+<!-- app/views/mentions/index.html.erb -->
+
+<h1>Mentions</h1>
+
+<h2>Mentioned in Comments</h2>
+<% @mention_comments.each do |mention_comment| %>
+  <p>
+    Mentioned in comment: <%= mention_comment.task_comment.content %>
+    <br>
+    In task: <%= link_to mention_comment.task_comment.task.title, task_path(mention_comment.task_comment.task) %>
+  </p>
+<% end %>
+
+<h2>Mentioned in Messages</h2>
+<% @mention_messages.each do |mention_message| %>
+  <p>
+    Mentioned in message: <%= mention_message.message.content %>
+    <br>
+    In chatroom: <%= link_to mention_message.message.chatroom.name, chatroom_by_name_path(name: mention_message.message.chatroom.name) %>
+  </p>
+<% end %>
