@@ -36,4 +36,16 @@ class TaskPolicy < ApplicationPolicy
   def remove_user_from_task?
     user.admin?
   end
+
+  def update?
+    user.admin?
+  end
+
+  def edit?
+    user.admin?
+  end
+
+  def destroy?
+    user.admin?
+  end
 end

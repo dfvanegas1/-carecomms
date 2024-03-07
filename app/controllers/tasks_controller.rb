@@ -5,7 +5,7 @@ class TasksController < ApplicationController
     @tasks = policy_scope(Task)
     authorize Task
 
-    if current_user.admin? # Check if the current user is an admin
+    if current_user.admin?
       @tasks = @tasks.order(:deadline)
     else
       @tasks = @tasks.joins(:user_tasks).where(user_tasks: { user_id: current_user.id }).order(:deadline)
@@ -22,7 +22,34 @@ class TasksController < ApplicationController
     redirect_to tasks_path, alert: 'Task not found.'
   end
 
+  def edit
+    @task = Task.find(params[:id])
+    authorize @task
+  rescue ActiveRecord::RecordNotFound
+    redirect_to tasks_path, alert: 'Task not found.'
+  end
+
   def update
+    @task = Task.find(params[:id])
+    authorize @task
+    if @task.update(task_params)
+      redirect_to task_path(@task), notice: 'Task was successfully updated.'
+    else
+      flash.now[:alert] = @task.errors.full_messages.join(', ')
+      render :edit
+    end
+  rescue ActiveRecord::RecordNotFound
+    redirect_to tasks_path, alert: 'Task not found.'
+  end
+
+  def destroy
+    @task = Task.find(params[:id])
+    authorize @task
+    if @task.destroy
+      redirect_to tasks_path, notice: 'Task was successfully deleted.'
+    else
+      redirect_to task_path(@task), alert: 'Error deleting task.'
+    end
   end
 
   def new
@@ -54,9 +81,6 @@ class TasksController < ApplicationController
     end
   end
 
-
-
-
   def toggle_completion
     @tasks = Task.all
     @task = @tasks.find(params[:id])
@@ -79,31 +103,6 @@ class TasksController < ApplicationController
     @task.users << @user unless @task.users.include?(@user)
     redirect_to task_path(@task), notice: "User added successfully."
   end
-
-  def remove_user_from_task
-    @user_task = UserTask.find_by(task_id: params[:id], user_id: params[:user_id])
-    authorize @user_task
-    if @user_task&.destroy
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("task_users", partial: "tasks/task_users", locals: { task: @user_task.task })
-        end
-        format.html { redirect_to task_path(user_task.task), notice: "User removed from task." }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to task_path(params[:id]), alert: "Failed to remove user from task." }
-        task = Task.find_by(id: params[:id])
-        if task
-          format.turbo_stream { render turbo_stream: turbo_stream.replace("task_users", partial: "tasks/task_users", locals: { task: task }) }
-        else
-          format.turbo_stream { render turbo_stream: turbo_stream.append("errors", "Task not found.") }
-        end
-      end
-    end
-  end
-
-
 
   private
 

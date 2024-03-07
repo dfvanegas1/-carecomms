@@ -1,9 +1,11 @@
-<ul>
-  <% task.user_tasks.each do |user_task| %>
-    <li id="user_task_<%= user_task.id %>">
-      <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "avatar-bordered") if user_task.user.avatar.attached? %>
-      <%= user_task.user.first_name %> <%= user_task.user.last_name %>
-      <%= button_to 'Remove', remove_user_from_task_task_path(id: task.id, user_id: user_task.user.id), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-    </li>
-  <% end %>
-</ul>
+<%= turbo_frame_tag "task_users" do %>
+  <ul>
+    <% task.user_tasks.each do |user_task| %>
+      <li id="user_task_<%= user_task.id %>">
+        <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "avatar-bordered") if user_task.user.avatar.attached? %>
+        <%= user_task.user.first_name %> <%= user_task.user.last_name %>
+        <%= button_to 'Remove', user_task_path(user_task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

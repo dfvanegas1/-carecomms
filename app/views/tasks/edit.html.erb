@@ -1,0 +1,33 @@
+<%= link_to task_path(@task), class: "back-button" do %>
+  <i class="fa fa-arrow-left"></i>
+<% end %>
+
+<%= form_with(model: @task, local: true, data: { turbo: false }) do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+
+  <p>
+    <%= form.label :deadline %><br>
+    <%= form.datetime_select :deadline %>
+  </p>
+
+  <p>
+    <%= form.label :priority %><br>
+    <%= form.select :priority, Task.priorities.map { |key, value| [key.capitalize, key] }, {}, { class: "select" } %>
+  </p>
+
+  <% User.all.each do |user| %>
+    <%= check_box_tag 'task[user_ids][]', user.id, @task.users.include?(user) %>
+    <%= image_tag(user.avatar, alt: "#{user.full_name}'s avatar", class: "avatar-bordered") if user.avatar.attached? %>
+    <%= user.full_name %><br>
+  <% end %>
+
+  <%= form.submit 'Update Task' %>
+<% end %>

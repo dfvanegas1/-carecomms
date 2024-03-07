@@ -2,25 +2,24 @@ Rails.application.routes.draw do
   devise_for :users
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :tasks, only: [:index, :show, :update, :new, :create] do
+  resources :tasks do
     resources :comments, only: :create
     member do
       post :add_user
-      delete :remove_user_from_task
       patch :toggle_completion
     end
   end
 
+  resources :user_tasks, only: [:destroy]
   resources :shifts, only: [:update]
 
-  resources :chatrooms, only: [] do # Exclude :show from the automatically generated routes
+  resources :chatrooms, only: [] do
     resources :messages, only: :create
   end
 
   resources :mention_comments, only: [:create]
   resources :mention_messages, only: [:create]
 
-# Custom route for chatroom show action to use name instead of id
 get 'chatrooms/:name', to: 'chatrooms#show', as: 'chatroom_by_name'
 
   root 'pages#home'
