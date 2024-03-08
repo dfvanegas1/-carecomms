@@ -5,11 +5,13 @@ class TasksController < ApplicationController
     @tasks = policy_scope(Task)
     authorize Task
 
-    if current_user.admin?
-      @tasks = @tasks.order(:deadline)
-    else
-      @tasks = @tasks.joins(:user_tasks).where(user_tasks: { user_id: current_user.id }).order(:deadline)
-    end
+    @tasks = if current_user.admin? && params[:view_option] == 'mine'
+               @tasks.joins(:user_tasks).where(user_tasks: { user_id: current_user.id }).order(:deadline)
+             elsif current_user.admin?
+               @tasks.order(:deadline)
+             else
+               @tasks.joins(:user_tasks).where(user_tasks: { user_id: current_user.id }).order(:deadline)
+             end
 
     @tasks = @tasks.where(priority: params[:priority]) if params[:priority].present?
   end

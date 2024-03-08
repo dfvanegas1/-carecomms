@@ -1,6 +1,11 @@
 <%= form_tag tasks_path, method: :get, class: "filter-form" do %>
-  <%= label_tag :priority, '' %>
+  <%= label_tag :priority, 'Priority' %>
   <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1', 'Unspecified' => '0'}, selected: params[:priority]), include_blank: 'All', onchange: 'this.form.submit()' %>
+
+  <% if current_user.admin? %>
+    <%= label_tag :view_option, 'View' %>
+    <%= select_tag :view_option, options_for_select({'All Tasks' => 'all', 'My Tasks' => 'mine'}, selected: params[:view_option]), include_blank: false, onchange: 'this.form.submit()' %>
+  <% end %>
 <% end %>
 
 <h1>Tasks</h1>
