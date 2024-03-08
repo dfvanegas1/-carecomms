@@ -4,9 +4,12 @@
     <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
 <% end %>
 <h1><%= @user.first_name %></h1>
-<p>Nurse</p>
-
-<h2>My Shifts</h2>
+  <p>Nurse</p>
+<% if @user == current_user %>
+  <h2>My Shifts</h2>
+  <% else %>
+  <h2><%= @user.first_name %>'s Shifts</h2>
+<% end %>
 <% @shifts.each do |shift| %>
   <div class="shifts-display" data-controller="edit-shifts">
     <p>Shift: <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %> to <%= shift.end_date.strftime("%d-%m-%Y %H:%M") %></p>
@@ -23,8 +26,11 @@
   </div>
 <% end %>
 
-
-<h2>My Tasks</h2>
+<% if @user == current_user %>
+  <h2>My Tasks</h2>
+  <% else %>
+    <h2><%= @user.first_name %>'s Tasks</h2>
+<% end %>
 <ul>
   <% @tasks.each do |task| %>
     <li>
