@@ -80,3 +80,4 @@ gem "cloudinary"
 gem "pundit"
 gem 'mentionable'
 gem "simple_calendar"
+gem 'redis'
