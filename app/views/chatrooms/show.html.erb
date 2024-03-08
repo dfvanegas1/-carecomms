@@ -10,7 +10,7 @@
     <% end %>
   </div>
 </div>
-
+<div class="form-container">
 <%= simple_form_for [@chatroom, Message.new], html: {
   data: {
     controller: "mentions",
@@ -31,5 +31,5 @@
   <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
   <%= f.input :file, as: :file, accept: 'application/pdf,image/png,image/jpeg' %>
   <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+  </div>
 <% end %>
-

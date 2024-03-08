@@ -317,7 +317,7 @@ number_of_messages.times do |i|
   last_message_content = message_content
 
   unless recent_messages.include?(message_content)
-    created_at_time = random_past_time
+    created_at_time = random_past_time - 10.minutes
     Message.create!(chatroom: general_chatroom, user: author, content: message_content, created_at: created_at_time)
     recent_messages = (recent_messages + [message_content]).last(10)
   end

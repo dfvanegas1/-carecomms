@@ -21,9 +21,21 @@
   <% end %>
 </ul>
 <%= link_to tasks_path do %>
-<h3>Tasks <i class="fa-solid fa-list-check"></i></h3>
+  <h3>Tasks <i class="fa-solid fa-list"></i></h3>
 <% end %>
-<p><%= current_user.tasks.count %> tasks</p>
+<% if current_user.admin? %>
+  <p><%= Task.count %> tasks</p>
+<% else %>
+  <p><%= current_user.tasks.count %> tasks</p>
+<% end %>
+
+<% if current_user.admin? %>
+  <%= link_to tasks_path(view_option: 'mine') do %>
+    <h3>Your Tasks <i class="fa-solid fa-user"></i></h3>
+  <% end %>
+  <p><%= current_user.tasks.count %> personal tasks</p>
+<% end %>
+
 <h2>Team on shift</h2>
 <% @users_on_shift.each do |user|%>
   <% if user.avatar.attached? %>

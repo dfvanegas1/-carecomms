@@ -1,0 +1,18 @@
+.chatroom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.messages {
+  overflow-y: scroll;
+  margin-bottom: 90px;
+}
+
+.form-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+}
