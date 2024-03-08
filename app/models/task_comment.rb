@@ -2,6 +2,7 @@ class TaskComment < ApplicationRecord
   belongs_to :task
   belongs_to :user
   has_many :mention_comments, dependent: :destroy
+  has_one_attached :file
   after_save :create_mentions
 
   private
