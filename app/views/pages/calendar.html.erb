@@ -1,0 +1,15 @@
+<h1>Your calendar</h1>
+<%= week_calendar(events: @events) do |date, events| %>
+  <%= date.strftime("%d-%m-%Y") %>
+
+    <div>
+  <% events.each do |event| %>
+    </div>
+      <%= cl_image_tag(event.avatar.key, class: 'avatar') if event.type == :shift %>
+    <% if event.type == :task %>
+      <ul>
+        <li><%= link_to event.title, task_path(event.model.id) %></li>
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>

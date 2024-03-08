@@ -48,4 +48,8 @@ class TaskPolicy < ApplicationPolicy
   def destroy?
     user.admin?
   end
+  
+  def calendar?
+    user.present?
+  end
 end

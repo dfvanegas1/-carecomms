@@ -26,4 +26,27 @@ class PagesController < ApplicationController
     @tasks = @user.tasks.order(:deadline)
     @tasks = @tasks.where(priority: params[:priority]) if params[:priority].present?
   end
+
+  def calendar
+    @tasks = policy_scope(Task)
+    authorize Task
+    @user_shifts = UserShift.all
+    @events = @user_shifts.map do |shift|
+                OpenStruct.new(
+                  start_time: shift.shift.start_date,
+                  end_time: shift.shift.end_date,
+                  model: shift,
+                  type: :shift,
+                  avatar: shift.user.avatar
+                )
+              end +
+                @tasks.map do |task|
+                  OpenStruct.new(
+                    start_time: task.deadline,
+                    model: task,
+                    type: :task,
+                    title: task.title
+                )
+              end
+  end
 end

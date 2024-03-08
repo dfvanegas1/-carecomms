@@ -17,9 +17,15 @@
             <% end %>
           </li>
           <li class="nav-item">
+            <%= link_to calendar_path, class: "nav-link" do%>
+              <i class="fa-solid fa-calendar-days"></i>
+            <% end %>
+          </li>
+          <li class="nav-item">
             <%= link_to team_path, class: "nav-link" do%>
               <i class="fa-solid fa-people-group"></i>
             <% end %>
+          </li>
           <li class="nav-item">
             <%= link_to chatroom_by_name_path(name: "General"), class: "nav-link" do%>
               <i class="fa-regular fa-comments"></i>

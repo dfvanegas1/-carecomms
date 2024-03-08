@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :mention_comments, only: [:create]
   resources :mention_messages, only: [:create]
 
+  get 'calendar', to: 'pages#calendar', as: 'calendar'
   get 'chatrooms/:name', to: 'chatrooms#show', as: 'chatroom_by_name'
 
   root 'pages#home'
