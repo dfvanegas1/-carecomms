@@ -2,9 +2,9 @@ class CommentsController < ApplicationController
   before_action :set_task
 
   def create
+    Rails.logger.debug "Submitted params: #{params.inspect}"
     @comment = @task.task_comments.build(comment_params)
     @comment.user = current_user
-
     respond_to do |format|
       if @comment.save
         format.turbo_stream
@@ -23,6 +23,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:task_comment).permit(:content)
+    params.require(:task_comment).permit(:content, :file)
   end
 end

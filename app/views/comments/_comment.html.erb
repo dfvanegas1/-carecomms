@@ -1,1 +1,10 @@
 <p><%= comment.content %> - <%= comment.user.full_name %></p>
+<% if comment.file.attached? %>
+  <% if comment.file.content_type.in?(['image/jpeg', 'image/jpg', 'image/png']) %>
+    <%= link_to rails_blob_path(comment.file, disposition: "attachment"), target: "_blank" do %>
+      <%= cl_image_tag comment.file.key, width: 200, height: 200, crop: :fill %>
+    <% end %>
+  <% elsif comment.file.content_type == 'application/pdf' %>
+    <%= link_to comment.file.filename, rails_blob_path(comment.file, disposition: "attachment"), target: "_blank" %>
+  <% end %>
+<% end %>
