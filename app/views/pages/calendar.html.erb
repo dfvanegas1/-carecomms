@@ -1,6 +1,6 @@
 <h1>Your calendar</h1>
 <%= week_calendar(events: @events) do |date, events| %>
-  <%= date %>
+  <%= date.strftime("%d-%m-%Y") %>
 
     <div>
   <% events.each do |event| %>
