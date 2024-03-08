@@ -9,12 +9,13 @@
       <%= render "messages/message", message: message %>
     <% end %>
   </div>
-</div>
+
 <div class="form-container">
 <%= simple_form_for [@chatroom, Message.new], html: {
   data: {
     controller: "mentions",
-    action: "keyup->mentions#keyup"
+    action: "keyup->mentions#keyup",
+    action: "turbo:submit-end->chatroom-subscription#resetForm",
   },
   class: "d-flex"
 } do |f| %>
@@ -26,10 +27,10 @@
       },
       placeholder: "Message ##{@chatroom.name}"
     },
-    wrapper_html: { class: "flex-grow-1" }
+    wrapper_html: { class: "" }
   %>
   <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
   <%= f.input :file, as: :file, accept: 'application/pdf,image/png,image/jpeg' %>
   <%= f.submit "Send", class: "btn btn-primary mb-3" %>
-  </div>
 <% end %>
+</div>
