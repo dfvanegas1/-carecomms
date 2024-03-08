@@ -57,7 +57,7 @@
 
 <h3>Add a Comment:</h3>
 <%= turbo_frame_tag "new_comment" do %>
-  <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form", local: true do |form| %>
+<%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form", local: true do |form| %>
     <div data-controller="mentions" data-action="keyup->mentions#keyup">
       <%= form.label :content, 'Your Comment:' %>
       <%= form.text_area :content, data: { mentions_target: "input" } %>
@@ -65,13 +65,10 @@
       <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
     </div>
     <div>
-      <%= form.submit 'Submit Comment' %>
+      <%= form.submit 'Submit Comment', data: { turbo_frame: "new_comment" } %>
     </div>
   <% end %>
 <% end %>
-
-
-
 
 <%= form_with model: @task, url: toggle_completion_task_path(@task), method: :patch, id: "task_completion_form_#{@task.id}", data: { turbo_frame: "task_#{@task.id}" } do |form| %>
   <div class="form-check form-switch">
