@@ -1,0 +1,23 @@
+.simple-calendar {
+  overflow: auto;
+  table {
+    min-height: 80vh;
+    ul {
+      padding-left: 10px;
+    }
+  }
+  .today {
+    background-color: #bceaff;
+  }
+}
+
+.calendar {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media (max-width: 767.98px) {
+  .simple-calendar table {
+      font-size:8px
+  }
+}
