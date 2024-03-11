@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Start Shift</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_importmap_tags %>
+  <style>
+    body {
+      background-color: #48BEFF;
+      background-size: cover;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .btn-primary {
+    }
+  </style>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>

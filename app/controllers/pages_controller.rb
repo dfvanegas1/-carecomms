@@ -9,6 +9,10 @@ class PagesController < ApplicationController
     @users = User.all
     @users_on_shift = Shift.current_shift_users
 
+    if params[:started_shift]
+      flash[:notice] = 'You successfully started your shift.'
+    end
+
     if current_user.admin?
       @tasks_priority = Task.where(priority: '3').count
     else
@@ -24,6 +28,10 @@ class PagesController < ApplicationController
     @users_on_shift = @users_on_shift.where("first_name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
     @users_out_today = Shift.out_today_users
     @users_out_today = @users_out_today.where("first_name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
+  end
+
+  def start_shift
+    render layout: 'start_shift'
   end
 
   def profile
