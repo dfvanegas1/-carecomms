@@ -1,15 +1,29 @@
 <h1>Your calendar</h1>
-<%= week_calendar(events: @events) do |date, events| %>
-  <%= date.strftime("%d-%m-%Y") %>
+<div data-controller="calendar">
+  <button data-action="click->calendar#showCalendar" data-calendar-target="button" data-value="1" class='btn btn-primary'>Shifts</button>
+  <button data-action="click->calendar#showCalendar" data-calendar-target="button" data-value="2" class='btn btn-primary'>Tasks</button>
 
-    <div>
-  <% events.each do |event| %>
-    </div>
-      <%= cl_image_tag(event.avatar.key, class: 'avatar') if event.type == :shift %>
-    <% if event.type == :task %>
-      <ul>
-        <li><%= link_to event.title, task_path(event.model.id) %></li>
-      </ul>
+  <div data-calendar-target='calendar1'>
+    <%= week_calendar(events: @user_shifts) do |date, ushifts| %>
+      <%= date %>
+        <% ushifts.each do |ushift| %>
+          <div>
+            <%= cl_image_tag ushift.user.avatar.key, class: 'avatar' %>
+            <p><%= ushift.shift.start_date.strftime("%H:%M") %> - <%= ushift.shift.end_date.strftime("%H:%M") %></p>
+          </div>
+        <% end %>
+      <% end %>
+  </div>
+  <div data-calendar-target='calendar2' class='d-none'>
+    <%= week_calendar(events: @tasks) do |date, tasks| %>
+      <%= date %>
+      <% tasks.each do |task| %>
+          <ul>
+            <li>
+            <%= link_to task.title, task_path(task) %>
+            </li>
+          </ul>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
-<% end %>
+  </div>
