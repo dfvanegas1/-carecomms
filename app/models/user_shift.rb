@@ -6,7 +6,7 @@ class UserShift < ApplicationRecord
     self.shift.start_date
   end
 
-  def end_time
-    self.shift.end_date
-  end
+  # def end_time
+  #   self.shift.end_date
+  # end
 end
