@@ -11,7 +11,7 @@
 <%= link_to mentions_path do %>
   <h3>Mentions <i class="fa-solid fa-at"></i></h3>
 <% end %>
-<p> <%= @total_mentions %> mentions </p>
+<p id="total-mentions"> <%= @total_mentions %> mentions </p>
 <h3> Shifts <i class="fa-regular fa-calendar"></i></h3>
 <ul>
   <% current_user.shifts.each do |shift| %>

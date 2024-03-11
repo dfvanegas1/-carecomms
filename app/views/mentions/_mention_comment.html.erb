@@ -1,0 +1,8 @@
+<div class="mention-comment">
+  <p>
+    Mentioned in comment: <%= mention_comment.task_comment.content %>
+    <br>
+    In task: <%= link_to mention_comment.task_comment.task.title, task_path(mention_comment.task_comment.task) %>
+  </p>
+</div>
+
