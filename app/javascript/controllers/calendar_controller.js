@@ -1,17 +1,70 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["calendarAllShifts", "calendarMyShifts", "calendarAllTasks", "calendarMyTasks"]
+  static targets = ["toggleButton", "filterSelect", "calendarAllShifts", "calendarMyShifts", "calendarAllTasks", "calendarMyTasks"]
+  static values = {
+    isAdmin: Boolean
+  }
 
   connect() {
-    console.log("Calendar controller connected");
+    this.isAdminValue = this.data.get("is-admin") === "true";
+    this.currentView = 'shifts';
+    this.toggleCalendarView();
   }
+
+  toggleCalendarView() {
+    const currentView = this.toggleButtonTarget.textContent;
+
+    if (currentView === "Shifts") {
+      this.currentView = 'tasks';
+      this.toggleButtonTarget.textContent = "Tasks";
+      if (!this.isAdminValue) {
+        this.filterSelectTarget.classList.add("d-none");
+      } else {
+        this.filterSelectTarget.classList.remove("d-none");
+        this.updateDropdown(["2", "All Tasks", "4", "My Tasks"]);
+      }
+    } else {
+      this.currentView = 'shifts';
+      this.toggleButtonTarget.textContent = "Shifts";
+      this.filterSelectTarget.classList.remove("d-none");
+      this.updateDropdown(["1", "All Shifts", "3", "My Shifts"]);
+    }
+
+    this.defaultSelection();
+  }
+
+  updateDropdown(options) {
+    this.filterSelectTarget.innerHTML = '';
+    for (let i = 0; i < options.length; i += 2) {
+        const option = document.createElement("option");
+        option.value = options[i];
+        option.text = options[i + 1];
+        this.filterSelectTarget.appendChild(option);
+    }
+  }
+
+
+  defaultSelection() {
+    let value;
+
+    if (this.isAdminValue) {
+        value = this.currentView === 'tasks' ? "2" : "1";
+    } else {
+        value = this.currentView === 'tasks' ? "4" : "1";
+    }
+
+    this.showCalendar({ target: { value: value } });
+  }
+
 
   showCalendar(event) {
     const calendarType = event.target.value;
     this.hideAllCalendars();
 
     switch (calendarType) {
+      default:
+        console.log(`Unhandled calendar type: ${calendarType}`);
       case "1":
         this.calendarAllShiftsTarget.classList.remove("d-none");
         break;
@@ -24,11 +77,8 @@ export default class extends Controller {
       case "4":
         this.calendarMyTasksTarget.classList.remove("d-none");
         break;
-      default:
-        console.log("Invalid calendar type");
     }
   }
-
 
   hideAllCalendars() {
     this.calendarAllShiftsTarget.classList.add("d-none");

@@ -1,6 +1,13 @@
 <h1>Your calendar</h1>
-<div data-controller="calendar">
-  <select class="form-select" data-action="change->calendar#showCalendar">
+<div data-controller="calendar"
+     data-calendar-is-admin="<%= current_user.admin? %>">
+  <div>
+    <label>Calendar View:</label>
+    <button data-action="click->calendar#toggleCalendarView" data-calendar-target="toggleButton">Shifts</button>
+  </div>
+  
+  <div>
+    <select class="form-select" data-action="change->calendar#showCalendar" data-calendar-target="filterSelect">
     <option value="0" disabled selected>Select a calendar...</option>
     <% if current_user.admin? %>
       <option value="2">All Tasks</option>
@@ -9,6 +16,7 @@
     <option value="3">My Shifts</option>
     <option value="4">My Tasks</option>
   </select>
+  </div>
 
   <div data-calendar-target='calendarAllShifts' class='d-none'>
     <%= week_calendar(events: @all_shifts) do |date, shifts| %>
