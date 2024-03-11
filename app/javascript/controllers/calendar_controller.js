@@ -1,30 +1,39 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="calendar"
 export default class extends Controller {
-  static targets = ['calendar1', 'calendar2', 'button']
+  static targets = ["calendarAllShifts", "calendarMyShifts", "calendarAllTasks", "calendarMyTasks"]
 
   connect() {
-    console.log("connected");
+    console.log("Calendar controller connected");
   }
 
   showCalendar(event) {
-    const calendarNumber = event.target.dataset.value;
-    if (calendarNumber === "1") {
-      this.showCalendar1();
-    } else if (calendarNumber === "2") {
-      this.showCalendar2();
+    const calendarType = event.target.value;
+    this.hideAllCalendars();
+
+    switch (calendarType) {
+      case "1":
+        this.calendarAllShiftsTarget.classList.remove("d-none");
+        break;
+      case "2":
+        this.calendarAllTasksTarget.classList.remove("d-none");
+        break;
+      case "3":
+        this.calendarMyShiftsTarget.classList.remove("d-none");
+        break;
+      case "4":
+        this.calendarMyTasksTarget.classList.remove("d-none");
+        break;
+      default:
+        console.log("Invalid calendar type");
     }
   }
 
-  showCalendar1() {
-    this.calendar1Target.classList.remove("d-none");
-    this.calendar2Target.classList.add("d-none");
 
-  }
-
-  showCalendar2() {
-    this.calendar1Target.classList.add('d-none');
-    this.calendar2Target.classList.remove("d-none");
+  hideAllCalendars() {
+    this.calendarAllShiftsTarget.classList.add("d-none");
+    this.calendarMyShiftsTarget.classList.add("d-none");
+    this.calendarAllTasksTarget.classList.add("d-none");
+    this.calendarMyTasksTarget.classList.add("d-none");
   }
 }
