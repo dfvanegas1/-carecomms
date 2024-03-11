@@ -9,6 +9,10 @@ class PagesController < ApplicationController
     @users = User.all
     @users_on_shift = Shift.current_shift_users
 
+    if params[:started_shift]
+      flash[:notice] = 'You successfully started your shift.'
+    end
+
     if current_user.admin?
       @tasks_priority = Task.where(priority: '3').count
     else
@@ -26,6 +30,10 @@ class PagesController < ApplicationController
     @users_out_today = @users_out_today.where("first_name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
   end
 
+  def start_shift
+    render layout: 'start_shift'
+  end
+
   def profile
     @user = User.find(params[:id])
     @shifts = @user.shifts
@@ -37,22 +45,5 @@ class PagesController < ApplicationController
     @tasks = policy_scope(Task)
     authorize Task
     @user_shifts = UserShift.all
-    @events = @user_shifts.map do |shift|
-                OpenStruct.new(
-                  start_time: shift.shift.start_date,
-                  end_time: shift.shift.end_date,
-                  model: shift,
-                  type: :shift,
-                  avatar: shift.user.avatar
-                )
-              end +
-                @tasks.map do |task|
-                  OpenStruct.new(
-                    start_time: task.deadline,
-                    model: task,
-                    type: :task,
-                    title: task.title
-                )
-              end
   end
 end
