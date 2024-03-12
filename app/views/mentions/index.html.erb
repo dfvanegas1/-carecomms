@@ -1,16 +1,22 @@
-<h1>Notifications</h1>
-<div>
-  <ul>
-    <% @notifications.each do |notification| %>
-      <li>
-        <% if notification.event.record_type == "MentionMessage" %>
-            <p><%= notification.record.message.user.first_name %> mentioned you in the Chatroom: <%= link_to notification.record.message.chatroom.name, chatroom_by_name_path(name: notification.record.message.chatroom.name ) %></p>
-          <% elsif notification.event.record_type == "MentionComment"%>
-            <p><%= notification.record.task_comment.user.first_name %> mentioned you in a comment on <%= link_to notification.record.task_comment.task.title, task_path(notification.record.task_comment.task) %></p>
-          <% else %>
-            <p>There's been a change in your shifts!</p>
-          <% end %>
-      </li>
-    <% end %>
-  </ul>
+<div class='header-primary'>
+  <h1>Notifications</h1>
+</div>
+<div class='container'>
+  <div>
+    <ul>
+      <% @notifications.each do |notification| %>
+        <li>
+          <div class='notification-card'>
+            <% if notification.event.record_type == "MentionMessage" %>
+                  <p><%= notification.record.message.user.first_name %> mentioned you in the Chatroom: <%= link_to notification.record.message.chatroom.name, chatroom_by_name_path(name: notification.record.message.chatroom.name ) %></p>
+              <% elsif notification.event.record_type == "MentionComment"%>
+                <p><%= notification.record.task_comment.user.first_name %> mentioned you in a comment on <%= link_to notification.record.task_comment.task.title, task_path(notification.record.task_comment.task) %></p>
+              <% else %>
+                <p>There's been a change in your shifts!</p>
+              <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>
