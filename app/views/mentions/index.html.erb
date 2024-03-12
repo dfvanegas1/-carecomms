@@ -1,5 +1,6 @@
 <!-- app/views/mentions/index.html.erb -->
 
+<div data-controller="mentions-updates shifts-updates">
 <h1>Mentions</h1>
 
 <h2>Mentioned in Comments</h2>
@@ -13,9 +14,11 @@
 
 <h2>Mentioned in Messages</h2>
 <% @mention_messages.each do |mention_message| %>
-  <p>
-    Mentioned in message: <%= mention_message.message.content %>
-    <br>
-    In chatroom: <%= link_to mention_message.message.chatroom.name, chatroom_by_name_path(name: mention_message.message.chatroom.name) %>
-  </p>
+    <p>
+      Mentioned in message: <%= mention_message.message.content %>
+      <br>
+      In chatroom: <%= link_to mention_message.message.chatroom.name, chatroom_by_name_path(name: mention_message.message.chatroom.name) %>
+    </p>
 <% end %>
+
+</div>
