@@ -1,11 +1,27 @@
 <%= turbo_frame_tag "task_users" do %>
+<div class="staff-list">
   <ul>
-    <% task.user_tasks.each do |user_task| %>
-      <li id="user_task_<%= user_task.id %>">
-        <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "avatar-bordered") if user_task.user.avatar.attached? %>
-        <%= user_task.user.first_name %> <%= user_task.user.last_name %>
-        <%= button_to 'Remove', user_task_path(user_task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+    <% @task.user_tasks.each do |user_task| %>
+      <li id="user_task_<%= user_task.id %>" class="staff-member">
+        <div class="avatar-container">
+          <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "staff-avatar") if user_task.user.avatar.attached? %>
+          <% if policy(@task).edit? %>
+            <%= button_to '', user_task_path(user_task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "remove-staff-btn" %>
+          <% end %>
+        </div>
+        <span class="staff-name"><%= user_task.user.first_name %></span>
       </li>
     <% end %>
-  </ul>
+
 <% end %>
+<% if policy(@task).edit? %>
+  <div class="add-user-container" data-controller="add-user">
+    <%= form_with url: add_user_task_path(@task), method: :post, id: "add-user-form", remote: true do |form| %>
+      <div class="add-member-button" data-action="click->add-user#toggleSelect">+</div>
+      <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :first_name, { include_blank: true }), id: 'user-select', class: "user-select", data: { add_user_target: "select" }, onchange: "this.form.submit();" %>
+    <% end %>
+    <span class="staff-name">Add Staff</span>
+  </div>
+<% end %>
+  </ul>
+</div>

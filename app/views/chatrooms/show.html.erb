@@ -1,14 +1,16 @@
 <h1>Chatroom</h1>
-<div class="container chatroom" data-controller="chatroom-subscription"
+<div class='chatroom-subscription-controller'data-controller="chatroom-subscription"
   data-chatroom-subscription-chatroom-id-value="<%= @chatroom.id %>">
+  <div class="container chatroom">
+    <h2>#<%= @chatroom.name %></h2>
 
-  <h2>#<%= @chatroom.name %></h2>
-
-  <div class="messages" data-chatroom-subscription-target="messages">
-    <% @chatroom.messages.order(created_at: :asc).each do |message| %>
-      <%= render "messages/message", message: message %>
-    <% end %>
+    <div class="messages" data-chatroom-subscription-target="messages">
+      <% @chatroom.messages.order(created_at: :asc).each do |message| %>
+        <%= render "messages/message", message: message %>
+      <% end %>
+    </div>
   </div>
+
 
   <div class="form-container">
     <%= simple_form_for [@chatroom, Message.new], html: {
@@ -18,19 +20,19 @@
       },
       class: "d-flex"
     } do |f| %>
-      <%= f.input :content,
-          label: false,
-          input_html: {
-            data: {
-              mentions_target: "input"
+        <%= f.input :content,
+            label: false,
+            input_html: {
+              data: {
+                mentions_target: "input"
+              },
+              placeholder: "Message ##{@chatroom.name}"
             },
-            placeholder: "Message ##{@chatroom.name}"
-          },
-          wrapper_html: { class: "" }
-        %>
-      <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
-      <%= f.input :file, as: :file, accept: 'application/pdf/png,image/jpeg' %>
+            wrapper_html: { class: "" }
+          %>
+      <%= f.input :file, as: :file, accept: 'application/pdf/png,image/jpeg'%>
       <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+      <div data-mentions-target="suggestions" class="suggestions-container d-none"></div>
     <% end %>
   </div>
 </div>

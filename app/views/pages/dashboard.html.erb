@@ -1,48 +1,77 @@
-<h1>Welcome <%= current_user.first_name %>!</h1>
+<div class="dashboard-header"><h1>Welcome <%= current_user.first_name %>!</h1>
 <% if current_user.avatar.attached? %>
   <%= cl_image_tag current_user.avatar.key, class: "avatar" %>
   <% else %>
   <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
 <% end %>
-<%= link_to tasks_path(priority: 3) do %>
-<h3>Priority <i class="fa-solid fa-triangle-exclamation"></i></h3>
-<% end %>
-<p><%= @tasks_priority %> tasks</p>
-<%= link_to mentions_path do %>
-  <h3>Mentions <i class="fa-solid fa-at"></i></h3>
-<% end %>
-<p> <%= @total_mentions %> mentions </p>
-<h3> Shifts <i class="fa-regular fa-calendar"></i></h3>
-<ul>
-  <% current_user.shifts.each do |shift| %>
-    <li>
-      <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %>
-    </li>
-  <% end %>
-</ul>
-<%= link_to tasks_path do %>
-  <h3>Tasks <i class="fa-solid fa-list"></i></h3>
-<% end %>
-<% if current_user.admin? %>
-  <p><%= Task.count %> tasks</p>
-<% else %>
-  <p><%= current_user.tasks.count %> tasks</p>
-<% end %>
+</div>
 
-<% if current_user.admin? %>
-  <%= link_to tasks_path(view_option: 'mine') do %>
-    <h3>Your Tasks <i class="fa-solid fa-user"></i></h3>
-  <% end %>
-  <p><%= current_user.tasks.count %> personal tasks</p>
-<% end %>
+ <%= link_to tasks_path(priority: 3) do %>
+ <div class="container-dashboard">
+  <div class="dash-cards">
+    <div class="dash-card">
+      <h3>Priority </h3>
+      <p><%= @tasks_priority %> tasks</p>
+      <h3><i class="fa-solid fa-triangle-exclamation"></i></h3>
+    </div>
+    <% end %>
 
-<h2>Team on shift</h2>
-<% @users_on_shift.each do |user|%>
-  <% if user.avatar.attached? %>
-    <%= link_to cl_image_tag(user.avatar.key, class: "avatar"), profile_path(id: user.id) %>
-  <% else %>
-    <%= link_to image_tag("avatar_placeholder.jpg", class: "avatar"), profile_path(id: user.id) %>
-  <% end %>
-  <%= link_to user.first_name, profile_path(id: user.id), class: "user-name" %>
-  <p>Nurse</p>
-<% end %>
+      <%= link_to tasks_path do %>
+    <div class="dash-card">
+        <h3>Team Tasks </h3>
+      <% if current_user.admin? %>
+        <p><%= Task.count %> tasks</p>
+      <% else %>
+        <p><%= current_user.tasks.count %> tasks</p>
+      <% end %>
+      <h3><i class="fa-solid fa-list"></i></h3>
+    </div>
+    <% end %>
+
+    <%= link_to mentions_path do %>
+    <div class="dash-card">
+        <h3>Mentions</h3>
+      <p id="total-mentions"> <%= @total_mentions %> mentions </p>
+      <h3><i class="fa-solid fa-at"></i></h3>
+    </div>
+    <% end %>
+
+<%= link_to tasks_path(view_option: 'mine') do %>
+    <div class="dash-card">
+      <% if current_user.admin? %>
+          <h3>Your Tasks</h3>
+        <p><%= current_user.tasks.count %> personal tasks</p>
+      <% end %>
+      <h3><i class="fa-solid fa-user"></i></h3>
+    </div>
+    <% end %>
+  </div>
+
+  <h3> Shifts <i class="fa-regular fa-calendar"></i></h3>
+  <div class="shifts-container">
+    <% current_user.shifts.each do |shift| %>
+      <div class="shift-card">
+        <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %>
+      </div>
+    <% end %>
+    </div>
+
+  <h2>Team on shift</h2>
+  <div class="team-shift container">
+    <div class="on-shift row">
+   <% @users_on_shift.each do |user|%>
+      <div class="user-shift col-4">
+        <div class="user-shift-card">
+    <% if user.avatar.attached? %>
+      <%= link_to cl_image_tag(user.avatar.key, class: "dash-shift-avatar"), profile_path(id: user.id) %>
+    <% else %>
+      <%= link_to image_tag("avatar_placeholder.jpg", class: "avatar"), profile_path(id: user.id) %>
+    <% end %>
+    <%= link_to user.first_name, profile_path(id: user.id), class: "user-name" %>
+    <p>Nurse</p>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
