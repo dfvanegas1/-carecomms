@@ -51,44 +51,81 @@
     </div>
 </div>
 
-<div class="task-section-priority">
+<div class="task-section prio-section">
   <% if policy(@task).edit? %>
     <%= form_with model: @task, url: task_path(@task), method: :patch, local: true do |form| %>
-      <div class="field">
-        <%= form.label :priority, 'Priority:' %>
-        <%= form.select :priority, Task.priorities.keys.map { |priority| [priority.capitalize, priority] }, {}, { class: "prio-select", onchange: "this.form.submit();" } %>
-      </div>
+      <fieldset class="form-group">
+        <%= form.label :priority, 'Priority:', class: 'form-label' %>
+        <% Task.priorities.keys.each do |priority| %>
+          <div class="form-check">
+            <%= form.radio_button :priority, priority, class: 'form-check-input', onchange: "this.form.submit();" %>
+            <%= form.label :priority, priority.capitalize, value: priority, class: 'form-check-label' %>
+          </div>
+        <% end %>
+      </fieldset>
     <% end %>
   <% else %>
-    <p>Priority: <%= @task.priority.capitalize %></p>
+      <p class="form-group"> <strong>Priority:</strong> <%= @task.priority.capitalize %></p>
   <% end %>
 </div>
 
-<h3>Comments:</h3>
-<%= turbo_frame_tag "comments" do %>
-  <% @task.task_comments.each do |comment| %>
-    <%= render "comments/comment", comment: comment %>
-  <% end %>
-<% end %>
+<div class="task-section deadline-container">
+  <h3>Deadline</h3>
+  <div class=deadline-box>
+  <div class="deadline-icon-container">
+    <i class="fa-solid fa-calendar-days deadline-icon"></i>
+    <p class="deadline-time"><%= @task.deadline.strftime('%a %b %d %H:%M') %></p>
+  </div>
+  </div>
+</div>
 
-<h3>Add a Comment:</h3>
-<%= turbo_frame_tag "new_comment" do %>
-  <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form", local: true do |form| %>
-    <div data-controller="mentions" data-action="keyup->mentions#keyup">
-      <%= form.label :content, 'Your Comment:' %>
-      <%= form.text_area :content, data: { mentions_target: "input" } %>
-      <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg' %>
-      <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
-    </div>
-    <div>
-      <%= form.submit 'Submit Comment', data: { turbo_frame: "new_comment" } %>
+<div class="task-section comments-container">
+  <h3>Comments:</h3>
+  <%= turbo_frame_tag "comments" do %>
+    <div class="comments-list">
+      <% @task.task_comments.each do |comment| %>
+        <div class="comment">
+          <div class="comment-avatar">
+            <%= image_tag(comment.user.avatar.url, alt: "#{comment.user.first_name}'s avatar", class: "avatar") if comment.user.avatar.attached? %>
+          </div>
+          <div class="comment-body">
+            <div class="comment-user">
+              <%= comment.user.first_name %>
+            </div>
+            <div class="comment-content">
+              <%= comment.content %>
+            </div>
+            <div class="comment-timestamp">
+              <%= time_ago_in_words(comment.created_at) %> ago
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   <% end %>
-<% end %>
+</div>
 
+<div class="task-section add-comment-section">
 <%= form_with model: @task, url: toggle_completion_task_path(@task), method: :patch, id: "task_completion_form_#{@task.id}", data: { turbo_frame: "task_#{@task.id}" } do |form| %>
-  <div class="form-check form-switch">
+<div class="task-toggle-switch form-check form-switch">
     <%= form.check_box :completed, class: "form-check-input", id: "completedSwitch#{@task.id}", onchange: "this.form.submit();" %>
-    <%= form.label :completed, 'Completed:', class: "form-check-label", for: "completedSwitch#{@task.id}" %>
+    <%= form.label :completed, 'Task done?', class: "form-check-label", for: "completedSwitch#{@task.id}" %>
   </div>
 <% end %>
+
+
+  <h3>Add a Comment:</h3>
+  <%= turbo_frame_tag "new_comment" do %>
+    <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form", local: true do |form| %>
+      <div data-controller="mentions" data-action="keyup->mentions#keyup" class="comment-form-container">
+        <%= form.label :content, 'Your Comment:', class: 'comment-label' %>
+        <%= form.text_area :content, data: { mentions_target: "input" }, class: 'comment-text-area' %>
+        <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg', class: 'comment-file-field' %>
+        <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
+      </div>
+      <div class="submit-comment-container">
+        <%= form.submit 'Submit Comment', class: 'submit-comment-btn', data: { turbo_frame: "new_comment" } %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
