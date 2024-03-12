@@ -1,0 +1,40 @@
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  padding-top: 15px;
+  background-color: #b6d9fb;
+}
+
+.team-header h1 {
+  margin: 0;
+}
+
+.team-search-bar {
+  margin: 15px;
+}
+
+.present-user {
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.absent-user {
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.user-on-duty {
+  padding-top: 15px;
+}
+
+.user-out {
+  padding-top: 15px;
+}

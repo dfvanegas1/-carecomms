@@ -1,3 +1,12 @@
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  padding-top: 15px;
+  background-color: #b6d9fb;
+}
+
 .container-dashboard {
   padding: 20px;
 }
@@ -30,7 +39,7 @@
 }
 
 .shifts-container {
-  margin-bottom: 10px;
+  margin: 10px 0px;
 }
 
 a {
