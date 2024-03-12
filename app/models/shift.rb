@@ -1,6 +1,7 @@
 class Shift < ApplicationRecord
   has_many :user_shifts, dependent: :destroy
   has_many :users, through: :user_shifts
+  has_many :notification_mentions, as: :record, dependent: :destroy, class_name: "Noticed::Event"
 
   def self.current_shift_users
     User.joins(user_shifts: :shift)
