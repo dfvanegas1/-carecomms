@@ -5,18 +5,20 @@
 
 <h2>Mentioned in Comments</h2>
 <% @mention_comments.each do |mention_comment| %>
-  <%= render 'mentions/mention_comment', mention_comment: mention_comment %>
+  <p>
+    Mentioned in comment: <%= mention_comment.task_comment.content %>
+    <br>
+    In task: <%= link_to mention_comment.task_comment.task.title, task_path(mention_comment.task_comment.task) %>
+  </p>
 <% end %>
 
 <h2>Mentioned in Messages</h2>
 <% @mention_messages.each do |mention_message| %>
-  <%= render 'mentions/mention_messages', mention_message: mention_message %>
+    <p>
+      Mentioned in message: <%= mention_message.message.content %>
+      <br>
+      In chatroom: <%= link_to mention_message.message.chatroom.name, chatroom_by_name_path(name: mention_message.message.chatroom.name) %>
+    </p>
 <% end %>
 
-<h2>Update in Shifts</h2>
-<div id="shifts-container" data-controller="shift-updates"
-     data-shift-updates-user-id-value="<%= current_user.id %>">
-  <!-- This container will be updated with shift information by the Stimulus controller -->
-  <p>Shift updates will be displayed here.</p>
-</div>
 </div>

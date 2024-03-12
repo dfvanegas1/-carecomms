@@ -8,8 +8,6 @@ class ShiftsController < ApplicationController
     @user_shift = UserShift.find_by(shift_id: @shift.id, user_id: @user.id)
     authorize @user_shift
     @user_shift.update(shift_id: params[:shift][:id])
-    ActionCable.server.broadcast "shifts_channel#{current_user.id}",
-    {shift: render_shift(@shift)}
     redirect_to profile_path(@user)
   end
 
@@ -27,7 +25,4 @@ class ShiftsController < ApplicationController
     @user = User.find(params[:shift][:user_id])
   end
 
-  def render_shift(shift)
-    ApplicationController.renderer.render(partial: 'shifts/shift', locals: { shift: shift })
-  end
 end

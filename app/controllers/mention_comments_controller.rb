@@ -5,8 +5,6 @@ class MentionCommentsController < ApplicationController
     @mention_comment = MentionComment.new(mention_comment_params)
 
     if @mention_comment.save
-      ActionCable.server.broadcast "mentions_channel#{mentioned_user_id}",
-      mention: render_mention(@mention_comment)
       redirect_to some_path, notice: 'Mention successfully created.'
     else
       render 'some_form', alert: 'Failed to create mention.'
@@ -18,9 +16,4 @@ class MentionCommentsController < ApplicationController
   def mention_comment_params
     params.require(:mention_comment).permit(:user_id, :task_comment_id)
   end
-
-  def render_mention(mention_comment)
-    ApplicationController.renderer.render(partial: 'mention_comments/mention', locals: { mention_comment: mention_comment })
-  end
-
 end

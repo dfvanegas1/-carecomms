@@ -1,7 +1,0 @@
-<div class="mention-message">
-  <p>
-    Mentioned in message: <%= mention_message.message.content %>
-    <br>
-    In chatroom: <%= link_to mention_message.message.chatroom.name, chatroom_by_name_path(name: mention_message.message.chatroom.name) %>
-  </p>
-</div>
