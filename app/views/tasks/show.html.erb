@@ -1,51 +1,68 @@
-<%= link_to tasks_path, class: "back-button" do %>
-  <i class="fa fa-arrow-left"></i>
-<% end %>
+<div class="header">
+  <%= link_to tasks_path, class: "back-button" do %>
+    <i class="fa-solid fa-arrow-left"></i>
+  <% end %>
 
-<% if policy(@task).edit? %>
-  <div class="dropdown">
-    <%= link_to 'Edit', edit_task_path(@task), class: "dropdown-item" %>
-    <%= button_to 'Delete Task', task_path(@task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-  </div>
-<% end %>
+  <h1 class="header-title"><%= @task.title %></h1>
 
-<h2>Title: <%= @task.title %></h2>
-<p>Description: <%= @task.description %></p>
-
-<h3>Assigned Users:</h3>
-<%= turbo_frame_tag "task_users" do %>
-  <ul>
-    <% @task.user_tasks.each do |user_task| %>
-      <li id="user_task_<%= user_task.id %>">
-        <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "avatar-bordered") if user_task.user.avatar.attached? %>
-        <%= user_task.user.first_name %> <%= user_task.user.last_name %>
-        <% if policy(@task).edit? %>
-        <%= button_to 'Remove', user_task_path(user_task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-
-<% if policy(@task).edit? %>
-<%= form_with url: add_user_task_path(@task), method: :post do |form| %>
-  <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :first_name) %>
-  <%= form.submit "Add User" %>
-<% end %>
-<% end %>
-
-<p> Deadline: <%= @task.deadline %></p>
-
-<% if policy(@task).edit? %>
-  <%= form_with model: @task, url: task_path(@task), method: :patch, local: true do |form| %>
-    <div class="field">
-      <%= form.label :priority, 'Priority:' %>
-      <%= form.select :priority, Task.priorities.keys.map { |priority| [priority.capitalize, priority] }, {}, { onchange: "this.form.submit();" } %>
+  <% if policy(@task).edit? %>
+    <div class="dropdown">
+      <button class="dropbtn"><i class="fas fa-ellipsis-v"></i></button>
+      <div class="dropdown-content">
+        <%= link_to 'Edit', edit_task_path(@task), class: "dropdown-item" %>
+        <%= button_to 'Delete Task', task_path(@task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "dropdown-item" %>
+      </div>
     </div>
   <% end %>
-<% else %>
-  <p>Priority: <%= @task.priority.capitalize %></p>
-<% end %>
+</div>
+
+<div class="task-section description-section">
+  <h3>Descriptions</h3>
+  <p><%= @task.description %></p>
+</div>
+
+<div class="task-section assigned-section">
+  <h3>Assigned Staff</h3>
+  <%= turbo_frame_tag "task_users" do %>
+    <div class="staff-list">
+      <ul>
+        <% @task.user_tasks.each do |user_task| %>
+          <li id="user_task_<%= user_task.id %>" class="staff-member">
+            <div class="avatar-container">
+              <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "staff-avatar") if user_task.user.avatar.attached? %>
+              <% if policy(@task).edit? %>
+                <%= button_to '', user_task_path(user_task), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: "remove-staff-btn" %>
+              <% end %>
+            </div>
+            <span class="staff-name"><%= user_task.user.first_name %></span>
+          </li>
+        <% end %>
+        <% end %>
+        <% if policy(@task).edit? %>
+          <div class="add-user-container" data-controller="add-user">
+            <%= form_with url: add_user_task_path(@task), method: :post, id: "add-user-form", remote: true do |form| %>
+              <div class="add-member-button" >+</div>
+              <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :first_name, { include_blank: true }), id: 'user-select', class: "user-select", data: { add_user_target: "select" }, onchange: "this.form.submit();" %>
+            <% end %>
+            <span class="staff-name">Add Staff</span>
+          </div>
+        <% end %>
+       </ul>
+    </div>
+</div>
+
+<div class="task-section-priority">
+  <% if policy(@task).edit? %>
+    <%= form_with model: @task, url: task_path(@task), method: :patch, local: true do |form| %>
+      <div class="field">
+        <%= form.label :priority, 'Priority:' %>
+        <%= form.select :priority, Task.priorities.keys.map { |priority| [priority.capitalize, priority] }, {}, { class: "prio-select", onchange: "this.form.submit();" } %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>Priority: <%= @task.priority.capitalize %></p>
+  <% end %>
+</div>
 
 <h3>Comments:</h3>
 <%= turbo_frame_tag "comments" do %>
@@ -54,10 +71,9 @@
   <% end %>
 <% end %>
 
-
 <h3>Add a Comment:</h3>
 <%= turbo_frame_tag "new_comment" do %>
-<%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form", local: true do |form| %>
+  <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form", local: true do |form| %>
     <div data-controller="mentions" data-action="keyup->mentions#keyup">
       <%= form.label :content, 'Your Comment:' %>
       <%= form.text_area :content, data: { mentions_target: "input" } %>
