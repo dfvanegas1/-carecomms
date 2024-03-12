@@ -81,3 +81,4 @@ gem "pundit"
 gem 'mentionable'
 gem "simple_calendar"
 gem 'redis'
+gem "noticed"
