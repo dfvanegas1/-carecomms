@@ -2,8 +2,8 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  border-radius: 10px; /* Add your border-radius here */
-  overflow: hidden; /* To ensure the children respect the border-radius */
+  border-radius: 10px;
+  overflow: hidden;
 }
 .task-item {
   display: flex;
@@ -146,7 +146,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23333' viewBox='0 0 8 8'><path d='M1 1.5l3 3 3-3' /></svg>") no-repeat right 0.75rem center/8px 8px; /* Custom arrow */
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23333' viewBox='0 0 8 8'><path d='M1 1.5l3 3 3-3' /></svg>") no-repeat right 0.75rem center/8px 8px;
   cursor: pointer;
   font-size: 12px;
   margin-right: 12px;
