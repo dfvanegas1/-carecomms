@@ -42,8 +42,12 @@ class PagesController < ApplicationController
   end
 
   def calendar
-    @tasks = policy_scope(Task)
+    @all_tasks = policy_scope(Task)
+    @my_tasks = @all_tasks.joins(:user_tasks).where(user_tasks: { user_id: current_user.id })
+
+    @all_shifts = Shift.all
+    @user_shifts = UserShift.where(user: current_user).map(&:shift)
+
     authorize Task
-    @user_shifts = UserShift.all
   end
 end
