@@ -31,7 +31,7 @@
             <% end %>
           </li>
           <li class="nav-item">
-            <%= link_to edit_user_registration_path do %>
+            <%= link_to profile_path(id: current_user.id) do %>
               <% if current_user.avatar.attached? %>
                 <%= cl_image_tag current_user.avatar.key, class: "rounded-circle avatar", alt: "User avatar" %>
               <% else %>
