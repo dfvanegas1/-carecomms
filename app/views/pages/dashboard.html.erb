@@ -1,9 +1,10 @@
-<h1>Welcome <%= current_user.first_name %>!</h1>
+<div class="dashboard-header"><h1>Welcome <%= current_user.first_name %>!</h1>
 <% if current_user.avatar.attached? %>
   <%= cl_image_tag current_user.avatar.key, class: "avatar" %>
   <% else %>
   <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
 <% end %>
+</div>
 
  <%= link_to tasks_path(priority: 3) do %>
  <div class="container-dashboard">
@@ -58,9 +59,9 @@
   <h2>Team on shift</h2>
   <div class="team-shift container">
     <div class="on-shift row">
+   <% @users_on_shift.each do |user|%>
       <div class="user-shift col-4">
         <div class="user-shift-card">
-  <% @users_on_shift.each do |user|%>
     <% if user.avatar.attached? %>
       <%= link_to cl_image_tag(user.avatar.key, class: "dash-shift-avatar"), profile_path(id: user.id) %>
     <% else %>
@@ -68,9 +69,9 @@
     <% end %>
     <%= link_to user.first_name, profile_path(id: user.id), class: "user-name" %>
     <p>Nurse</p>
-  <% end %>
         </div>
       </div>
+      <% end %>
     </div>
   </div>
 </div>
