@@ -17,12 +17,20 @@
   <div class='shifts-display' data-profile-target='shifts'>
 
     <% @shifts.each do |shift| %>
-      <div data-controller="edit-shifts">
-        <div class='shift-card'>
+      <div data-controller="edit-shifts" class='edit-shifts'>
+        <div class='shift-card-profile'>
           <% if shift.start_date.hour >= 5 && shift.end_date.hour < 18 %>
-            <i class="fa-regular fa-sun"></i> <p> <%= shift.start_date.strftime("%d-%m %H:%M") %> <%= shift.end_date.strftime("%d-%m %H:%M") %></p>
+            <i class="fa-regular fa-sun"></i>
+            <div>
+              <p><%= shift.start_date.strftime("%d-%m") %></p>
+              <p><%= shift.start_date.strftime("%H:%M") %> to <%= shift.end_date.strftime("%H:%M") %></p>
+            </div>
             <% else %>
-            <i class="fa-regular fa-moon"></i> <p> <%= shift.start_date.strftime("%d-%m %H:%M") %> <%= shift.end_date.strftime("%d-%m %H:%M") %></p>
+            <i class="fa-regular fa-moon"></i>
+            <div>
+              <p><%= shift.start_date.strftime("%d-%m") %></p>
+              <p><%= shift.start_date.strftime("%H:%M") %> to <%= shift.end_date.strftime("%H:%M") %></p>
+            </div>
           <% end %>
           <% if policy(Shift).update? %>
             <button data-action="click->edit-shifts#showForm" class="edit-button"><i class="fa-regular fa-pen-to-square"></i></button>

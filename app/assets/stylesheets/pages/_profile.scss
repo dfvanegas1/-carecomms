@@ -13,16 +13,20 @@
     }
 }
 
-.shift-card {
+.shift-card-profile {
+  background-color: white;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 10px;
-  max-width: 175px;
-  border: 1px solid rgb(192, 192, 192);
-  border-radius: 5px;
+  max-width: 250px;
+  border: 1px solid rgb(230, 230, 230);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   position: relative;
     p {
-      margin: 12px 5px 12px 12px;
+      text-align: center;
+      margin: 10px;
     }
 }
 
@@ -30,12 +34,13 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 2px;
+
 }
 
 .profile-avatar {
   height: 100px;
   width: 100%;
-  border-radius: 24px;
+  border-radius: 50%;
   object-fit: cover;
 }
 
@@ -44,4 +49,18 @@
   justify-content: center;
   margin: 5px;
   margin-top: -36px;
+}
+
+.edit-shifts {
+  justify-self: stretch;
+}
+
+
+@media (max-width: 767.98px) {
+  .shift-card-profile {
+    max-width: 190px;
+  }
+  .shift-card-profile {
+    padding: 15px;
+  }
 }
