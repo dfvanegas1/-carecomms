@@ -1,45 +1,62 @@
-<% if @user.avatar.attached? %>
-    <%= cl_image_tag @user.avatar.key, class: "avatar" %>
-  <% else %>
-    <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
-<% end %>
-<h1><%= @user.first_name %></h1>
-  <p>Nurse</p>
-<% if @user == current_user %>
-  <h2>My Shifts</h2>
-  <% else %>
-  <h2><%= @user.first_name %>'s Shifts</h2>
-<% end %>
-<% @shifts.each do |shift| %>
-  <div class="shifts-display" data-controller="edit-shifts">
-    <p>Shift: <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %> to <%= shift.end_date.strftime("%d-%m-%Y %H:%M") %></p>
-    <% if policy(Shift).update? %>
-      <button data-action="click->edit-shifts#showForm" class="btn btn-outline-primary">Edit</button>
-    <% end %>
-    <div class="shifts-edit" data-edit-shifts-target="form">
-      <%= simple_form_for(shift) do |f| %>
-        <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'form-control' %>
-        <%= f.hidden_field :user_id, value: @user.id %>
-        <%= f.submit "Assign Shift", class: "btn btn-primary" %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+<%# profile.html.erb %>
 
-<% if @user == current_user %>
-  <h2>My Tasks</h2>
-  <% else %>
-    <h2><%= @user.first_name %>'s Tasks</h2>
-<% end %>
-<ul>
-  <% @tasks.each do |task| %>
-    <li>
-      <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, data: { turbo_frame: "task_#{task.id}" } do |form| %>
-        <%= check_box_tag "completed", task.id, task.completed, onchange: "this.form.submit();" %>
-        <%= link_to task.title, task_path(task) %>:
-        <%= task.description %>:
-        <%= task.deadline.strftime("%H:%M %d-%m-%Y") %>
-      <% end %>
-    </li>
+<div class='profile-header'>
+  <% if @user.avatar.attached? %>
+      <%= cl_image_tag @user.avatar.key, class: "profile-avatar" %>
+    <% else %>
+      <%= image_tag "avatar_placeholder.jpg", class: "profile-avatar" %>
   <% end %>
-</ul>
+  <h1><%= @user.first_name %></h1>
+    <p>Nurse</p>
+</div>
+<div class= 'container' data-controller='profile'>
+  <div class='button-select-display'>
+    <button data-action="click->profile#display" data-profile-target="button" data-value="1" class='button-select'>Shifts</button>
+    <button data-action="click->profile#display" data-profile-target="button" data-value="2" class='button-select'>Tasks</button>
+  </div>
+  <div class='shifts-display' data-profile-target='shifts'>
+
+    <% @shifts.each do |shift| %>
+      <div data-controller="edit-shifts">
+        <div class='shift-card'>
+          <% if shift.start_date.hour >= 5 && shift.end_date.hour < 18 %>
+            <i class="fa-regular fa-sun"></i> <p> <%= shift.start_date.strftime("%d-%m %H:%M") %> <%= shift.end_date.strftime("%d-%m %H:%M") %></p>
+            <% else %>
+            <i class="fa-regular fa-moon"></i> <p> <%= shift.start_date.strftime("%d-%m %H:%M") %> <%= shift.end_date.strftime("%d-%m %H:%M") %></p>
+          <% end %>
+          <% if policy(Shift).update? %>
+            <button data-action="click->edit-shifts#showForm" class="edit-button"><i class="fa-regular fa-pen-to-square"></i></button>
+          <% end %>
+          </div>
+        <div class="shifts-edit" data-edit-shifts-target="form">
+          <%= simple_form_for(shift) do |f| %>
+            <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'select-form' %>
+            <%= f.hidden_field :user_id, value: @user.id %>
+            <%= f.submit "Assign Shift", class: "button-assign-shift" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div data-profile-target='tasks' class='d-none'>
+    <ul class="task-list">
+      <% @tasks.each do |task| %>
+        <li class="task-item">
+          <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, local: true do |form| %>
+            <div class="task-checkbox">
+              <%= form.check_box :completed, onchange: "this.form.submit();" %>
+            </div>
+            <div class="task-content">
+              <div class="task-info">
+                <%= link_to task.title, task_path(task), class: "task-title" %>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: <%= task.completed ? 100 : 0 %>%" aria-valuenow="<%= task.completed ? 100 : 0 %>" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

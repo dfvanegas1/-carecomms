@@ -1,74 +1,76 @@
-<h1>Your calendar</h1>
-<div data-controller="calendar"
-     data-calendar-is-admin="<%= current_user.admin? %>">
-  <div>
-    <label>Calendar View:</label>
-    <button data-action="click->calendar#toggleCalendarView" data-calendar-target="toggleButton">Shifts</button>
-  </div>
-  
-  <div>
-    <select class="form-select" data-action="change->calendar#showCalendar" data-calendar-target="filterSelect">
-    <option value="0" disabled selected>Select a calendar...</option>
-    <% if current_user.admin? %>
-      <option value="2">All Tasks</option>
-    <% end %>
-    <option value="1">All Shifts</option>
-    <option value="3">My Shifts</option>
-    <option value="4">My Tasks</option>
-  </select>
-  </div>
+<div class='container calendar'>
+  <h1>Your calendar</h1>
+  <div data-controller="calendar"
+      data-calendar-is-admin="<%= current_user.admin? %>">
+    <div>
+      <label>Calendar View:</label>
+      <button data-action="click->calendar#toggleCalendarView" data-calendar-target="toggleButton">Shifts</button>
+    </div>
 
-  <div data-calendar-target='calendarAllShifts' class='d-none'>
-    <%= week_calendar(events: @all_shifts) do |date, shifts| %>
-      <%= date %>
-        <% shifts.each do |shift| %>
-          <div>
-            <% shift.users.each do |user| %>
-              <%= cl_image_tag user.avatar.key, class: 'avatar' %>
-            <% end %>
-            <p><%= shift.start_date.strftime("%H:%M") %> - <%= shift.end_date.strftime("%H:%M") %></p>
-          </div>
+    <div>
+      <select class="form-select" data-action="change->calendar#showCalendar" data-calendar-target="filterSelect">
+        <option value="0" disabled selected>Select a calendar...</option>
+        <% if current_user.admin? %>
+          <option value="2">All Tasks</option>
         <% end %>
-    <% end %>
-  </div>
+        <option value="1">All Shifts</option>
+        <option value="3">My Shifts</option>
+        <option value="4">My Tasks</option>
+      </select>
+    </div>
 
-  <div data-calendar-target='calendarAllTasks' class='d-none'>
-    <%= week_calendar(events: @all_tasks) do |date, tasks| %>
-      <%= date %>
-      <% tasks.each do |task| %>
-        <ul>
-          <li>
-            <%= link_to task.title, task_path(task) %>
-          </li>
-        </ul>
+    <div data-calendar-target='calendarAllShifts' class='d-none shifts-calendar'>
+      <%= week_calendar(events: @all_shifts) do |date, shifts| %>
+        <%= date %>
+          <% shifts.each do |shift| %>
+            <div>
+              <% shift.users.each do |user| %>
+                <%= cl_image_tag user.avatar.key, class: 'avatar' %>
+              <% end %>
+              <p><%= shift.start_date.strftime("%H:%M") %> - <%= shift.end_date.strftime("%H:%M") %></p>
+            </div>
+          <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
 
-  <div data-calendar-target='calendarMyShifts' class='d-none'>
-    <%= week_calendar(events: @user_shifts) do |date, shifts| %>
-      <%= date %>
-        <% shifts.each do |shift| %>
-          <div>
-            <% shift.users.each do |user| %>
-              <%= cl_image_tag user.avatar.key, class: 'avatar' %>
-            <% end %>
-            <p><%= shift.start_date.strftime("%H:%M") %> - <%= shift.end_date.strftime("%H:%M") %></p>
-          </div>
+    <div data-calendar-target='calendarAllTasks' class='d-none'>
+      <%= week_calendar(events: @all_tasks) do |date, tasks| %>
+        <%= date %>
+        <% tasks.each do |task| %>
+          <ul>
+            <li>
+              <%= link_to task.title, task_path(task) %>
+            </li>
+          </ul>
         <% end %>
-    <% end %>
-  </div>
-
-  <div data-calendar-target='calendarMyTasks' class='d-none'>
-    <%= week_calendar(events: @my_tasks) do |date, tasks| %>
-      <%= date %>
-      <% tasks.each do |task| %>
-        <ul>
-          <li>
-            <%= link_to task.title, task_path(task) %>
-          </li>
-        </ul>
       <% end %>
-    <% end %>
+    </div>
+
+    <div data-calendar-target='calendarMyShifts' class='d-none shifts-calendar'>
+      <%= week_calendar(events: @user_shifts) do |date, shifts| %>
+        <%= date %>
+          <% shifts.each do |shift| %>
+            <div>
+              <% shift.users.each do |user| %>
+                <%= cl_image_tag user.avatar.key, class: 'avatar' %>
+              <% end %>
+              <p><%= shift.start_date.strftime("%H:%M") %> - <%= shift.end_date.strftime("%H:%M") %></p>
+            </div>
+          <% end %>
+      <% end %>
+    </div>
+
+    <div data-calendar-target='calendarMyTasks' class='d-none'>
+      <%= week_calendar(events: @my_tasks) do |date, tasks| %>
+        <%= date %>
+        <% tasks.each do |task| %>
+          <ul>
+            <li>
+              <%= link_to task.title, task_path(task) %>
+            </li>
+          </ul>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
