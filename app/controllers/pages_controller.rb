@@ -9,6 +9,10 @@ class PagesController < ApplicationController
     @users = User.all
     @users_on_shift = Shift.current_shift_users
 
+    if params[:started_shift]
+      flash[:notice] = 'You successfully started your shift.'
+    end
+
     if current_user.admin?
       @tasks_priority = Task.where(priority: '3').count
     else
@@ -26,6 +30,10 @@ class PagesController < ApplicationController
     @users_out_today = @users_out_today.where("first_name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
   end
 
+  def start_shift
+    render layout: 'start_shift'
+  end
+
   def profile
     @user = User.find(params[:id])
     @shifts = @user.shifts
@@ -34,8 +42,12 @@ class PagesController < ApplicationController
   end
 
   def calendar
-    @tasks = policy_scope(Task)
+    @all_tasks = policy_scope(Task)
+    @my_tasks = @all_tasks.joins(:user_tasks).where(user_tasks: { user_id: current_user.id })
+
+    @all_shifts = Shift.all
+    @user_shifts = UserShift.where(user: current_user).map(&:shift)
+
     authorize Task
-    @user_shifts = UserShift.all
   end
 end
