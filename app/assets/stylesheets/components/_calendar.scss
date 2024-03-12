@@ -1,9 +1,12 @@
 .simple-calendar {
   overflow: auto;
   table {
-    min-height: 80vh;
+    min-height: 74vh;
     ul {
       padding-left: 10px;
+    }
+    ul>li {
+      text-decoration: none;
     }
   }
   .today {
@@ -18,6 +21,11 @@
 
 @media (max-width: 767.98px) {
   .simple-calendar table {
-      font-size:8px
+      font-size:12px
   }
+}
+
+.shifts-calendar {
+  overflow: auto;
+  min-height: 74vh;
 }
