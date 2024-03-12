@@ -27,11 +27,11 @@ export default class extends Controller {
     this.suggestionsTarget.innerHTML = data.map(username =>
       `<div data-action="click->mentions#selectSuggestion">${username}</div>`
     ).join('');
-    this.suggestionsTarget.classList.remove('hidden');
+    this.suggestionsTarget.classList.remove('d-none');
   }
 
   hideSuggestions() {
-    this.suggestionsTarget.classList.add('hidden');
+    this.suggestionsTarget.classList.add('d-none');
   }
 
   selectSuggestion(event) {
