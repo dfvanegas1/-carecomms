@@ -5,6 +5,7 @@ class MentionCommentsController < ApplicationController
     @mention_comment = MentionComment.new(mention_comment_params)
 
     if @mention_comment.save
+      NewMentionNotifier.with(record: @mention_comment).deliver(@mention_comment.user)
       redirect_to some_path, notice: 'Mention successfully created.'
     else
       render 'some_form', alert: 'Failed to create mention.'
