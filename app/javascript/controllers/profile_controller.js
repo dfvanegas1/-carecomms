@@ -7,14 +7,14 @@ export default class extends Controller {
   static targets = ['button', 'shifts', 'tasks']
 
   connect() {
-    console.log("connected");
+    // console.log("connected");
   }
 
   display(event) {
-      const calendarNumber = event.target.dataset.value;
-      if (calendarNumber === "1") {
+    const viewNumber = event.target.dataset.value;
+      if (viewNumber === "1") {
         this.displayShifts();
-      } else if (calendarNumber === "2") {
+      } else if (viewNumber === "2") {
         this.displayTasks();
       }
     }
