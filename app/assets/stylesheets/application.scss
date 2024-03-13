@@ -14,3 +14,8 @@
 @import "chatrooms/show";
 @import "tasks/index";
 @import "tasks/show";
+
+.body{
+  max-height: 91vh;
+  overflow: scroll;
+}
