@@ -18,7 +18,7 @@
   <div class="add-user-container" data-controller="add-user">
     <%= form_with url: add_user_task_path(@task), method: :post, id: "add-user-form", remote: true do |form| %>
       <div class="add-member-button" data-action="click->add-user#toggleSelect">+</div>
-      <%= select_tag :user_id, options_from_collection_for_select(User.all, :id, :first_name, { include_blank: true }), id: 'user-select', class: "user-select", data: { add_user_target: "select" }, onchange: "this.form.submit();" %>
+      <%= select_tag :user_id, options_for_select([['', nil]] + User.all.map { |user| [user.first_name, user.id] }), id: 'user-select', class: "user-select", data: { add_user_target: "select" }, onchange: "this.form.submit();" %>
     <% end %>
     <span class="staff-name">Add Staff</span>
   </div>

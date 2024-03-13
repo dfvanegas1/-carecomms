@@ -1,48 +1,31 @@
-<div class="dashboard-header"><h1>Welcome <%= current_user.first_name %>!</h1>
-<% if current_user.avatar.attached? %>
-  <%= cl_image_tag current_user.avatar.key, class: "avatar" %>
-  <% else %>
-  <%= image_tag "avatar_placeholder.jpg", class: "avatar" %>
-<% end %>
+<div class="dashboard-header">
+  <h1>Welcome <%= current_user.first_name %>!</h1>
+  <%= link_to mentions_path do %>
+  <div class="notification-icon">
+  <i class="fa-solid fa-bell"></i>
+  </div>
+  <% end %>
 </div>
 
  <%= link_to tasks_path(priority: 3) do %>
  <div class="container-dashboard">
   <div class="dash-cards">
     <div class="dash-card">
-      <h3>Priority </h3>
-      <p><%= @tasks_priority %> tasks</p>
-      <h3><i class="fa-solid fa-triangle-exclamation"></i></h3>
-    </div>
-    <% end %>
-
-      <%= link_to tasks_path do %>
-    <div class="dash-card">
-        <h3>Team Tasks </h3>
-      <% if current_user.admin? %>
-        <p><%= Task.count %> tasks</p>
-      <% else %>
-        <p><%= current_user.tasks.count %> tasks</p>
-      <% end %>
-      <h3><i class="fa-solid fa-list"></i></h3>
-    </div>
-    <% end %>
-
-    <%= link_to mentions_path do %>
-    <div class="dash-card">
-        <h3>Mentions</h3>
-      <p id="total-mentions"> <%= @total_mentions %> mentions </p>
-      <h3><i class="fa-solid fa-at"></i></h3>
+      <div class="card-content">
+      <h3> <%= @tasks_priority %> </h3>
+      <p> Priority tasks</p>
+      </div>
     </div>
     <% end %>
 
 <%= link_to tasks_path(view_option: 'mine') do %>
     <div class="dash-card">
+      <div class="card-content">
       <% if current_user.admin? %>
-          <h3>Your Tasks</h3>
-        <p><%= current_user.tasks.count %> personal tasks</p>
+          <h3><%= current_user.tasks.count %></h3>
+        <p> Your own tasks</p>
       <% end %>
-      <h3><i class="fa-solid fa-user"></i></h3>
+      </div>
     </div>
     <% end %>
   </div>
