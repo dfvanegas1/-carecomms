@@ -1,16 +1,13 @@
+
+
 .simple-calendar {
   overflow: auto;
+  height: 580px;
   table {
-    min-height: 74vh;
-    ul {
-      padding-left: 10px;
-    }
+    min-height: 60vh;
     ul>li {
       text-decoration: none;
     }
-  }
-  .today {
-    background-color: #bceaff;
   }
 }
 
@@ -21,11 +18,37 @@
 
 @media (max-width: 767.98px) {
   .simple-calendar table {
-      font-size:12px
+      font-size:15px;
   }
 }
 
 .shifts-calendar {
   overflow: auto;
-  min-height: 74vh;
+  min-height: 60vh;
+}
+
+.calendar-users {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 5px;
+}
+
+.calendar-tasks {
+  padding: 10px;
+  background-color: #d0d0d0;
+  border-radius: 15px;
+  margin: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    a {
+      color: black;
+    }
+}
+
+.calendar-shifts {
+  padding: 5px;
+  background-color: #d0d0d0;
+  border-radius: 20px;
+  margin: 2px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
