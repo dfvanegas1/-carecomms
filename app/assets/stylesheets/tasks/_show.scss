@@ -406,6 +406,8 @@ ul {
 }
 
 .add-comment-section {
+  box-sizing: border-box;
+  position: relative;
   padding: 20px;
   background-color: #f7f7f7;
   margin-bottom: 30px;
@@ -425,11 +427,12 @@ ul {
   border: 1px solid #ced4da;
   resize: vertical;
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .file-upload-label {
   position: absolute;
-  right: 15px;
+  right: 10px;
   top: 38px;
   cursor: pointer;
   color: #b6d9fb;
@@ -465,6 +468,7 @@ ul {
 .task-toggle-switch {
   display: flex;
   align-items: center;
+
 }
 
 .form-check-input {
@@ -478,7 +482,7 @@ ul {
 .task-toggle-switch {
   position: absolute;
   right: 44px;
-  top: 65%;
+  top: 67%;
   transform: translateY(-50%);
 }
 
@@ -487,4 +491,44 @@ ul {
   color: #333;
   font-weight: bold;
   font-size: 18px;
+}
+
+
+
+
+
+
+.file-upload-wrapper {
+  position: absolute;
+  right: 1px;
+  top: 10%;
+  white-space: nowrap;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+.file-upload-label {
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 1px;
+  font-size: 14px;
+}
+
+
+
+.file-upload-button-text {
+  font-weight: bold;
+}
+
+.file-name {
+  display: inline-block;
+  font-style: italic;
+  color: #555;
+}
+
+.fa-paperclip {
+  font-size: 25px;
 }

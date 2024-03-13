@@ -1,11 +1,17 @@
 <%= form_with model: [task, comment], url: task_comments_path(task), id: "new_comment_form", local: true do |form| %>
-  <div data-controller="mentions" data-action="keyup->mentions#keyup">
-    <%= form.label :content, 'Your Comment:' %>
-    <%= form.text_area :content, data: { mentions_target: "input" } %>
-    <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg' %>
+  <h3>Add a Comment:</h3>
+  <div class="comment-form-container" data-controller="mentions" data-action="keyup->mentions#keyup">
     <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
+    <%= form.text_area :content, placeholder: 'Your Comment...', class: 'comment-text-area', data: { mentions_target: "input" } %>
+
+    <div class="file-upload-wrapper" data-controller="file-upload">
+      <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg', class: 'hidden-file-input', id: 'hidden-file-input', data: { action: "change->file-upload#displayFileName" } %>
+      <label for="hidden-file-input" class="file-upload-label">
+        <i class="fa-solid fa-paperclip"></i>
+        <span class="file-upload-button-text"></span>
+        <span class="file-name" data-file-upload-target="fileName"></span>
+      </label>
+    </div>
   </div>
-  <div>
-    <%= form.submit 'Submit Comment', data: { turbo_frame: "new_comment" } %>
-  </div>
+  <%= form.submit 'Submit Comment', class: 'submit-comment-btn', data: { turbo_frame: "new_comment" } %>
 <% end %>
