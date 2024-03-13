@@ -43,7 +43,8 @@
 }
 
 a {
-  text-decoration: none; // Removes underline from all links
+  text-decoration: none;
+  color:  black;
 
   &:hover {
     text-decoration: none; // Optional: Removes underline on hover
