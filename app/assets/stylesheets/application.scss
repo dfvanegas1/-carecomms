@@ -16,3 +16,9 @@
 @import "tasks/show";
 @import "tasks/new";
 @import "tasks/edit";
+
+.body{
+  max-height: 91vh;
+  overflow: scroll;
+}
+
