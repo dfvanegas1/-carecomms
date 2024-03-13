@@ -289,8 +289,8 @@ ul {
 }
 
 .form-check-input:checked {
-  background-color: #b6d9fb;
-  border-color: #b6d9fb;
+  background-color: #015cc8;
+  border-color: #015cc8;
   border: 1px solid #717171;
 }
 
@@ -435,7 +435,7 @@ ul {
   right: 10px;
   top: 38px;
   cursor: pointer;
-  color: #b6d9fb;
+  color: #015cc8;
 }
 
 .comment-file-field {
@@ -452,8 +452,9 @@ ul {
 .submit-comment-btn {
   padding: 10px 20px;
   border-radius: 20px;
-  background-color: #b6d9fb;
-  color: black;
+  background-color: #015cc8;
+  color: white;
+  font-weight: bold;
   border: 1px solid #CCCCCC;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -462,7 +463,7 @@ ul {
 }
 
 .submit-comment-btn:hover {
-  background-color: #b6d9fb;
+  background-color: #015cc8;
 }
 
 .task-toggle-switch {
@@ -493,15 +494,10 @@ ul {
   font-size: 18px;
 }
 
-
-
-
-
-
 .file-upload-wrapper {
   position: absolute;
   right: 1px;
-  top: 10%;
+  top: 5%;
   white-space: nowrap;
 }
 
