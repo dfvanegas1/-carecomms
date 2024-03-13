@@ -1,16 +1,18 @@
 .edit-button {
-  padding: 0px;
-  border: 0px solid rgba(0, 0, 0, 0);
+  padding: -1px;
+  border: 1px solid white;
   position: absolute;
-  right: 13px;
-  bottom: 8px
+  right: 5px;
+  bottom: 5px;
+  border-radius: 50%
 }
 
 .button-select {
-  padding: 10px;
-  border: 1px solid rgb(219, 219, 219);
-  border-radius: 3px;
-  margin-right: 3px;
+  padding: 10px 30px;
+  border: 0px solid #dbdbdb;
+  border-radius: 10px 10px 0px 0px;
+  margin-left: 2px;
+  background-color: #f4f4f4
 }
 
 .select-form {

@@ -20,17 +20,15 @@
       <div data-controller="edit-shifts" class='edit-shifts'>
         <div class='shift-card-profile'>
           <% if shift.start_date.hour >= 5 && shift.end_date.hour < 18 %>
-            <i class="fa-regular fa-sun"></i>
-            <div>
-              <p><%= shift.start_date.strftime("%d-%m") %></p>
-              <p><%= shift.start_date.strftime("%H:%M") %> to <%= shift.end_date.strftime("%H:%M") %></p>
+            <div class='shift-icon-day'>
+              <p><i class="fa-regular fa-sun"></i></p>
             </div>
+              <p><%= shift.start_date.to_fs(:short) %> to <%= shift.end_date.strftime("%H:%M") %></p>
             <% else %>
-            <i class="fa-regular fa-moon"></i>
-            <div>
-              <p><%= shift.start_date.strftime("%d-%m") %></p>
-              <p><%= shift.start_date.strftime("%H:%M") %> to <%= shift.end_date.strftime("%H:%M") %></p>
+            <div class='shift-icon-night'>
+              <p><i class="fa-regular fa-moon"></i></p>
             </div>
+              <p><%= shift.start_date.to_fs(:short) %> to <%= shift.end_date.strftime("%H:%M") %></p>
           <% end %>
           <% if policy(Shift).update? %>
             <button data-action="click->edit-shifts#showForm" class="edit-button"><i class="fa-regular fa-pen-to-square"></i></button>
@@ -38,29 +36,26 @@
           </div>
         <div class="shifts-edit" data-edit-shifts-target="form">
           <%= simple_form_for(shift) do |f| %>
-            <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'select-form' %>
-            <%= f.hidden_field :user_id, value: @user.id %>
-            <%= f.submit "Assign Shift", class: "button-assign-shift" %>
+            <div class='d-flex'>
+              <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'form-control' %>
+              <%= f.hidden_field :user_id, value: @user.id %>
+              <%= f.submit 'Update', class: "button-assign-shift" %>
+            </div>
           <% end %>
         </div>
       </div>
     <% end %>
   </div>
   <div data-profile-target='tasks' class='d-none'>
-    <ul class="task-list">
+    <ul>
       <% @tasks.each do |task| %>
-        <li class="task-item">
-          <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, local: true do |form| %>
+        <li class="task-item-profile">
+          <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, local: true, class:'d-flex' do |form| %>
             <div class="task-checkbox">
               <%= form.check_box :completed, onchange: "this.form.submit();" %>
             </div>
-            <div class="task-content">
-              <div class="task-info">
+            <div>
                 <%= link_to task.title, task_path(task), class: "task-title" %>
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" style="width: <%= task.completed ? 100 : 0 %>%" aria-valuenow="<%= task.completed ? 100 : 0 %>" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-              </div>
             </div>
           <% end %>
         </li>
