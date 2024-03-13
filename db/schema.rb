@@ -100,17 +100,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_194604) do
     t.index ["recipient_type", "recipient_id"], name: "index_noticed_notifications_on_recipient"
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "recipient_id"
-    t.string "action"
-    t.string "notifiable_type"
-    t.integer "notifiable_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_notifications_on_user_id"
-  end
-
   create_table "shifts", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
@@ -179,7 +168,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_194604) do
   add_foreign_key "mention_messages", "users"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"
-  add_foreign_key "notifications", "users"
   add_foreign_key "task_comments", "tasks"
   add_foreign_key "task_comments", "users"
   add_foreign_key "user_shifts", "shifts"

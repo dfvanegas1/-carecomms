@@ -37,8 +37,8 @@
 .dash-cards {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 2px;
-  margin-bottom: 10px;
+  grid-gap: 15px;
+  margin-bottom: 15px;
 }
 
 .dash-card {
@@ -52,6 +52,8 @@
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-decoration: none;
+  background: #fff;
+  border: 0px;
 }
 
 .card-content {
@@ -65,6 +67,8 @@
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border: 0px;
 }
 
 .user-shift-card {
@@ -72,12 +76,12 @@
 }
 
 .shifts-container {
-  margin: 10px 0px;
+  margin: 15px 0px;
 }
 
 a {
   text-decoration: none;
-  color:  black;
+  color: black;
 
   &:hover {
     text-decoration: none; // Optional: Removes underline on hover
