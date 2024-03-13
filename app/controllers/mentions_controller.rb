@@ -3,7 +3,6 @@ class MentionsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @mention_comments = MentionComment.where(user: current_user)
-    @mention_messages = MentionMessage.where(user: current_user)
+    @notifications = current_user.notifications.includes(event: :record)
   end
 end

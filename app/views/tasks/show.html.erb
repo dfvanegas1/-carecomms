@@ -104,28 +104,29 @@
     </div>
   <% end %>
 </div>
+<div class="comments-and-toggle-container">
 
-<div class="task-section add-comment-section">
-<%= form_with model: @task, url: toggle_completion_task_path(@task), method: :patch, id: "task_completion_form_#{@task.id}", data: { turbo_frame: "task_#{@task.id}" } do |form| %>
-<div class="task-toggle-switch form-check form-switch">
-    <%= form.check_box :completed, class: "form-check-input", id: "completedSwitch#{@task.id}", onchange: "this.form.submit();" %>
+  <!-- Comment Form -->
+  <div class="add-comment-section">
+    <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), local: true, id: "new_comment_form" do |form| %>
+      <h3>Add a Comment:</h3>
+      <div class="comment-form-container">
+        <%= form.text_area :content, placeholder: 'Your Comment...', class: 'comment-text-area', data: { mentions_target: "input" } %>
+        <label for="file-upload" class="file-upload-label">
+          <i class="fa-solid fa-file-circle-plus"></i>
+        </label>
+        <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg', id: "file-upload", class: 'comment-file-field' %>
+      </div>
+      <%= form.submit 'Submit Comment', class: 'submit-comment-btn' %>
+    <% end %>
+  </div>
+
+  <!-- Toggle Switch Form -->
+<%= form_with url: toggle_completion_task_path(@task), method: :patch, local: true, id: "task_completion_form_#{@task.id}", data: { turbo_frame: "task_#{@task.id}" } do |form| %>
+  <div class="task-toggle-switch form-check form-switch">
+    <%= form.check_box :completed, checked: @task.completed?, class: "form-check-input", id: "completedSwitch#{@task.id}", onchange: "this.form.submit();" %>
     <%= form.label :completed, 'Task done?', class: "form-check-label", for: "completedSwitch#{@task.id}" %>
   </div>
 <% end %>
 
-
-  <h3>Add a Comment:</h3>
-  <%= turbo_frame_tag "new_comment" do %>
-    <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), id: "new_comment_form", local: true do |form| %>
-      <div data-controller="mentions" data-action="keyup->mentions#keyup" class="comment-form-container">
-        <%= form.label :content, 'Your Comment:', class: 'comment-label' %>
-        <%= form.text_area :content, data: { mentions_target: "input" }, class: 'comment-text-area' %>
-        <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg', class: 'comment-file-field' %>
-        <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
-      </div>
-      <div class="submit-comment-container">
-        <%= form.submit 'Submit Comment', class: 'submit-comment-btn', data: { turbo_frame: "new_comment" } %>
-      </div>
-    <% end %>
-  <% end %>
 </div>

@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :tasks, through: :user_tasks
   has_many :mention_comments
   has_many :mention_messages
+  has_many :notifications, as: :recipient, class_name: "Noticed::Notification"
+  has_many :notifications_mentions, as: :record, dependent: :destroy, class_name: "Noticed::Event"
   has_one_attached :avatar
 
   def full_name
