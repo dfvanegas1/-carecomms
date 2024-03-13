@@ -1,0 +1,15 @@
+.notification-info {
+  display: flex;
+  align-items: center;
+    .notif-time {
+      font-size: 12px;
+      color: lightgray;
+    }
+    img {
+      margin-right: 5px;
+    }
+    i {
+      padding: 10px;
+      font-size: 25px;
+    }
+}
