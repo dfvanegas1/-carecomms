@@ -19,6 +19,19 @@
   margin: 15px;
 }
 
+.team-input-search {
+  background: #ffffff;
+}
+
+.img-search-btn {
+  color: #b6d9fb;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  margin-left: 3px;
+  padding: 3px 7px;
+}
+
 .present-user {
   text-align: center;
   padding: 15px;
@@ -28,6 +41,7 @@
   text-decoration: none;
   height: 17vh;
   justify-content: space-evenly;
+  border: 0px;
 }
 
 .present-user p {
@@ -51,6 +65,7 @@
   text-decoration: none;
   height: 17vh;
   justify-content: space-evenly;
+  border: 0px;
 }
 
 
