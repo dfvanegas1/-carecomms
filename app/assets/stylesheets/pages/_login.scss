@@ -1,0 +1,23 @@
+.log-in {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.btn-login {
+  background-color: lightgray;
+  margin-top: 10px;
+  border-radius: 10px;
+  border-color: lightgray;
+}
+
+.btn:hover {
+  background-color: darkgray;
+  border-color: darkgrey;
+}
+
+.btn-primary {
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: darkgrey;
+  --bs-btn-active-border-color: darkgrey;
+}
