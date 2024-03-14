@@ -1,0 +1,41 @@
+.welcome-card {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: max-content;
+  padding: 50px;
+  border-radius: 70px;
+   h1 {
+    color: #424242;
+   }
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.btn-start-shift {
+  color: #676767;
+  background-color: #eeeeee;
+  border: 1px solid #ebebeb;
+  border-radius: 25px;
+  padding: 6px 12px;
+  margin-bottom: 5px;
+}
+.btn-start-shift:hover {
+  color: #fff;
+  background-color: #353b44;
+  border: 1px solid #343941;
+  box-shadow: 49px, 132px, 253px rgba(0, 0, 0, 0.125);
+}
+.btn-start-shift:active {
+  color: #fff;
+  background-color: #353b44;
+  border: 1px solid #343941;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}

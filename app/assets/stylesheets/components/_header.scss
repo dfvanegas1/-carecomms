@@ -1,9 +1,11 @@
 .header-primary {
-  background-color: #b6d9fb;
-  // position: fixed;
-  // top: 0;
-  // left: 0;
+  background-color: #012a45;
+  z-index: +1;
+  position: fixed;
   width: 100%;
   margin: 0;
-  padding: 1px
+  padding: 1rem;
+  padding-top: 15px;
+  align-items: center;
+  justify-content: space-between;
 }
