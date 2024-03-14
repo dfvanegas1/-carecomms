@@ -4,7 +4,6 @@
   <% end %>
 
   <h1 class="header-title">New Task</h1>
-
   <div class="dropdown">
     <button class="dropbtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="fas fa-ellipsis-v"></i>
@@ -19,6 +18,7 @@
   </div>
 </div>
 
+<div class=container-task>
 <%= form_with(model: @task, local: true, data: { turbo: false }, id: "task-form") do |form| %>
   <div class="form-section">
     <%= form.label :title, class: 'form-label-section', style: 'margin-top: 58px;' %>
@@ -74,3 +74,4 @@
     <%= form.submit 'Create Task', class: 'form-submit-button' %>
   </div>
 <% end %>
+</div>
