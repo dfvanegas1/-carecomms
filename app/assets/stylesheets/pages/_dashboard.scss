@@ -80,6 +80,10 @@
   border: 0px;
 }
 
+.user-shift-card {
+  text-align: center;
+}
+
 .shifts-container {
   margin: 15px 0px;
 }
@@ -168,10 +172,4 @@ a {
 .user-shift {
   display: inline-block; /* Allows for horizontal layout */
   margin-right: 20px; /* Space between items */
-}
-
-.user-shift-card {
-  /* other styles remain the same */
-  /* Adjust width to fit content, remove 100% width */
-  width: auto; /* Adjusts width based on content size */
 }

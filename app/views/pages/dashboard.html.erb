@@ -21,10 +21,8 @@
 <%= link_to tasks_path(view_option: 'mine') do %>
     <div class="dash-card">
       <div class="card-content">
-      <% if current_user.admin? %>
           <h3><%= current_user.tasks.count %></h3>
-        <p> Your own tasks</p>
-      <% end %>
+        <p> Total tasks</p>
       </div>
     </div>
     <% end %>
