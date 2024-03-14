@@ -19,7 +19,7 @@
     <% @shifts.each do |shift| %>
       <div data-controller="edit-shifts" class='edit-shifts'>
         <div class='shift-card-profile'>
-          <% if shift.start_date.hour >= 5 && shift.end_date.hour < 18 %>
+          <% if shift.start_date.hour >= 5 && shift.start_date.hour <= 18 %>
             <div class='shift-icon-day'>
               <i class="fa-regular fa-sun"></i>
             </div>
