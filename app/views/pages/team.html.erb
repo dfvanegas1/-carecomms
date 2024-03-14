@@ -1,51 +1,58 @@
-<div class="team-header"><h1>Your team</h1> </div>
+<div class="team-header"><h1>Your team</h1>
 <%= form_with url: team_path, method: :get, class: "d-flex team-search-bar" do %>
   <%= text_field_tag :query,
         params[:query],
         class: "form-control-team team-input-search",
-        placeholder: "Type a name"
+        placeholder: "Type a name..."
     %>
   <%= button_tag type: 'submit', class: 'img-search-btn' do %>
-  <i class="fa-solid fa-magnifying-glass"></i>
+    <i class="fa-solid fa-magnifying-glass"></i>
   <% end %>
 <% end %>
-<div class="team-page-container">
-    <div class="teams-on-duty container">
+</div>
+
+<div class="container-team">
+  <div class="team-page-container">
+    <div class="teams-on-duty">
       <h2>On duty</h2>
-      <div class="team-on-duty row">
-      <% @users_on_shift.each do |user|%>
-        <div class="user-on-duty col-4">
-          <div class="present-user card">
-      <% if user.avatar.attached? %>
-        <%= link_to cl_image_tag(user.avatar.key, class: "team-avatar"), profile_path(id: user.id) %>
-      <% else %>
-        <%= link_to image_tag("avatar_placeholder.jpg", class: "avatar"), profile_path(id: user.id) %>
-      <% end %>
-      <%= link_to user.first_name, profile_path(id: user.id), class: "user-name" %>
-      <p> <%= user.tasks.count %> tasks</p>
-          </div>
-        </div>
-    <% end %>
+      <div class="team-on-duty">
+        <ul>
+          <% @users_on_shift.each do |user| %>
+            <li class="user-on-duty">
+              <div class="present-user card">
+                <% if user.avatar.attached? %>
+                  <%= link_to cl_image_tag(user.avatar.key, class: "teams-avatar"), profile_path(id: user.id) %>
+                <% else %>
+                  <%= link_to image_tag("avatar_placeholder.jpg", class: "teams-avatar"), profile_path(id: user.id) %>
+                <% end %>
+                <%= link_to user.first_name, profile_path(id: user.id), class: "user-names" %>
+                <p><%= user.tasks.count %> tasks</p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
 
-
-  <div class="teams-out container">
-    <h2>Out today</h2>
-    <div class="teams-out row">
-  <% @users_out_today.each do |user|%>
-      <div class="user-out col-4">
-        <div class="absent-user card">
-    <% if user.avatar.attached? %>
-      <%= link_to cl_image_tag(user.avatar.key, class: "team-avatar"), profile_path(id: user.id) %>
-      <% else %>
-      <%= link_to image_tag("avatar_placeholder.jpg", class: "avatar"), profile_path(id: user.id) %>
-    <% end %>
-    <%= link_to user.first_name, profile_path(id: user.id), class: "user-name" %>
-    <p> <%= user.tasks.count %> tasks</p>
-        </div>
+    <div class="teams-out">
+      <h2>Out today</h2>
+      <div class="teams-out">
+        <ul>
+          <% @users_out_today.each do |user| %>
+            <li class="user-out">
+              <div class="absent-user card">
+                <% if user.avatar.attached? %>
+                  <%= link_to cl_image_tag(user.avatar.key, class: "teams-avatar"), profile_path(id: user.id) %>
+                <% else %>
+                  <%= link_to image_tag("avatar_placeholder.jpg", class: "teams-avatar"), profile_path(id: user.id) %>
+                <% end %>
+                <%= link_to user.first_name, profile_path(id: user.id), class: "user-names" %>
+                <p><%= user.tasks.count %> tasks</p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
       </div>
-  <% end %>
     </div>
   </div>
 </div>
