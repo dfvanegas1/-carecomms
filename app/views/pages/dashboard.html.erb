@@ -28,31 +28,40 @@
     <% end %>
   </div>
 
-  <h3> Shifts <i class="fa-regular fa-calendar"></i></h3>
+  <div class= "dashboard-shift-title">
+  <h3> Shifts </h3>
+  </div>
   <div class="shifts-container">
     <% current_user.shifts.each do |shift| %>
       <div class="shift-card">
-        <%= shift.start_date.strftime("%d-%m-%Y %H:%M") %>
+        <i class="fa-solid fa-calendar-days deadline-icon"></i>
+        <%= shift.start_date.strftime('%a %b %d %H:%M') %>
       </div>
     <% end %>
     </div>
 
-  <h2>Team on shift</h2>
-  <div class="team-shift container">
-    <div class="on-shift row">
-   <% @users_on_shift.each do |user|%>
-      <div class="user-shift col-4">
-        <div class="user-shift-card">
-    <% if user.avatar.attached? %>
-      <%= link_to cl_image_tag(user.avatar.key, class: "dash-shift-avatar"), profile_path(id: user.id) %>
-    <% else %>
-      <%= link_to image_tag("avatar_placeholder.jpg", class: "avatar"), profile_path(id: user.id) %>
-    <% end %>
-    <%= link_to user.first_name, profile_path(id: user.id), class: "user-name" %>
-    <p>Nurse</p>
-        </div>
-      </div>
-      <% end %>
-    </div>
+  <div class="dashboard-team-shift-title">
+      <h3>Team on Shift</h3>
   </div>
+  <div class="team-shift-container">
+      <div class="team-shift-row">
+          <ul>
+              <% @users_on_shift.each do |user| %>
+              <li class="user-shift">
+                  <div class="user-shift-card">
+                      <div class="user-shift-avatar-container">
+                          <% if user.avatar.attached? %>
+                          <%= link_to cl_image_tag(user.avatar.key, class: "dash-shift-avatar"), profile_path(id: user.id) %>
+                          <% else %>
+                          <%= link_to image_tag("avatar_placeholder.jpg", class: "dash-shift-avatar"), profile_path(id: user.id) %>
+                          <% end %>
+                      </div>
+                      <%= link_to user.first_name, profile_path(id: user.id), class: "user-name-dashboard" %>
+                  </div>
+              </li>
+              <% end %>
+          </ul>
+      </div>
+  </div>
+
 </div>
