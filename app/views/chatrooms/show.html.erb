@@ -1,9 +1,6 @@
-<div class="header">
-  <%= link_to dashboard_path, class: "back-button" do %>
-    <i class="fa-solid fa-arrow-left"></i>
-  <% end %>
+<div class="header-chatroom">
 
-  <h1 class="header-title" style="margin-right:35px;">Chatroom</h1>
+  <h1 class="header-title">Chatroom</h1>
 
 </div>
 
@@ -37,10 +34,14 @@
             },
             wrapper_html: { class: "" }
           %>
-        <label for="file-upload" class="file-upload-label">
-          <i class="fa-solid fa-paperclip"></i>
-        </label>
-        <%= f.file_field :file, id: "file-upload", class: "file-upload-input", accept: 'application/pdf/png,image/jpeg', style: "display: none;" %>
+        <div class="file-upload-wrapper" data-controller="file-upload">
+          <%= f.file_field :file, accept: 'application/pdf,image/png,image/jpeg', class: 'hidden-file-input', id: 'hidden-file-input', data: { action: "change->file-upload#displayFileName" } %>
+          <label for="hidden-file-input" class="file-upload-label">
+            <i class="fa-solid fa-paperclip"></i>
+            <span class="file-upload-button-text"></span>
+            <span class="file-name" data-file-upload-target="fileName"></span>
+          </label>
+        </div>
       </div>
       <%= f.submit "Send", class: "submit-comment-btn", id:"submit-chatroom" %>
     <% end %>

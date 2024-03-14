@@ -28,19 +28,19 @@
 
 <ul class="task-list">
   <% @tasks.each do |task| %>
-    <li class="task-item">
-      <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, local: true do |form| %>
-        <div class="task-checkbox">
-          <%= form.check_box :completed, onchange: "this.form.submit();" %>
-        </div>
-        <div class="task-content">
-          <div class="task-info">
-            <%= link_to task.title, task_path(task), class: "task-title" %>
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width: <%= task.completed ? 100 : 0 %>%" aria-valuenow="<%= task.completed ? 100 : 0 %>" aria-valuemin="0" aria-valuemax="100"></div>
+    <li class="task-item <%= 'task-completed' if task.completed %>"
+        data-controller="task-toggle"
+        data-action="change->task-toggle#updateCompletion"
+        data-task-toggle-url-value="<%= toggle_completion_task_path(task) %>">
+      <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, local: true, id: "task_completion_form_#{task.id}", data: { turbo_frame: dom_id(task) } do |form| %>
+        <div class="d-flex flex-column">
+          <div class="d-flex align-items-center">
+            <div class="task-checkbox">
+              <%= form.check_box :completed, class: "task-checkbox-input", data: { task_toggle_target: "checkbox" } %>
             </div>
+            <%= link_to task.title, task_path(task), class: "task-title" %>
           </div>
-          <div class="task-users">
+          <div class="task-users mt-2">
             <% task.user_tasks.each do |user_task| %>
               <%= image_tag(user_task.user.avatar, alt: "#{user_task.user.first_name}'s avatar", class: "task-avatar") if user_task.user.avatar.attached? %>
             <% end %>
@@ -50,5 +50,6 @@
     </li>
   <% end %>
 </ul>
+
 <div class="bottom-spacer"></div>
 </div>

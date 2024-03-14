@@ -46,20 +46,23 @@
       </div>
     <% end %>
   </div>
-  <div data-profile-target='tasks' class='d-none'>
-    <ul>
-      <% @tasks.each do |task| %>
-        <li class="task-item-profile">
-          <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, local: true, class:'d-flex' do |form| %>
-            <div class="task-checkbox">
-              <%= form.check_box :completed, onchange: "this.form.submit();" %>
-            </div>
-            <div>
-                <%= link_to task.title, task_path(task), class: "task-title" %>
-            </div>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+<div data-profile-target='tasks' class='d-none'>
+  <ul>
+    <% @tasks.each do |task| %>
+      <li class="task-item-profile <%= 'task-completed' if task.completed %>"
+          data-controller="task-toggle"
+          data-action="change->task-toggle#updateCompletion"
+          data-task-toggle-url-value="<%= toggle_completion_task_path(task) %>">
+        <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, local: true, class: 'd-flex', id: "task_completion_form_#{task.id}", data: { turbo_frame: dom_id(task) } do |form| %>
+          <div class="task-checkbox">
+            <%= form.check_box :completed, class: "task-checkbox-input", data: { task_toggle_target: "checkbox" } %>
+          </div>
+          <div>
+              <%= link_to task.title, task_path(task), class: "task-title" %>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
 </div>

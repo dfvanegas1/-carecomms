@@ -2,10 +2,11 @@
   height: 80vh;
   overflow: scroll;
   position: relative;
+  background-color: #f4f4f4;
 }
 
 .chatroom__messages{
-  height: 68%;
+  height: 75%;
   overflow: scroll;
   padding: 1rem;
 }
@@ -16,7 +17,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 20px;
-  background-color: #f7f7f7;
+  background-color: #f4f4f4;
   margin-top: -25px;
   padding-bottom: 0px;
 }
@@ -36,6 +37,18 @@
 }
 
 #submit-chatroom{
-  margin-bottom: 15px;
+  margin-bottom: 0px;
   margin-top:0px;
+}
+
+.header-chatroom{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  padding-top: 15px;
+  background-color: #012a45;
+  z-index: +1;
+  width: 100%;
+  height: 65px;
 }

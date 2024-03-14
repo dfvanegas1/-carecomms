@@ -16,6 +16,7 @@
   <% end %>
 </div>
 
+
 <div class='container'>
   <div class="task-section description-section">
     <h3>Descriptions</h3>
@@ -79,72 +80,73 @@
     </div>
     </div>
   </div>
-
-  <div class="task-section comments-container">
-    <h3>Comments:</h3>
-    <%= turbo_frame_tag "comments" do %>
-      <div class="comments-list">
-        <% @task.task_comments.each do |comment| %>
-          <div class="comment">
-            <div class="comment-avatar">
-              <%= image_tag(comment.user.avatar.url, alt: "#{comment.user.first_name}'s avatar", class: "avatar") if comment.user.avatar.attached? %>
+<div class="task-section comments-container">
+  <h3>Comments:</h3>
+  <%= turbo_frame_tag "comments" do %>
+    <div class="comments-list">
+      <% @task.task_comments.each do |comment| %>
+        <div class="comment">
+          <div class="comment-avatar">
+            <%= image_tag(comment.user.avatar.url, alt: "#{comment.user.first_name}'s avatar", class: "avatar") if comment.user.avatar.attached? %>
+          </div>
+          <div class="comment-body">
+            <div class="comment-user">
+              <%= comment.user.first_name %>
             </div>
-            <div class="comment-body">
-              <div class="comment-user">
-                <%= comment.user.first_name %>
-              </div>
-              <div class="comment-content">
-                <p><%= comment.content %></p>
-                <% if comment.file.attached? %>
-                  <% if comment.file.content_type.in?(['image/jpeg', 'image/jpg', 'image/png']) %>
-                    <%= link_to rails_blob_path(comment.file, disposition: "attachment"), target: "_blank" do %>
-                      <%= cl_image_tag comment.file.key, width: 200, height: 200, crop: :fill %>
-                    <% end %>
-                  <% elsif comment.file.content_type == 'application/pdf' %>
-                    <%= link_to comment.file.filename, rails_blob_path(comment.file, disposition: "attachment"), target: "_blank" %>
+            <div class="comment-content">
+              <p><%= comment.content %></p>
+              <% if comment.file.attached? %>
+                <% if comment.file.content_type.in?(['image/jpeg', 'image/jpg', 'image/png']) %>
+                  <%= link_to rails_blob_path(comment.file, disposition: "attachment"), target: "_blank" do %>
+                    <%= cl_image_tag comment.file.key, width: 200, height: 200, crop: :fill %>
                   <% end %>
+                <% elsif comment.file.content_type == 'application/pdf' %>
+                  <%= link_to comment.file.filename, rails_blob_path(comment.file, disposition: "attachment"), target: "_blank" %>
                 <% end %>
-              </div>
-              <div class="comment-timestamp">
-                <%= time_ago_in_words(comment.created_at) %> ago
-              </div>
+              <% end %>
+            </div>
+            <div class="comment-timestamp">
+              <%= time_ago_in_words(comment.created_at) %> ago
             </div>
           </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <div class="comments-and-toggle-container">
-
-    <div class="add-comment-section">
-      <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), local: true, id: "new_comment_form" do |form| %>
-        <h3>Add a Comment:</h3>
-        <div class="comment-form-container" data-controller="mentions" data-action="keyup->mentions#keyup">
-          <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
-          <%= form.text_area :content, placeholder: 'Your Comment...', class: 'comment-text-area', data: { mentions_target: "input" } %>
-
-      <div class="file-upload-wrapper" data-controller="file-upload">
-        <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg', class: 'hidden-file-input', id: 'hidden-file-input', data: { action: "change->file-upload#displayFileName" } %>
-        <label for="hidden-file-input" class="file-upload-label">
-          <i class="fa-solid fa-paperclip"></i>
-          <span class="file-upload-button-text"></span>
-          <span class="file-name" data-file-upload-target="fileName"></span>
-        </label>
-      </div>      </div>
-        <%= form.submit 'Submit Comment', class: 'submit-comment-btn' %>
+        </div>
       <% end %>
     </div>
+  <% end %>
+</div>
+<div class="comments-and-toggle-container">
 
-    <%= form_with url: toggle_completion_task_path(@task), method: :patch, local: true, id: "task_completion_form_#{@task.id}", data: { turbo_frame: "task_#{@task.id}" } do |form| %>
-      <div class="task-toggle-switch form-check form-switch">
-        <%= form.check_box :completed, checked: @task.completed?, class: "form-check-input", id: "completedSwitch#{@task.id}", onchange: "this.form.submit();", style: "font-size: 30px;" %>
-        <%= form.label :completed, 'Task done?', class: "form-check-label", for: "completedSwitch#{@task.id}", style: "position: absolute;
-        top: -50%;
-        right: 2px;
-        white-space: nowrap;
-        opacity: 25%;" %>
+  <div class="add-comment-section">
+    <%= form_with model: [ @task, TaskComment.new ], url: task_comments_path(@task), local: true, id: "new_comment_form" do |form| %>
+      <h3>Add a Comment:</h3>
+      <div class="comment-form-container" data-controller="mentions" data-action="keyup->mentions#keyup">
+        <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
+      <div style="position: relative;">
+        <%= form.text_area :content, placeholder: 'Your Comment...', class: 'comment-text-area', data: { mentions_target: "input" } %>
+        <div class="file-upload-wrapper" data-controller="file-upload">
+          <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg', class: 'hidden-file-input', id: 'hidden-file-input', data: { action: "change->file-upload#displayFileName" } %>
+          <label for="hidden-file-input" class="file-upload-label">
+            <i class="fa-solid fa-paperclip"></i>
+            <span class="file-upload-button-text"></span>
+            <span class="file-name" data-file-upload-target="fileName"></span>
+          </label>
+        </div>
       </div>
-    <% end %>
 
+    </div>
+      <%= form.submit 'Submit Comment', class: 'submit-comment-btn' %>
+    <% end %>
   </div>
+
+<%= form_with url: toggle_completion_task_path(@task), method: :patch, id: "task_completion_form_#{@task.id}", data: { controller: "task-toggle", action: "change->task-toggle#updateCompletion", task_toggle_url_value: toggle_completion_task_path(@task) } do |form| %>
+  <div class="task-toggle-switch form-check form-switch">
+    <%= form.check_box :completed, checked: @task.completed?, class: "form-check-input", id: "completedSwitch#{@task.id}", data: { task_toggle_target: "checkbox" }, style: "font-size: 30px;" %>
+      <%= form.label :completed, 'Task done?', class: "form-check-label", for: "completedSwitch#{@task.id}", style: "position: absolute;
+      top: -50%;
+      right: 2px;
+      white-space: nowrap;
+      opacity: 25%;" %>
+    </div>
+  <% end %>
+</div>
 </div>

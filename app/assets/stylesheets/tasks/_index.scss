@@ -164,10 +164,13 @@
 }
 
 .my-4 {
-  margin-top: 0 !important;
-  padding-top: 1rem !important;
+  margin-top: 27px !important;
   margin-bottom: 0.5rem !important;
   color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+
 }
 
 .spacer {
@@ -186,4 +189,10 @@
   position: absolute;
   top: 63%;
   right: 16px;
+}
+
+
+.task-completed .task-title {
+  text-decoration: line-through;
+  color: #adb5bd;
 }

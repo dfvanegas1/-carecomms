@@ -20,6 +20,12 @@ export default class extends Controller {
     console.log('trying jaja')
   }
   resetForm(event) {
-    event.target.reset()
+    event.target.reset();
+
+    const fileNameDisplay = document.querySelector("[data-file-upload-target='fileName']");
+    if (fileNameDisplay) {
+      fileNameDisplay.textContent = "";
+    }
   }
+
 }
