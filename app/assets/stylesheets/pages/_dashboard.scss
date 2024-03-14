@@ -1,8 +1,7 @@
 .dashboard-header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  height: 8vh;
   padding: 1rem;
   padding-top: 15px;
   background-color: #012a45;
@@ -13,18 +12,19 @@
 }
 
 .dashboard-header h1 {
-  color: white;
+  font-size: 1.2rem;
   margin: 0;
+  text-align: center;
+  font-weight: bold;
+  color: white;
 }
 
 .notification-icon {
-  margin-right: 10px;
-  width: 67.75px;
   height: 61px;
   align-items: center;
-  justify-content: center;
   display: flex;
   text-decoration: none;
+  margin-left: 10px;
 }
 
 .notification-icon i {

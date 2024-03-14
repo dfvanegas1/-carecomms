@@ -1,0 +1,8 @@
+<div class="task-item <%= 'task-completed' if task.completed %>" id="<%= dom_id(task) %>">
+  <%= form_with model: task, url: toggle_completion_task_path(task), method: :patch, id: "task_completion_form_#{task.id}", data: { turbo_frame: dom_id(task) } do |form| %>
+    <div class="task-toggle-switch form-check form-switch">
+      <%= form.check_box :completed, checked: task.completed?, class: "form-check-input", id: "completedSwitch#{task.id}", onchange: "this.form.submit();" %>
+      <%= form.label :completed, 'Task done?', class: "form-check-label", for: "completedSwitch#{task.id}" %>
+    </div>
+  <% end %>
+</div>

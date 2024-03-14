@@ -84,17 +84,21 @@ class TasksController < ApplicationController
   end
 
   def toggle_completion
-    @tasks = Task.all
-    @task = @tasks.find(params[:id])
-    @task.completed = !@task.completed
-    authorize @task
+    @task = Task.find(params[:id])
+    Rails.logger.debug "Received params: #{params.inspect}" # Log incoming params
+    @task.completed = params[:completed].present? && params[:completed].to_s == "true"
+    authorize @task # Assuming you're using Pundit; adjust as needed.
+
     if @task.save
       respond_to do |format|
-        format.turbo_stream
-        format.html { redirect_back(fallback_location: task_path(@task), notice: 'Task status updated.') }
+        format.json { head :no_content }
+        format.html { redirect_to @task, notice: 'Task updated.' }
       end
     else
-      redirect_back(fallback_location: task_path(@task), alert: 'Unable to update task.')
+      respond_to do |format|
+        format.json { render json: { error: "Unable to update task." }, status: :unprocessable_entity }
+        format.html { redirect_to @task, alert: 'Unable to update task.' }
+      end
     end
   end
 

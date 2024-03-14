@@ -51,7 +51,7 @@
 
   <div class="form-section">
   <div class="form-group">
-    <%= form.label :priority, 'Priority:', class: 'form-label' %>
+    <%= form.label :priority, 'Priority:', class: 'form-labels' %>
     <% Task.priorities.each do |key, value| %>
       <div>
         <%= form.radio_button :priority, key %>

@@ -17,7 +17,7 @@
 </div>
 
 <div class="task-section description-section">
-  <h3>Descriptions</h3>
+  <h3>Description</h3>
   <p><%= @task.description %></p>
 </div>
 
@@ -120,23 +120,26 @@
       <h3>Add a Comment:</h3>
       <div class="comment-form-container" data-controller="mentions" data-action="keyup->mentions#keyup">
         <div data-mentions-target="suggestions" class="suggestions-container hidden"></div>
+      <div style="position: relative;">
         <%= form.text_area :content, placeholder: 'Your Comment...', class: 'comment-text-area', data: { mentions_target: "input" } %>
+        <div class="file-upload-wrapper" data-controller="file-upload">
+          <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg', class: 'hidden-file-input', id: 'hidden-file-input', data: { action: "change->file-upload#displayFileName" } %>
+          <label for="hidden-file-input" class="file-upload-label">
+            <i class="fa-solid fa-paperclip"></i>
+            <span class="file-upload-button-text"></span>
+            <span class="file-name" data-file-upload-target="fileName"></span>
+          </label>
+        </div>
+      </div>
 
-    <div class="file-upload-wrapper" data-controller="file-upload">
-      <%= form.file_field :file, accept: 'application/pdf,image/png,image/jpeg', class: 'hidden-file-input', id: 'hidden-file-input', data: { action: "change->file-upload#displayFileName" } %>
-      <label for="hidden-file-input" class="file-upload-label">
-        <i class="fa-solid fa-paperclip"></i>
-        <span class="file-upload-button-text"></span>
-        <span class="file-name" data-file-upload-target="fileName"></span>
-      </label>
-    </div>      </div>
+    </div>
       <%= form.submit 'Submit Comment', class: 'submit-comment-btn' %>
     <% end %>
   </div>
 
-  <%= form_with url: toggle_completion_task_path(@task), method: :patch, local: true, id: "task_completion_form_#{@task.id}", data: { turbo_frame: "task_#{@task.id}" } do |form| %>
-    <div class="task-toggle-switch form-check form-switch">
-      <%= form.check_box :completed, checked: @task.completed?, class: "form-check-input", id: "completedSwitch#{@task.id}", onchange: "this.form.submit();", style: "font-size: 30px;" %>
+<%= form_with url: toggle_completion_task_path(@task), method: :patch, id: "task_completion_form_#{@task.id}", data: { controller: "task-toggle", action: "change->task-toggle#updateCompletion", task_toggle_url_value: toggle_completion_task_path(@task) } do |form| %>
+  <div class="task-toggle-switch form-check form-switch">
+    <%= form.check_box :completed, checked: @task.completed?, class: "form-check-input", id: "completedSwitch#{@task.id}", data: { task_toggle_target: "checkbox" }, style: "font-size: 30px;" %>
       <%= form.label :completed, 'Task done?', class: "form-check-label", for: "completedSwitch#{@task.id}", style: "position: absolute;
       top: -50%;
       right: 2px;

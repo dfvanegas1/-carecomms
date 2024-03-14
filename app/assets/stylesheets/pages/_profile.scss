@@ -10,8 +10,11 @@
   width: 100%;
   z-index: +1;
     h1 {
+      font-size: 1.2rem;
+      margin: 5px;
+      text-align: center;
+      font-weight: bold;
       color: white;
-      margin: 0px;
     }
     p {
       text-align: center;
@@ -23,7 +26,7 @@
   background: #d7d7d7;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 15px;
   border: 1px solid #e6e6e6;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
