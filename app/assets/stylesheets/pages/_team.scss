@@ -12,6 +12,7 @@
   padding-top: 15px;
   align-items: center;
   justify-content: space-between;
+  height: 112px;
 }
 
 .team-header h1 {
@@ -20,67 +21,105 @@
 }
 
 .team-search-bar {
-  margin: 15px;
+  margin: 5px;
+  margin-top: 10px;
+  padding: 7px 8px 7px 8px;
 }
 
 .team-input-search {
   background: #ffffff;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   width: 46vh;
+  padding-left: 10px;
+  color: #012a45;
+}
+
+.team-input-search::placeholder {
+  color: #012a45;
 }
 
 .img-search-btn {
-  color: #b6d9fb;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 5px;
+  color: white;
+  background-color: #012a45;
+  border: 1px solid white;
+  border-radius: 50px;
   margin-left: 3px;
-  padding: 3px 7px;
+  padding: 0px 4px;
+  position: absolute;
+  right: 30px;
+  top: 65.3px;
 }
 
-.present-user {
+.container-team {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  height: 660px;
+}
+
+.teams-on-duty h2 {
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 110px;
+}
+
+.teams-out h2 {
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+.team-on-duty, .teams-out {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.team-on-duty ul, .teams-out ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+}
+
+.team-on-duty li, .teams-out li {
+  display: inline-block;
+  width: 150px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.present-user, .absent-user {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
   text-align: center;
-  padding: 15px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  height: 17vh;
-  justify-content: space-evenly;
-  border: 0px;
+  background: #d7d7d7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  width: 140px;
 }
 
-.present-user p {
-  font-size: 12px
+.teams-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 3px solid #333;
 }
 
-.absent-user p {
-  font-size: 12px
-}
-
-.user-name {
-  font-size: 15px;
-}
-
-.absent-user {
-  text-align: center;
-  padding: 15px;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  height: 17vh;
-  justify-content: space-evenly;
-  border: 0px;
-}
-
-
-
-.user-on-duty {
-  padding-top: 15px;
-}
-
-.user-out {
-  padding-top: 15px;
+.user-names, .card p {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+  margin-top: 10px;
 }

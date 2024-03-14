@@ -6,6 +6,8 @@
   padding: 1rem;
   padding-top: 15px;
   background-color: #012a45;
+  position: fixed;
+  width: 100%;
 }
 
 .dashboard-header h1 {
@@ -37,6 +39,7 @@
 
 .container-dashboard {
   padding: 20px;
+  height: 665px;
 }
 
 .dash-cards {
@@ -59,6 +62,7 @@
   text-decoration: none;
   background: #d7d7d7;
   border: 0px;
+  margin-top: 58px;
 }
 
 .dash-card h3 {

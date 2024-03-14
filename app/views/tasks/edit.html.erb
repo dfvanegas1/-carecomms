@@ -15,7 +15,7 @@
 
 <%= form_with(model: @task, local: true, data: { turbo: false }, id: "task-form") do |form| %>
   <div class="form-section">
-    <%= form.label :title, class: 'form-label-section' %>
+    <%= form.label :title, class: 'form-label-section', style: 'margin-top: 58px;' %>
     <%= form.text_field :title, class: 'task-input', placeholder: 'Enter task title here' %>
   </div>
 

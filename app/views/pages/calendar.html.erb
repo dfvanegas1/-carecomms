@@ -4,7 +4,7 @@
 <div class='container calendar'>
   <div data-controller="calendar"
       data-calendar-is-admin="<%= current_user.admin? %>">
-    <div class='d-flex justify-content-between align-items-center'>
+    <div class='d-flex justify-content-between align-items-center' style="margin-top: 58px;">
       <div>
         <label>View:</label>
         <button data-action="click->calendar#toggleCalendarView" data-calendar-target="toggleButton" class='button-calendar'>Shifts</button>
