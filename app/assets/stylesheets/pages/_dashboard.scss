@@ -1,11 +1,16 @@
 .dashboard-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   height: 8vh;
   padding: 1rem;
   padding-top: 15px;
-  background-color: #b6d9fb;
+  background-color: #012a45;
+}
+
+.dashboard-header h1 {
+  color: white;
+  margin: 0;
 }
 
 .notification-icon {
@@ -25,7 +30,7 @@
 }
 
 .fa-bell {
-  color: black;
+  color: white;
   text-decoration: none;
 }
 
@@ -49,11 +54,15 @@
   margin-bottom: 10px;
   padding: 10px;
   height: 15vh;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-decoration: none;
-  background: #fff;
+  background: #d7d7d7;
   border: 0px;
+}
+
+.dash-card h3 {
+  font-weight: bold;
 }
 
 .card-content {
@@ -66,13 +75,9 @@
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #d7d7d7;
   border: 0px;
-}
-
-.user-shift-card {
-  text-align: center;
 }
 
 .shifts-container {
@@ -84,6 +89,89 @@ a {
   color: black;
 
   &:hover {
-    text-decoration: none; // Optional: Removes underline on hover
+    text-decoration: none;
   }
+}
+
+.dashboard-shift-title h3 {
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.dashboard-team-shift-title h3 {
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 25px;
+}
+
+.on-shift {
+  display: flex;
+}
+
+.team-shift-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+}
+
+.user-shift-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #d7d7d7;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  font-size: 16px;
+  color: #333;
+  transition: transform 0.3s;
+  width: auto;
+}
+
+.user-shift-avatar-container {
+  margin-bottom: 10px;
+}
+
+.dash-shift-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #333;
+}
+
+.user-name-dashboard {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.team-shift-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  margin-top: 15px;
+}
+
+.team-shift-row ul {
+  display: flex;
+  flex-direction: row;
+  padding: 0; /* Reset default padding */
+  margin: 0; /* Reset default margin */
+  list-style-type: none; /* Removes bullet points */
+}
+
+.user-shift {
+  display: inline-block; /* Allows for horizontal layout */
+  margin-right: 20px; /* Space between items */
+}
+
+.user-shift-card {
+  /* other styles remain the same */
+  /* Adjust width to fit content, remove 100% width */
+  width: auto; /* Adjusts width based on content size */
 }

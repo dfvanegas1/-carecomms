@@ -58,6 +58,9 @@ ul {
   padding: 1rem;
   padding-top: 15px;
   background-color: #012a45;
+  z-index: +1;
+  position: fixed;
+  width: 100%;
 }
 
 .back-button {
