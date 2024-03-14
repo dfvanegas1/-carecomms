@@ -5,14 +5,19 @@
 }
 
 .btn-login {
-  padding: 6px 12px;
-  background-color: #dedede;
+  background-color: lightgray;
   margin-top: 10px;
   border-radius: 10px;
-  --bs-btn-bg: #787878;
+  border-color: lightgray;
 }
 
 .btn:hover {
-  background-color: #787878;
-  color: white;
+  background-color: darkgray;
+  border-color: darkgrey;
+}
+
+.btn-primary {
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: darkgrey;
+  --bs-btn-active-border-color: darkgrey;
 }
