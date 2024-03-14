@@ -11,8 +11,8 @@
 </div>
 <div class= 'container' data-controller='profile'>
   <div class='button-select-display'>
-    <button data-action="click->profile#display" data-profile-target="button" data-value="1" class='button-select'>Shifts</button>
-    <button data-action="click->profile#display" data-profile-target="button" data-value="2" class='button-select'>Tasks</button>
+    <button data-action="click->profile#display" data-profile-target="btnShifts" data-value="1" class='button-select'>Shifts</button>
+    <button data-action="click->profile#display" data-profile-target="btnTasks" data-value="2" class='button-select'>Tasks</button>
   </div>
   <div class='shifts-display' data-profile-target='shifts'>
 
@@ -21,12 +21,12 @@
         <div class='shift-card-profile'>
           <% if shift.start_date.hour >= 5 && shift.end_date.hour < 18 %>
             <div class='shift-icon-day'>
-              <p><i class="fa-regular fa-sun"></i></p>
+              <i class="fa-regular fa-sun"></i>
             </div>
               <p><%= shift.start_date.to_fs(:short) %> to <%= shift.end_date.strftime("%H:%M") %></p>
             <% else %>
             <div class='shift-icon-night'>
-              <p><i class="fa-regular fa-moon"></i></p>
+              <i class="fa-regular fa-moon"></i>
             </div>
               <p><%= shift.start_date.to_fs(:short) %> to <%= shift.end_date.strftime("%H:%M") %></p>
           <% end %>
@@ -37,7 +37,7 @@
         <div class="shifts-edit" data-edit-shifts-target="form">
           <%= simple_form_for(shift) do |f| %>
             <div class='d-flex'>
-              <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'form-control' %>
+              <%= f.collection_select :id, Shift.all, :id, :shift_info, { prompt: 'Select a shift' }, class: 'form-control-update' %>
               <%= f.hidden_field :user_id, value: @user.id %>
               <%= f.submit 'Update', class: "button-assign-shift" %>
             </div>
