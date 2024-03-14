@@ -16,9 +16,11 @@ margin: 0;
   }
 }
 
-.calendar {
-  padding-right: 15px;
-  padding-left: 15px;
+.container-calendar {
+  max-width: 600px;
+  padding: 20px;
+  position: relative;
+  margin-bottom: 10vh;
 }
 
 @media (max-width: 767.98px) {
