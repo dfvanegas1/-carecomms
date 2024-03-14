@@ -1,0 +1,40 @@
+.message-box{
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  overflow: hidden;
+  width:80%;
+}
+
+.message{
+  background: #d7d7d7;
+}
+
+.message__current-user{
+  background: #012a4542;
+  text-align: end;
+  margin-left: auto;
+}
+
+.message__content{
+  text-align:start
+}
+
+.message__time{
+  text-align:end;
+  font-style: italic;
+  font-size: 10px;
+}
+
+#message_content{
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #ced4da;
+  resize: vertical;
+  width: 100%;
+  margin-bottom: 15px;
+}

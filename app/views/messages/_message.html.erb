@@ -1,9 +1,7 @@
-<div id="message-<%= message.id %>">
-  <small>
-    <strong><%= message.user.first_name %></strong>
-    <i><%= message.created_at.strftime("%a %b %e at %l:%M %p") %></i>
-  </small>
-  <p><%= message.content %></p>
+<div id="message-<%= message.id %>" class="<% if  message.user == current_user %> message__current-user <% else %> message <% end %> message-box">
+  <p><strong><%=message.user.first_name if message.user != current_user %></strong></p>
+  <p class="message__content"><%= message.content %></p>
+  <p class="message__time"><%= message.created_at.strftime("%a %b %e at %l:%M %p") %></p>
   <% if message.file.attached? %>
   <% if message.file.content_type.in?(['image/jpeg', 'image/jpg', 'image/png']) %>
     <%= link_to rails_blob_path(message.file, disposition: "attachment"), target: "_blank" do %>
@@ -15,3 +13,4 @@
 <% end %>
 
 </div>
+

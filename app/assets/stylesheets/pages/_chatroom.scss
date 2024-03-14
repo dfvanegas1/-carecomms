@@ -1,0 +1,41 @@
+.chatroom{
+  height: 80vh;
+  overflow: scroll;
+  position: relative;
+}
+
+.chatroom__messages{
+  height: 68%;
+  overflow: scroll;
+  padding: 1rem;
+}
+
+.chatroom__form{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: #f7f7f7;
+  margin-top: -25px;
+  padding-bottom: 0px;
+}
+
+.chatroom__name{
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.chatroom__messages-container{
+  height:100%;
+}
+
+.file-upload-input {
+  display: none;
+}
+
+#submit-chatroom{
+  margin-bottom: 15px;
+  margin-top:0px;
+}
