@@ -3,15 +3,19 @@
 }
 
 .team-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: #012a45;
+  z-index: +1;
+  position: fixed;
+  width: 100%;
+  margin: 0;
   padding: 1rem;
   padding-top: 15px;
-  background-color: #b6d9fb;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .team-header h1 {
+  color: white;
   margin: 0;
 }
 
@@ -21,6 +25,9 @@
 
 .team-input-search {
   background: #ffffff;
+  border: none;
+  border-radius: 5px;
+  width: 46vh;
 }
 
 .img-search-btn {
@@ -53,7 +60,7 @@
 }
 
 .user-name {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .absent-user {
