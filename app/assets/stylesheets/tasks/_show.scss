@@ -57,7 +57,7 @@ ul {
   align-items: center;
   padding: 1rem;
   padding-top: 15px;
-  background-color: #b6d9fb;
+  background-color: #012a45;
 }
 
 .back-button {
@@ -81,6 +81,7 @@ ul {
   text-align: center;
   flex-grow: 1;
   font-weight: bold;
+  color: white;
 }
 
 .dropdown {
@@ -410,8 +411,8 @@ ul {
   position: relative;
   padding: 20px;
   background-color: #f7f7f7;
-  margin-bottom: 30px;
   margin-top: -25px;
+  padding-bottom: 0px;
 }
 
 .comment-form-container {
@@ -483,7 +484,7 @@ ul {
 .task-toggle-switch {
   position: absolute;
   right: 44px;
-  top: 67%;
+  top: 74%;
   transform: translateY(-50%);
 }
 
@@ -497,7 +498,7 @@ ul {
 .file-upload-wrapper {
   position: absolute;
   right: 1px;
-  top: 5%;
+  top: 0%;
   white-space: nowrap;
 }
 
@@ -527,4 +528,12 @@ ul {
 
 .fa-paperclip {
   font-size: 25px;
+}
+
+.fa-ellipsis-v {
+  color: #012a45;
+}
+
+.fa-arrow-left {
+  color: #012a45;
 }

@@ -14,9 +14,11 @@
     <div class="col">
       <%= form_tag tasks_path, method: :get, class: "filter-form" do %>
         <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1'}, selected: params[:priority]), include_blank: 'All', onchange: 'this.form.submit()' %>
+        <i class="fa-solid fa-caret-down select-caret"></i>
 
         <% if current_user.admin? %>
           <%= select_tag :view_option, options_for_select({'All Tasks' => 'all', 'My Tasks' => 'mine'}, selected: params[:view_option]), include_blank: false, onchange: 'this.form.submit()' %>
+          <i class="fa-solid fa-caret-down select-caret fa-caret-down-2"></i>
         <% end %>
       <% end %>
     </div>
