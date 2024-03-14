@@ -8,11 +8,26 @@
         <li>
           <div class='notification-card'>
             <% if notification.event.record_type == "MentionMessage" %>
-                  <p><%= notification.record.message.user.first_name %> mentioned you in the Chatroom: <%= link_to notification.record.message.chatroom.name, chatroom_by_name_path(name: notification.record.message.chatroom.name ) %></p>
+                <%= link_to chatroom_by_name_path(name: notification.record.message.chatroom.name ) do %>
+                  <div class='notification-info'>
+                    <%= cl_image_tag notification.record.message.user.avatar.key, class:'avatar' %>
+                    <p><%= notification.record.message.user.first_name %> mentioned you in the <strong>Chatroom: <%= notification.record.message.chatroom.name %></strong></p>
+                    <p class='notif-time'><%= time_ago_in_words(notification.created_at) %> </p>
+                  </div>
+                <% end %>
               <% elsif notification.event.record_type == "MentionComment"%>
-                <p><%= notification.record.task_comment.user.first_name %> mentioned you in a comment on <%= link_to notification.record.task_comment.task.title, task_path(notification.record.task_comment.task) %></p>
+                <%= link_to task_path(notification.record.task_comment.task) do %>
+                  <div class='notification-info'>
+                    <%= cl_image_tag notification.record.task_comment.user.avatar.key, class:'avatar' %>
+                    <p><%= notification.record.task_comment.user.first_name %> mentioned you on <strong><%= notification.record.task_comment.task.title %></strong></p>
+                    <p class='notif-time'><%= time_ago_in_words(notification.created_at) %></p>
+                  </div>
+                <% end %>
               <% else %>
-                <p>There's been a change in your shifts!</p>
+                <div class='notification-info'>
+                  <i class="fa-regular fa-calendar-plus"></i>
+                  <p>Shift update: <%= notification.record.shift.start_date.to_fs(:short) %> to <%= notification.record.shift.end_date.strftime("%H:%M") %></p>
+                </div>
               <% end %>
           </div>
         </li>

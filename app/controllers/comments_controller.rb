@@ -7,6 +7,9 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     respond_to do |format|
       if @comment.save
+        @comment.mention_comments.each do |mention|
+          NewMentionNotifier.with(record: mention).deliver(mention.user)
+        end
         format.turbo_stream
         format.html { redirect_to @task }
       else

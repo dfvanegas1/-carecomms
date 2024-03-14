@@ -24,7 +24,8 @@
 .navbar-bottom .navbar-nav {
   justify-content: center;
   align-items: center;
-  font-size: 30px;
+  font-size: 20px;
+  gap: 30px;
 }
 
 .navbar-bottom .navbar-toggler {
@@ -38,18 +39,17 @@
 }
 
 .rounded-circle.avatar {
-  width: 45px;
-  height: 45px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 15px;
-
+  margin-right: 25px;
 }
 
 .bg-light {
-  background-color: #b6d9fb !important;
+  background-color: #012a45 !important;
 }
 
 .mb-2 {
@@ -66,4 +66,8 @@
 
 .navbar-collapse {
   flex-grow: 0;
+}
+
+.nav-link {
+  color: #ffffff !important;
 }

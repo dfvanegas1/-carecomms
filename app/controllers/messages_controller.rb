@@ -8,6 +8,9 @@ class MessagesController < ApplicationController
       ChatroomChannel.broadcast_to( @chatroom,
                                     render_to_string(partial: "message", locals: { message: @message }))
       head :ok
+      @message.mention_messages.each do |mention|
+        NewMentionNotifier.with(record: mention).deliver(mention.user)
+      end
     else
       render "chatrooms/show", status: :unprocessable_entity
     end
