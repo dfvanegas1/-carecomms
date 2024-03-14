@@ -1,0 +1,18 @@
+.log-in {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.btn-login {
+  padding: 6px 12px;
+  background-color: #dedede;
+  margin-top: 10px;
+  border-radius: 10px;
+  --bs-btn-bg: #787878;
+}
+
+.btn:hover {
+  background-color: #787878;
+  color: white;
+}
