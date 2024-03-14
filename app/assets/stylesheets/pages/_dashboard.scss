@@ -8,6 +8,8 @@
   background-color: #012a45;
   position: fixed;
   width: 100%;
+  margin: 0;
+  height: 65px;
 }
 
 .dashboard-header h1 {
@@ -19,7 +21,6 @@
   margin-right: 10px;
   width: 67.75px;
   height: 61px;
-  padding: 8px 17px;
   align-items: center;
   justify-content: center;
   display: flex;
