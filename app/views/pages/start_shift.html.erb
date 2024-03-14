@@ -1,2 +1,7 @@
-<h1>Hello <%= current_user.full_name %></h1>
-<%= link_to 'Start Shift and Proceed to Dashboard', dashboard_path(started_shift: true), class: 'btn btn-primary' %>
+<div class='center-container'>
+  <div class='welcome-card'>
+    <h1>Hello <%= current_user.first_name %>!</h1>
+    <%= link_to 'Start Shift', dashboard_path(started_shift: true), class: 'btn-start-shift' %>
+    <%= link_to 'Go to Dashboard', dashboard_path, class: 'btn-start-shift' %>
+  </div>
+</div>
