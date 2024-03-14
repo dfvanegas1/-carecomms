@@ -18,36 +18,36 @@
     </ul>
   </div>
 </div>
-
-<%= form_with(model: @task, local: true, data: { turbo: false }, id: "task-form") do |form| %>
-  <div class="form-section">
-    <%= form.label :title, class: 'form-label-section', style: 'margin-top: 58px;' %>
-    <%= form.text_field :title, class: 'task-input', placeholder: 'Enter task title here' %>
-  </div>
-
-  <div class="form-section">
-  <p class>
-    <%= form.label :description, class: 'form-label-section' %>
-    <%= form.text_area :description, class: 'task-input', placeholder: 'Describe the task...' %>
-  </p>
-  </div>
-
-  <div class="form-section">
-    <h3>Team Members</h3>
-    <div class="user-list">
-      <ul>
-        <% User.all.each do |user| %>
-          <li class="user-member">
-            <%= check_box_tag 'user_ids[]', user.id, @task.users.include?(user), id: "user_#{user.id}" %>
-            <%= label_tag "user_#{user.id}" do %>
-              <%= image_tag(user.avatar, alt: "#{user.full_name}'s avatar", class: "avatar-new") if user.avatar.attached? %>
-              <span class="user-name"><%= user.first_name %></span>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
+<div class='container'>
+  <%= form_with(model: @task, local: true, data: { turbo: false }, id: "task-form") do |form| %>
+    <div class="form-section">
+      <%= form.label :title, class: 'form-label-section', style: 'margin-top: 58px;' %>
+      <%= form.text_field :title, class: 'task-input', placeholder: 'Enter task title here' %>
     </div>
-  </div>
+
+    <div class="form-section">
+    <p class>
+      <%= form.label :description, class: 'form-label-section' %>
+      <%= form.text_area :description, class: 'task-input', placeholder: 'Describe the task...' %>
+    </p>
+    </div>
+
+    <div class="form-section">
+      <h3>Team Members</h3>
+      <div class="user-list">
+        <ul>
+          <% User.all.each do |user| %>
+            <li class="user-member">
+              <%= check_box_tag 'user_ids[]', user.id, @task.users.include?(user), id: "user_#{user.id}" %>
+              <%= label_tag "user_#{user.id}" do %>
+                <%= image_tag(user.avatar, alt: "#{user.full_name}'s avatar", class: "avatar-new") if user.avatar.attached? %>
+                <span class="user-name"><%= user.first_name %></span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
 
   <div class="form-section">
   <div class="form-group">
@@ -56,21 +56,22 @@
       <div>
         <%= form.radio_button :priority, key %>
         <%= form.label "priority_#{key}", key.capitalize %>
-      </div>
-    <% end %>
-  </div>
-  </div>
-
-<div class="form-section">
-  <p class="form-group-deadline">
-    <%= form.label :deadline, class: 'form-label-deadline' %>
-    <div class=form-background-deadline>
-    <%= form.datetime_select :deadline, {}, { class: 'datetime-select' } %>
+        </div>
+      <% end %>
     </div>
-  </p>
-</div>
+    </div>
 
-  <div class="form-section-button">
-    <%= form.submit 'Create Task', class: 'form-submit-button' %>
+  <div class="form-section">
+    <p class="form-group-deadline">
+      <%= form.label :deadline, class: 'form-label-deadline' %>
+      <div class=form-background-deadline>
+      <%= form.datetime_select :deadline, {}, { class: 'datetime-select' } %>
+      </div>
+    </p>
   </div>
-<% end %>
+
+    <div class="form-section-button">
+      <%= form.submit 'Create Task', class: 'form-submit-button' %>
+    </div>
+  <% end %>
+</div>
