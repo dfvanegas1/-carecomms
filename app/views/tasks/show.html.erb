@@ -55,7 +55,7 @@
   <% if policy(@task).edit? %>
     <%= form_with model: @task, url: task_path(@task), method: :patch, local: true do |form| %>
       <fieldset class="form-group">
-        <%= form.label :priority, 'Priority:', class: 'form-label' %>
+        <%= form.label :priority, 'Priority:', class: 'form-labels' %>
         <% Task.priorities.keys.each do |priority| %>
           <div class="form-check">
             <%= form.radio_button :priority, priority, class: 'form-check-input', onchange: "this.form.submit();" %>
