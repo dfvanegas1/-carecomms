@@ -19,7 +19,7 @@
               <div class="d-flex justify-content-between align-items-end mb-3">
                 <div class="me-2">
                   <%= label_tag :priority, 'Priority', class: 'form-label-index' %>
-                  <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1', 'Completed' => 'completed'}, selected: params[:priority]), include_blank: 'All', class: 'form-select' %>
+                  <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1'}, selected: params[:priority]), include_blank: 'All', class: 'form-select' %>
                 </div>
                 <% if current_user.admin? %>
                   <div class="me-2">
