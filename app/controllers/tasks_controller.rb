@@ -14,7 +14,15 @@ class TasksController < ApplicationController
              end
 
     @tasks = @tasks.where(priority: params[:priority]) if params[:priority].present?
+
+    case params[:completed]
+    when 'true'
+      @tasks = @tasks.where(completed: true)
+    when 'false'
+      @tasks = @tasks.where(completed: false)
+    end
   end
+
 
   def show
     @task = Task.includes(user_tasks: :user, task_comments: :user).find(params[:id])
@@ -85,9 +93,9 @@ class TasksController < ApplicationController
 
   def toggle_completion
     @task = Task.find(params[:id])
-    Rails.logger.debug "Received params: #{params.inspect}" # Log incoming params
+    Rails.logger.debug "Received params: #{params.inspect}"
     @task.completed = params[:completed].present? && params[:completed].to_s == "true"
-    authorize @task # Assuming you're using Pundit; adjust as needed.
+    authorize @task
 
     if @task.save
       respond_to do |format|

@@ -1,29 +1,49 @@
 <div class="container">
-<div class=background-container>
-  <h1 class="text-center my-4">My tasks</h1>
-
-  <div class="row mb-3">
-    <div class="col">
-      <% if policy(Task).create? %>
-        <%= link_to new_task_path, class: 'add-task-btn' do %>
-          Add Task
-          <span class="add-task-icon">+</span>
+  <div class="background-container">
+    <h1 class="text-center my-4">My Tasks</h1>
+    <div class="row mb-3">
+      <div class="col d-flex justify-content-between">
+        <% if policy(Task).create? %>
+          <%= link_to new_task_path, class: 'btn btn-primary add-task-btn' do %>
+            Add Task
+            <span class="fas fa-plus"></span>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
-    <div class="col">
-      <%= form_tag tasks_path, method: :get, class: "filter-form" do %>
-        <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1'}, selected: params[:priority]), include_blank: 'All', onchange: 'this.form.submit()' %>
-        <i class="fa-solid fa-caret-down select-caret"></i>
 
-        <% if current_user.admin? %>
-          <%= select_tag :view_option, options_for_select({'All Tasks' => 'all', 'My Tasks' => 'mine'}, selected: params[:view_option]), include_blank: false, onchange: 'this.form.submit()' %>
-          <i class="fa-solid fa-caret-down select-caret fa-caret-down-2"></i>
-        <% end %>
-      <% end %>
+        <div class="dropdown-index">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Filters
+          </button>
+          <div class="dropdown-menu p-4" aria-labelledby="filterDropdown" style="width: 100%;background-color: rgb(255 255 255);border: none;position: absolute;inset: 0px auto auto 0px;margin: 0px;transform: translate3d(0px, 99px, 0px);border-radius: 15px;" data-popper-placement="bottom-start">
+            <%= form_tag tasks_path, method: :get do %>
+              <div class="d-flex justify-content-between align-items-end mb-3">
+                <div class="me-2">
+                  <%= label_tag :priority, 'Priority', class: 'form-label-index' %>
+                  <%= select_tag :priority, options_for_select({'High' => '3', 'Medium' => '2', 'Low' => '1'}, selected: params[:priority]), include_blank: 'All', class: 'form-select' %>
+                </div>
+                <% if current_user.admin? %>
+                  <div class="me-2">
+                    <%= label_tag :view_option, 'View Option', class: 'form-label-index' %>
+                    <%= select_tag :view_option, options_for_select({'All Tasks' => 'all', 'My Tasks' => 'mine'}, selected: params[:view_option]), include_blank: false, class: 'form-select' %>
+                  </div>
+                <% end %>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="form-check mb-3">
+                <div class="checkbox-index-filter">
+                  <%= check_box_tag :completed, 'true', params[:completed] == 'true', class: 'form-check-input' %>
+                  <%= label_tag :completed, 'Completed', class: 'form-check-label' %>
+                </div>
+                </div>
+                <%= submit_tag 'Apply Filters', class: 'submit-filter' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+
   <div class="spacer"></div>
 
 <ul class="task-list">

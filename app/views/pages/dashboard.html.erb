@@ -7,22 +7,22 @@
   <% end %>
 </div>
 
- <%= link_to tasks_path(priority: 3) do %>
+ <%= link_to tasks_path(priority: 3, completed: false) do %>
  <div class="container-dashboard">
   <div class="dash-cards">
     <div class="dash-card">
       <div class="card-content">
-      <h3> <%= @tasks_priority %> </h3>
+      <h3> <%= Task.where(priority: 3, completed: false).count %> </h3>
       <p> Priority tasks</p>
       </div>
     </div> 
     <% end %>
 
-<%= link_to tasks_path(view_option: 'mine') do %>
+<%= link_to tasks_path(view_option: 'mine', completed: false) do %>
     <div class="dash-card">
       <div class="card-content">
-          <h3><%= current_user.tasks.count %></h3>
-        <p> Total tasks</p>
+          <h3><%= current_user.tasks.where(completed: false).count %></h3>
+        <p>Uncompleted Tasks</p>
       </div>
     </div>
     <% end %>
