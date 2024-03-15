@@ -28,5 +28,6 @@ module Carecomms
     #
     config.time_zone = 'Europe/Madrid'
     # config.eager_load_paths << Rails.root.join("extras")
+    config.exceptions_app = self.routes
   end
 end
