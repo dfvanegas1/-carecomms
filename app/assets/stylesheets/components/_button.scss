@@ -39,7 +39,16 @@
 }
 
 .button-calendar {
-  padding: 5px 10px;
-  border: 1px solid #dbdbdb;
-  border-radius: 36px;
+  padding: 10px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 22px;
+  color: #012a45;
+  margin-left: -25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: white;
 }

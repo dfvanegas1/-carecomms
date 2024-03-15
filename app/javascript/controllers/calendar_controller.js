@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["toggleButton", "filterSelect", "calendarAllShifts", "calendarMyShifts", "calendarAllTasks", "calendarMyTasks"]
+  static targets = ["toggleButton", "filterSelect", "calendarAllShifts", "calendarMyShifts", "calendarAllTasks", "calendarMyTasks", "text", "icon"]
   static values = {
     isAdmin: Boolean
   }
@@ -13,11 +13,11 @@ export default class extends Controller {
   }
 
   toggleCalendarView() {
-    const currentView = this.toggleButtonTarget.textContent;
+    const buttonText = this.textTarget.textContent.trim();
 
-    if (currentView === "Shifts") {
+    if (buttonText === "Shifts") {
       this.currentView = 'tasks';
-      this.toggleButtonTarget.textContent = "Tasks";
+      this.textTarget.textContent = "Tasks";
       if (!this.isAdminValue) {
         this.filterSelectTarget.classList.add("d-none");
       } else {
@@ -26,13 +26,15 @@ export default class extends Controller {
       }
     } else {
       this.currentView = 'shifts';
-      this.toggleButtonTarget.textContent = "Shifts";
+      this.textTarget.textContent = "Shifts";
       this.filterSelectTarget.classList.remove("d-none");
       this.updateDropdown(["1", "All Shifts", "3", "My Shifts"]);
     }
 
     this.defaultSelection();
   }
+
+
 
   updateDropdown(options) {
     this.filterSelectTarget.innerHTML = '';
