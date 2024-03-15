@@ -15,7 +15,7 @@
       <h3> <%= Task.where(priority: 3, completed: false).count %> </h3>
       <p> Priority tasks</p>
       </div>
-    </div>
+    </div> 
     <% end %>
 
 <%= link_to tasks_path(view_option: 'mine', completed: false) do %>
