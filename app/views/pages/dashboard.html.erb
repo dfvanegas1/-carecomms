@@ -1,3 +1,5 @@
+<% content_for :title, "Dashboard | Welcome to CareComms" %>
+
 <div class="dashboard-header">
   <h1>Welcome <%= current_user.first_name %>!</h1>
   <%= link_to mentions_path do %>
@@ -15,7 +17,7 @@
       <h3> <%= Task.where(priority: 3, completed: false).count %> </h3>
       <p> Priority tasks</p>
       </div>
-    </div> 
+    </div>
     <% end %>
 
 <%= link_to tasks_path(view_option: 'mine', completed: false) do %>

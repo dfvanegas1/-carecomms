@@ -1,3 +1,5 @@
+<% content_for :title, "Team Page | CareComms" %>
+
 <div class="team-header"><h1>Your team</h1>
 <%= form_with url: team_path, method: :get, class: "d-flex team-search-bar" do %>
   <%= text_field_tag :query,
